@@ -1,0 +1,12 @@
+nameOverride: mongodb
+fullnameOverride: mongodb
+auth:
+  usernames: [ mongo_db_user ]
+  passwords: [ 9N94uwyTVSWBGX ]
+  databases: [ announce-db ]
+  rootPassword: 9N94uwyTVSWBGX
+replicaCount: 0
+volumePermissions:
+  enabled: true
+service:
+  type: LoadBalancer

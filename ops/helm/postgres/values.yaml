@@ -1,0 +1,14 @@
+nameOverride: postgres
+fullnameOverride: postgres
+auth:
+  username: postgres_db_user
+  password: 8HdN8WD746iQ
+  database: user_management
+  rootPassword: 8HdN8WD746iQ
+secondary:
+  replicaCount: 0
+volumePermissions:
+  enabled: true
+primary:
+  service:
+    type: LoadBalancer

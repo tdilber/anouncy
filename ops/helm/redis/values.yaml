@@ -1,0 +1,6 @@
+nameOverride: redis
+fullnameOverride: redis
+auth:
+  enabled: false
+replica:
+  replicaCount: 0
