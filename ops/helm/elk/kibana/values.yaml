@@ -1,0 +1,21 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+  hostname: "kibana.anouncy.com"
+elasticsearch:
+  security:
+    tls:
+      enabled: true
+      existingSecret: logging-elasticsearch-coordinating-crt
+      usePemCerts: true
+    auth:
+      enabled: true
+      kibanaUsername: elastic
+      kibanaPassword: PZqXvHuP
+      createSystemUser: true
+      elasticsearchPasswordSecret: elk-password-secret
+      existingSecret: elk-password-secret
+  hosts:
+    - logging-elasticsearch.logging.svc.cluster.local
+  port: 9200

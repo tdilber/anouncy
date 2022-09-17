@@ -1,0 +1,49 @@
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+  hostname: "logstash.anouncy.com"
+extraEnvVars:
+  - name: ELASTICSEARCH_HOST
+    value: "logging-elasticsearch.logging.svc.cluster.local"
+  - name: ELASTICSEARCH_PORT
+    value: "9200"
+  - name: ELASTICSEARCH_CACERT
+    valueFrom:
+      secretKeyRef:
+        name: logging-elasticsearch-coordinating-crt
+        key: tls.crt
+
+
+input: |
+  tcp {
+     port => 8080
+     type => syslog
+     codec => json_lines
+   }
+
+
+
+filter: |
+  grok {
+  match => { "message" => "%{COMBINEDAPACHELOG}" }
+  }
+  date {
+  match => [ "timestamp" , "dd/MMM/yyyy:HH:mm:ss Z" ]
+  }
+
+
+
+output: |
+  elasticsearch {
+   hosts => ["https://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+   index => "logstash-%{+YYYY.MM.dd}"
+   ssl => true
+   ssl_certificate_verification => false
+   user => 'elastic'
+   password => 'PZqXvHuP'
+  }
+  stdout {
+    codec => json
+  }
+
