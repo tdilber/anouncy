@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+  namespace: default
+  {{- with .Values.user.service.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: {{ .Values.user.deployment.port }}
+      port: {{ .Values.user.deployment.port }}
+      name: api-prometheus-port
+  selector:
+    app: api

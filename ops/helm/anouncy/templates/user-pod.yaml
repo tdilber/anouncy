@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: {{ .Values.user.deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.user.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.user.deployment.maxSurge }}
+  template:
+    metadata:
+      {{- with .Values.user.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: user
+        octopusexport: OctopusExport
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.user.deployment.terminationGracePeriodSeconds }}
+      imagePullSecrets:
+        - name: docker-login-secret
+      containers:
+        - name: user-container
+          image: {{ .Values.user.deployment.image }}
+          imagePullPolicy:  {{ .Values.user.deployment.imagePullPolicy }}
+          ports:
+            - name: user-port
+              containerPort:  {{ .Values.user.deployment.port }}
+          envFrom:
+            - secretRef:
+                name: postgres-db-secret
+                optional: false
+          resources:
+            requests:
+              memory:  {{ .Values.user.deployment.memoryRequest }}
+            limits:
+              memory:  {{ .Values.user.deployment.memoryLimit }}
+          livenessProbe:
+            initialDelaySeconds:  {{ .Values.user.deployment.readynessLivenessInitialDelay }}
+            periodSeconds:  {{ .Values.user.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.user.deployment.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.user.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.user.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.user.deployment.port }}
