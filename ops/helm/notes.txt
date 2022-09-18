@@ -1,3 +1,6 @@
+K3S Install
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --no-deploy traefik --tls-san IP_ADDRESS" sh -s -
+
 kubectl create secret generic postgres-db-secret --from-literal=SPRING_DATASOURCE_USERNAME=postgres_db_user --from-literal=SPRING_DATASOURCE_PASSWORD='8HdN8WD746iQ' --dry-run=client -o yaml > postgres-db-secret.yaml
 
 kubectl create secret docker-registry --dry-run=client docker-regcred \
@@ -7,3 +10,15 @@ kubectl create secret docker-registry --dry-run=client docker-regcred \
 --docker-email=dilber.talha@gmail.com \
 --namespace=default \
 -o yaml > docker-secret.yaml
+
+helm install "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy" --generate-name --values "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy/values.yaml"
+helm install "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy" --generate-name --values "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy/values.yaml"
+
+
+Traefik:
+helm repo add traefik https://helm.traefik.io/traefik
+kubectl create namespace traefik
+kubectl config set-context --current --namespace=traefik
+helm install ingress-traefik traefik/traefik --version 10.24.3 -n traefik --values "$ANOUNCY_PROJECT_PATH/ops/helm/traefik/traefik-config.yaml"
+
+helm upgrade --cleanup-on-fail ingress-traefik traefik/traefik --version 10.24.3 -n traefik --values "$ANOUNCY_PROJECT_PATH/ops/helm/traefik/traefik-config.yaml"
