@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### HELM SECRETS ###
+docker-secret.yaml
+elk-password-secret.yaml
+postgres-db-secret.yaml
+*secret.yaml
