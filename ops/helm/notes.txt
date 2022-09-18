@@ -1,0 +1,9 @@
+kubectl create secret generic postgres-db-secret --from-literal=SPRING_DATASOURCE_USERNAME=postgres_db_user --from-literal=SPRING_DATASOURCE_PASSWORD='8HdN8WD746iQ' --dry-run=client -o yaml > postgres-db-secret.yaml
+
+kubectl create secret docker-registry --dry-run=client docker-regcred \
+--docker-server=$ANOUNCY_DOCKER_HOST \
+--docker-username=$ANOUNCY_DOCKER_USERNAME \
+--docker-password=$ANOUNCY_DOCKER_PASSWORD \
+--docker-email=dilber.talha@gmail.com \
+--namespace=default \
+-o yaml > docker-secret.yaml

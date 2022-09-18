@@ -28,7 +28,7 @@ prometheus:
 
           # service port name must end with word 'metrics-port'
           - action: keep
-            regex: .*metrics-port
+            regex: .*prometheus-port
             source_labels: [ __meta_kubernetes_service_port_name ]
 
           # allow override of http scheme
