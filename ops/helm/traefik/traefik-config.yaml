@@ -28,9 +28,9 @@ additionalArguments:
   #  - --certificatesresolvers.cloudflare.acme.storage=/ssl-certs/acme-cloudflare.json
   #
   # Generic (replace with your DNS provider):
-  - --certificatesresolvers.generic.acme.dnschallenge.provider=generic
-  - --certificatesresolvers.generic.acme.email=dilber.talha@gmail.com
-  - --certificatesresolvers.generic.acme.storage=/ssl-certs/acme-generic.json
+#  - --certificatesresolvers.generic.acme.dnschallenge.provider=generic
+#  - --certificatesresolvers.generic.acme.email=dilber.talha@gmail.com
+#  - --certificatesresolvers.generic.acme.storage=/ssl-certs/acme-generic.json
 
 logs:
   # Configure log settings here...

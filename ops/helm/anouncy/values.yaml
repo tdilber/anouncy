@@ -4,7 +4,7 @@ ingress:
 
 user:
   deployment:
-    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:7FB9C5C4-323A-4A47-A115-7FDF5939523B"
+    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:95200E62-5501-41E0-BF40-B89B67C6374B"
     imagePullPolicy: Always
     port: 8080
     replicas: 1
@@ -19,4 +19,4 @@ user:
   service:
     annotations:
   ingress:
-    host:
+    host: "api.anouncy.com"
