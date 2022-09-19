@@ -38,3 +38,4 @@ docker-secret.yaml
 elk-password-secret.yaml
 postgres-db-secret.yaml
 *secret.yaml
+/**/registry-ignore/
