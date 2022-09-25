@@ -1,6 +1,0 @@
-displayName: User Ids Resolver
-summary: Read Jwt Token And Resolve User Id and Anounymous User Id for redirect inside requests.
-type: middleware
-import: github.com/tdilber/anouncy/tools/traefik-user-ids-resolver-plugin
-compatibility: TODO
-testData:
