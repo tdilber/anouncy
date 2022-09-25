@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+management:
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+anouncy:
+  password:
+    salt:
+      user: ASDsdasd
+      anonymous: asASdasdAsd
