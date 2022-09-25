@@ -6,14 +6,14 @@ ingress:
 
 user:
   deployment:
-    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:A7ABECED-CBDF-4AC9-ADDD-9D45D884E59D"
+    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:0C618011-EEF6-497F-944E-3188E99F1A54"
     imagePullPolicy: Always
     port: 8080
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 25
+    readynessLivenessInitialDelay: 10
     readynessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
