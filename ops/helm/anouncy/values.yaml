@@ -1,10 +1,12 @@
 ingress:
   annotations:
     kubernetes.io/ingress.class: "traefik"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-demo@kubernetescrd
 
 user:
   deployment:
-    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:95200E62-5501-41E0-BF40-B89B67C6374B"
+    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:A7ABECED-CBDF-4AC9-ADDD-9D45D884E59D"
     imagePullPolicy: Always
     port: 8080
     replicas: 1
@@ -19,4 +21,4 @@ user:
   service:
     annotations:
   ingress:
-    host: "api.anouncy.com"
+    host: "user.anouncy.com"

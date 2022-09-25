@@ -1,0 +1,10 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: demo
+  namespace: traefik
+spec:
+  plugin:
+    demo:
+      ResolverUrl: "http://user-service.default.svc.cluster.local:8080/user/token-resolver/"
+      LogLevel: "DEBUG"

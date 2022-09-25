@@ -4,6 +4,8 @@ additionalArguments:
   # HTTP Challenge
   # ---
   # Generic Example:
+  - --experimental.plugins.demo.moduleName=github.com/tdilber/anouncy-traefik-plugin
+  - --experimental.plugins.demo.version=v0.0.6
   - --certificatesresolvers.generic.acme.email=dilber.talha@gmail.com
   - --certificatesresolvers.generic.acme.caServer=https://acme-v02.api.letsencrypt.org/directory
   - --certificatesresolvers.generic.acme.httpChallenge.entryPoint=web
@@ -35,7 +37,7 @@ additionalArguments:
 logs:
   # Configure log settings here...
   general:
-    level: INFO
+    level: DEBUG
 
 ports:
   # Configure your entrypoints here...
@@ -69,7 +71,7 @@ env:
 # Disable Dashboard
 ingressRoute:
   dashboard:
-    enabled: false
+    enabled: true
 
 # Persistent Storage
 persistence:
@@ -93,3 +95,12 @@ deployment:
 ingressClass:
   enabled: true
   isDefaultClass: true
+
+# Enable experimental features
+experimental:
+  http3:
+    enabled: false
+  plugins:
+    enabled: true
+  kubernetesGateway:
+    enabled: false
