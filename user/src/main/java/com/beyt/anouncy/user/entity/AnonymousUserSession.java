@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AnonymousUserSession implements Serializable {
     @Id
-    @Column(name = "session_hash", nullable = false)
+    @Column(name = "session_hash", nullable = false, unique = true)
     private String sessionHash;
 
     @NotNull
