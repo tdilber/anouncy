@@ -1,6 +1,6 @@
 package com.beyt.anouncy.user.controller;
 
-import com.beyt.anouncy.user.dto.ApiErrorDTO;
+import com.beyt.anouncy.user.dto.general.ApiErrorDTO;
 import com.beyt.anouncy.user.exception.ClientErrorException;
 import com.beyt.anouncy.user.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
