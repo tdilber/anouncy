@@ -3,6 +3,8 @@ package com.beyt.anouncy.user.controller;
 import com.beyt.anouncy.user.context.UserContext;
 import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
+import com.beyt.anouncy.user.dto.UserSignOutDTO;
+import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,18 @@ public class UserController {
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody @Valid UserSignInDTO dto) {
         userService.signIn(dto);
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<?> signUp(@RequestBody @Valid UserSignUpDTO dto) {
+        userService.signUp(dto);
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<?> signOut(@RequestBody @Valid UserSignOutDTO dto) {
+        userService.signOut(dto);
         return ResponseEntity.ok(true);
     }
 
