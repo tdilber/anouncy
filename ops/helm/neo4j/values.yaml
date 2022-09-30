@@ -1,0 +1,24 @@
+service:
+  type: LoadBalancer
+
+# Use password authentication
+authEnabled: true
+existingPasswordSecret: neo4j-password-secret
+existingPasswordSecretKey: neo4j-password
+
+persistentVolume:
+  enabled: true
+  size: 5Gi
+
+resources: { }
+# limits:
+#   cpu: 100m
+#   memory: 512Mi
+# requests:
+#   cpu: 100m
+#   memory: 512Mi
+
+
+exporters:
+  jmx:
+    enabled: false

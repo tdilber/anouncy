@@ -22,3 +22,20 @@ kubectl config set-context --current --namespace=traefik
 helm install ingress-traefik traefik/traefik --version 10.24.3 -n traefik --values "$ANOUNCY_PROJECT_PATH/ops/helm/traefik/traefik-config.yaml"
 
 helm upgrade --cleanup-on-fail ingress-traefik traefik/traefik --version 10.24.3 -n traefik --values "$ANOUNCY_PROJECT_PATH/ops/helm/traefik/traefik-config.yaml"
+kubectl apply -f "$ANOUNCY_PROJECT_PATH/ops/helm/traefik/traefik-middleware-config.yaml"
+
+
+helm install logging-elasticsearch bitnami/elasticsearch --version 19.3.0 -n logging --values "$ANOUNCY_PROJECT_PATH/ops/helm/elk/elastic-search/values.yaml"
+helm install logging-logstash bitnami/logstash --version 5.1.2 -n logging --values "$ANOUNCY_PROJECT_PATH/ops/helm/elk/logstash/values.yaml"
+helm install logging-kibana bitnami/kibana --version 10.2.2 -n logging --values "$ANOUNCY_PROJECT_PATH/ops/helm/elk/kibana/values.yaml"
+kubectl apply -f -n logging "$ANOUNCY_PROJECT_PATH/ops/helm/elk/elk-password-secret.yaml"
+
+helm install prod-prometheus -n prometheus prometheus-community/kube-prometheus-stack --version 39.9.0 --values "$ANOUNCY_PROJECT_PATH/ops/helm/kube-prometheus-stack/values.yaml"
+helm upgrade --cleanup-on-fail prod-prometheus -n prometheus prometheus-community/kube-prometheus-stack --version 39.9.0 --values "$ANOUNCY_PROJECT_PATH/ops/helm/kube-prometheus-stack/values.yaml"
+
+helm install prod-redis -n persist bitnami/redis --version 17.3.1 --values "$ANOUNCY_PROJECT_PATH/ops/helm/redis/values.yaml"
+helm install prod-postgresql -n persist bitnami/postgresql --version 11.9.5 --values "$ANOUNCY_PROJECT_PATH/ops/helm/postgres/values.yaml"
+
+kubectl apply -n persist -f "$ANOUNCY_PROJECT_PATH/ops/helm/neo4j/neo4j-password-secret.yaml"
+helm repo add equinor-charts https://equinor.github.io/helm-charts/charts/
+helm install prod-neo4j  -n persist equinor-charts/neo4j-community --version 1.2.5 --values "$ANOUNCY_PROJECT_PATH/ops/helm/neo4j/values.yaml"
