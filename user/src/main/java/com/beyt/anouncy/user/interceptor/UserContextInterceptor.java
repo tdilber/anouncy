@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Component
 public class UserContextInterceptor implements HandlerInterceptor {
@@ -19,8 +20,8 @@ public class UserContextInterceptor implements HandlerInterceptor {
         String userId = request.getHeader("USER-ID");
         String anonymousUserId = request.getHeader("ANONYMOUS-USER-ID");
 
-        userContext.setUserId(userId);
-        userContext.setAnonymousUserId(anonymousUserId);
+        userContext.setUserId(UUID.fromString(userId));
+        userContext.setAnonymousUserId(UUID.fromString(anonymousUserId));
         return true;
     }
 }

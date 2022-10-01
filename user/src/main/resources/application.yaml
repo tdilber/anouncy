@@ -1,6 +1,38 @@
 server:
   port: 8080
 
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://${ANOUNCY_TEST_SERVER_IP}:5432/user_management
+    username: postgres_db_user
+    password: 8HdN8WD746iQ
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
 management:
   health:
     livenessState:
@@ -13,7 +45,10 @@ management:
         enabled: true
 
 anouncy:
+  jwtToken:
+    secret: asdasdwqeqdaasdasdasdasdasdasdasdasdasdlmaslkdmalskdmalksdmalksmdlamksdlkads
   password:
     salt:
       user: ASDsdasd
       anonymous: asASdasdAsd
+      session: asASdasdasdAsd

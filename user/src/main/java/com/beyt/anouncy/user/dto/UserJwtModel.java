@@ -17,15 +17,15 @@ public class UserJwtModel implements Serializable {
     private String name;
     private String surname;
     private String username;
-    private UUID anonymousUserSessionId;
+    private String userSessionId;
     private Date createAt;
 
-    public UserJwtModel(User user, UUID sessionId) {
+    public UserJwtModel(User user, String sessionId) {
         this.userId = user.getId();
         this.name = user.getFirstName();
         this.surname = user.getLastName();
         this.username = user.getUsername();
-        this.anonymousUserSessionId = sessionId;
+        this.userSessionId = sessionId;
         this.createAt = new Date();
     }
 

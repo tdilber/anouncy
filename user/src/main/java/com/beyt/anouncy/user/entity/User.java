@@ -64,6 +64,9 @@ public class User extends BaseUuidEntity {
     @JsonIgnore
     private String activationKey;
 
+    @Column(name = "activation_date")
+    private Instant activationDate = null;
+
     @Size(max = 20)
     @Column(name = "reset_key", length = 20)
     @JsonIgnore

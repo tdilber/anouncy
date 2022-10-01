@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody @Valid UserSignUpDTO dto) {
-        userService.signUp(dto);
+        userService.signUp(dto, dto.getPassword());
         return ResponseEntity.ok(true);
     }
 

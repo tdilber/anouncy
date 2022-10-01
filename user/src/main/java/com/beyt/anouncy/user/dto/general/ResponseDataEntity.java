@@ -2,7 +2,6 @@ package com.beyt.anouncy.user.dto.general;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 
 public class ResponseDataEntity<T> extends ResponseEntity<DataResult<T>> {
@@ -27,8 +26,8 @@ public class ResponseDataEntity<T> extends ResponseEntity<DataResult<T>> {
         super(new DataResult<>(body), headers, rawStatus);
     }
 
-    public static <T> ResponseEntity<T> ok(@Nullable T body) {
-        return ok().body(new DataResult<T>(body));
-    }
+//    public static <T> ResponseEntity<T> ok(@Nullable T body) {
+//        return ok().body(new DataResult<T>(body));
+//    }
 
 }
