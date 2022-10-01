@@ -1,6 +1,7 @@
 package com.beyt.anouncy.user.controller;
 
 import com.beyt.anouncy.user.dto.general.ApiErrorDTO;
+import com.beyt.anouncy.user.exception.ClientAuthorizationException;
 import com.beyt.anouncy.user.exception.ClientErrorException;
 import com.beyt.anouncy.user.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,17 @@ import java.util.stream.Collectors;
 public class AnouncyControllerAdvice {
     @Autowired
     private MessageService messageService;
+
+    @ExceptionHandler(ClientAuthorizationException.class)
+    public ResponseEntity<ApiErrorDTO> handleClientAuthorizationException(ClientAuthorizationException exception) {
+        String errorMessages = exception.getErrorMessageKeyList()
+                .stream()
+                .map(errorCode -> messageService.getMessage(errorCode))
+                .collect(Collectors.joining("\n"));
+
+        return new ResponseEntity<>(new ApiErrorDTO(errorMessages, String.join("\n", exception.getErrorMessageKeyList()), HttpStatus.BAD_REQUEST.value() + ""), HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(ClientErrorException.class)
     public ResponseEntity<ApiErrorDTO> handleClientErrorException(ClientErrorException exception) {
