@@ -39,7 +39,7 @@ public class ConfigurationService implements ApplicationRunner {
     }
 
 
-    private void fetchAllConfigurations() {
+    public void fetchAllConfigurations() {
         configurationMap = configurationRepository.findAll().stream().collect(Collectors.toMap(Configuration::getKey, Configuration::getValue));
     }
 }

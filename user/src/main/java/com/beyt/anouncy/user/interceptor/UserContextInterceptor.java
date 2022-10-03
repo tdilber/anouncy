@@ -1,6 +1,7 @@
 package com.beyt.anouncy.user.interceptor;
 
 import com.beyt.anouncy.user.context.UserContext;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -20,8 +21,14 @@ public class UserContextInterceptor implements HandlerInterceptor {
         String userId = request.getHeader("USER-ID");
         String anonymousUserId = request.getHeader("ANONYMOUS-USER-ID");
 
-        userContext.setUserId(UUID.fromString(userId));
-        userContext.setAnonymousUserId(UUID.fromString(anonymousUserId));
+        if (Strings.isNotBlank(userId)) {
+            userContext.setUserId(UUID.fromString(userId));
+        }
+
+        if (Strings.isNotBlank(anonymousUserId)) {
+            userContext.setAnonymousUserId(UUID.fromString(anonymousUserId));
+        }
+
         return true;
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class HashHelper {
     private final ConfigurationService configurationService;
     private final PasswordEncoder bCryptPasswordEncoder;
-    private final PasswordEncoder sCryptPasswordEncoder;
     private final Environment environment;
 
     public boolean check(HashType type, String password, String exitingHash) {
@@ -25,7 +24,7 @@ public class HashHelper {
             throw new IllegalStateException();
         }
 
-        return getEncoder(propertySalt, configSalt).matches(salted(propertySalt, configSalt, password), exitingHash);
+        return getEncoder().matches(salted(propertySalt, configSalt, password), exitingHash);
     }
 
     public String hash(HashType type, String password) {
@@ -36,17 +35,15 @@ public class HashHelper {
             throw new IllegalStateException();
         }
 
-        return getEncoder(propertySalt, configSalt).encode(salted(propertySalt, configSalt, password));
+        return getEncoder().encode(salted(propertySalt, configSalt, password));
     }
 
     private String salted(String propertySalt, String configSalt, String password) {
         return new StringBuilder().append(propertySalt).append(password).append(configSalt).toString();
     }
 
-    private PasswordEncoder getEncoder(String propertySalt, String configSalt) {
-        int value1 = propertySalt.charAt(0);
-        int value2 = configSalt.charAt(0);
-        return (value1 + value2) % 2 == 1 ? bCryptPasswordEncoder : sCryptPasswordEncoder;
+    private PasswordEncoder getEncoder() {
+        return bCryptPasswordEncoder;
     }
 
     public enum HashType {

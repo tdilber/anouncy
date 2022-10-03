@@ -15,10 +15,10 @@ import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseUuidEntity {
     public static final String LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$";
 
@@ -59,8 +59,8 @@ public class User extends BaseUuidEntity {
     @Column(name = "image_url", length = 256)
     private String imageUrl;
 
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
+    @Size(max = 100)
+    @Column(name = "activation_key", length = 100)
     @JsonIgnore
     private String activationKey;
 

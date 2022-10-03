@@ -46,7 +46,7 @@ management:
 
 anouncy:
   jwtToken:
-    secret: asdasdwqeqdaasdasdasdasdasdasdasdasdasdlmaslkdmalskdmalksdmalksmdlamksdlkads
+    secret: asdasdwqeqdaasdasdasdasdasdasdasdasdasdlmaslkdmalskdmalksdmalksmdlamksdlkadsasdasdasdasdasdasdasdasdweqweasdadqweqwe
   password:
     salt:
       user: ASDsdasd

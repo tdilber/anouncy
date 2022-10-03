@@ -5,7 +5,7 @@ import com.beyt.anouncy.user.context.UserContext;
 import com.beyt.anouncy.user.dto.UserJwtModel;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
 import com.beyt.anouncy.user.dto.UserSignOutDTO;
-import com.beyt.anouncy.user.dto.UserUpdateDTO;
+import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.entity.AnonymousUser;
 import com.beyt.anouncy.user.entity.User;
 import com.beyt.anouncy.user.exception.ClientErrorException;
@@ -70,7 +70,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserJwtResponse signUp(UserUpdateDTO dto, String password) {
+    public UserJwtResponse signUp(UserSignUpDTO dto) {
         userRepository
                 .findByUsername(dto.getUsername().toLowerCase())
                 .ifPresent(
@@ -92,7 +92,7 @@ public class UserService {
                         }
                 );
         User newUser = new User();
-        String encryptedPassword = hashHelper.hash(HashHelper.HashType.USER, password);
+        String encryptedPassword = hashHelper.hash(HashHelper.HashType.USER, dto.getPassword());
         newUser.setUsername(dto.getUsername().toLowerCase());
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
@@ -111,7 +111,7 @@ public class UserService {
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
 
-        String hashForAnonymousUser = hashHelper.hash(HashHelper.HashType.ANONYMOUS_USER, password);
+        String hashForAnonymousUser = hashHelper.hash(HashHelper.HashType.ANONYMOUS_USER, dto.getPassword() + "_" + newUser.getId()); // Because when 2 member use same password then it will not be conflicted
         AnonymousUser anonymousUser = new AnonymousUser(hashForAnonymousUser);
         anonymousUserRepository.save(anonymousUser);
 
