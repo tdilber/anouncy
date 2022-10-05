@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Slf4j
 @Aspect
 @Component
-@Slf4j
 public class NeedLoginAspect {
 
     @Autowired

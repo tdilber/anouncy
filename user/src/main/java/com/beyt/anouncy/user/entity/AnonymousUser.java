@@ -20,7 +20,7 @@ public class AnonymousUser extends BaseUuidEntity {
 
     @JsonIgnore
     @NotNull
-    @Size(min = 60, max = 60)
-    @Column(name = "password_hash", length = 60, nullable = false)
+    @Size(min = 60, max = 250)
+    @Column(name = "password_hash", length = 250, nullable = false)
     private String password;
 }

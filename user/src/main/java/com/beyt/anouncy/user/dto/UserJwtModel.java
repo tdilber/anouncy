@@ -1,6 +1,7 @@
 package com.beyt.anouncy.user.dto;
 
 import com.beyt.anouncy.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class UserJwtModel implements Serializable {
         this.createAt = new Date();
     }
 
+    @JsonIgnore
     public String getFullName() {
         return name + " " + surname;
     }

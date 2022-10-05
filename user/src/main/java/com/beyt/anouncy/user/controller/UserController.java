@@ -2,7 +2,6 @@ package com.beyt.anouncy.user.controller;
 
 import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
-import com.beyt.anouncy.user.dto.UserSignOutDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
 @Slf4j
 @RestController
@@ -21,28 +20,34 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody @Valid UserSignInDTO dto) {
-        userService.signIn(dto);
-        return ResponseEntity.ok(true);
-    }
-
     @PostMapping("/sign-up")
     public ResponseEntity<UserService.UserJwtResponse> signUp(@RequestBody @Valid UserSignUpDTO dto) {
         UserService.UserJwtResponse userJwtResponse = userService.signUp(dto);
         return ResponseEntity.ok(userJwtResponse);
     }
 
+    @GetMapping("/activate/{activationCode}")
+    public ResponseEntity<Boolean> activateAccount(@PathVariable @NotBlank String activationCode) {
+        userService.activateAccount(activationCode);
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<UserService.UserJwtResponse> signIn(@RequestBody @Valid UserSignInDTO dto) {
+        UserService.UserJwtResponse userJwtResponse = userService.signIn(dto);
+        return ResponseEntity.ok(userJwtResponse);
+    }
+
     @PostMapping("/sign-out")
-    public ResponseEntity<?> signOut(@RequestBody @Valid UserSignOutDTO dto) {
-        userService.signOut(dto);
+    public ResponseEntity<Boolean> signOut(@RequestHeader("Authorization") String token) {
+        userService.signOut(token);
         return ResponseEntity.ok(true);
     }
 
     @GetMapping("/token-resolver/{token}")
-    public ResponseEntity<UserResolveResultDTO> tokenResolver(@PathVariable String token) {
-        log.info("Token Received : {}", token);
-        return ResponseEntity.ok(new UserResolveResultDTO(UUID.randomUUID().toString(), UUID.randomUUID().toString()));
+    public ResponseEntity<UserResolveResultDTO> tokenResolver(@PathVariable @NotBlank String token) {
+        UserResolveResultDTO dto = userService.resolveToken(token);
+        return ResponseEntity.ok(dto);
     }
 }
 

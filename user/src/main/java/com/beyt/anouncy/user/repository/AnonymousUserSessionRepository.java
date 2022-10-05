@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface AnonymousUserSessionRepository extends CrudRepository<AnonymousUserSession, String> {
     Optional<AnonymousUserSession> findBySessionHash(String sessionHash);
 
+    void deleteBySessionHash(String hash);
 }

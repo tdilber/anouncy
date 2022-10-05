@@ -19,24 +19,35 @@ public class JwtTokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
 
-    private final Key key;
+    private final ConfigurationService configurationService;
 
-    private final JwtParser jwtParser;
+    private final AnouncyApplicationProperties applicationProperties;
+
+    private Key key;
+
+    private JwtParser jwtParser;
 
     private final long tokenValidityInMilliseconds;
 
     private final long tokenValidityInMillisecondsForRememberMe;
+
     private final ObjectMapper objectMapper;
 
     public JwtTokenProvider(ConfigurationService configurationService, AnouncyApplicationProperties applicationProperties) {
-        byte[] keyBytes;
+        this.configurationService = configurationService;
+        this.applicationProperties = applicationProperties;
         objectMapper = new ObjectMapper();
+        this.tokenValidityInMilliseconds = 3_600_000; // One Hour
+        this.tokenValidityInMillisecondsForRememberMe = 31_556_926_000L;
+        init();
+    }
+
+    public synchronized void init() {
+        byte[] keyBytes;
         String secret = configurationService.get("anouncy.jwtToken.secret") + applicationProperties.getJwtToken().getSecret();
         keyBytes = Decoders.BASE64.decode(secret);
         key = Keys.hmacShaKeyFor(keyBytes);
         jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-        this.tokenValidityInMilliseconds = 3_600_000; // One Hour
-        this.tokenValidityInMillisecondsForRememberMe = 31_556_926_000L; // One Year
     }
 
     @SneakyThrows

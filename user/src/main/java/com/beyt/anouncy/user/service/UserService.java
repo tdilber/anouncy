@@ -3,8 +3,8 @@ package com.beyt.anouncy.user.service;
 import com.beyt.anouncy.user.aspect.NeedLogin;
 import com.beyt.anouncy.user.context.UserContext;
 import com.beyt.anouncy.user.dto.UserJwtModel;
+import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
-import com.beyt.anouncy.user.dto.UserSignOutDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.entity.AnonymousUser;
 import com.beyt.anouncy.user.entity.User;
@@ -55,7 +55,7 @@ public class UserService {
             throw new ClientErrorException("user.password.not.correct");
         }
 
-        String hash = hashHelper.hash(HashHelper.HashType.ANONYMOUS_USER, dto.getPassword());
+        String hash = hashHelper.hash(HashHelper.HashType.ANONYMOUS_USER, dto.getPassword() + "_" + user.getId());
         Optional<AnonymousUser> anonymousUserOpt = anonymousUserRepository.findByPassword(hash);
 
         AnonymousUser anonymousUser = anonymousUserOpt.orElseThrow(IllegalStateException::new);
@@ -118,13 +118,30 @@ public class UserService {
         return createUserJwtResponse(newUser, anonymousUser);
     }
 
-    @NeedLogin
-    public void signOut(UserSignOutDTO dto) {
-//        userSessionService.deleteSession() TODO
-
+    public UserResolveResultDTO resolveToken(String token) {
+        try {
+            UserJwtModel model = jwtTokenProvider.getAuthentication(token);
+            UUID anonymousUserId = userSessionService.findAnonymousUserIdToSessionId(model.getUserSessionId());
+            return new UserResolveResultDTO(model.getUserId(), anonymousUserId);
+        } catch (Exception e) {
+            throw new ClientErrorException("");
+        }
     }
 
-    public Optional<User> activateRegistration(String key) {
+    @NeedLogin
+    public void signOut(String token) {
+        UserJwtModel model = jwtTokenProvider.getAuthentication(token);
+        userSessionService.deleteSession(model.getUserSessionId());
+    }
+
+    @Transactional
+    public void activateAccount(String activationCode) {
+        Optional<User> userOpt = activateRegistration(activationCode);
+        User user = userOpt.orElseThrow(() -> new ClientErrorException("user.not.found"));
+        userRepository.save(user);
+    }
+
+    private Optional<User> activateRegistration(String key) {
         return userRepository
                 .findOneByActivationKey(key)
                 .map(

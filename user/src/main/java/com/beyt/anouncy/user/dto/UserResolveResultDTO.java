@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResolveResultDTO {
-    private String userId;
-    private String anonymousUserId;
+    private UUID userId;
+    private UUID anonymousUserId;
 }
