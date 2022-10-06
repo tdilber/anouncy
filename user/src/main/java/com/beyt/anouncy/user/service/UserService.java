@@ -8,6 +8,7 @@ import com.beyt.anouncy.user.dto.UserSignInDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.entity.AnonymousUser;
 import com.beyt.anouncy.user.entity.User;
+import com.beyt.anouncy.user.exception.ClientAuthorizationException;
 import com.beyt.anouncy.user.exception.ClientErrorException;
 import com.beyt.anouncy.user.helper.HashHelper;
 import com.beyt.anouncy.user.repository.AnonymousUserRepository;
@@ -51,6 +52,10 @@ public class UserService {
         }
 
         User user = userOpt.get();
+        if (!user.isActivated()) {
+            throw new ClientErrorException("user.not.activated");
+        }
+
         if (!hashHelper.check(HashHelper.HashType.USER, dto.getPassword(), user.getPassword())) {
             throw new ClientErrorException("user.password.not.correct");
         }
@@ -70,14 +75,14 @@ public class UserService {
     }
 
     @Transactional
-    public UserJwtResponse signUp(UserSignUpDTO dto) {
+    public void signUp(UserSignUpDTO dto) {
         userRepository
                 .findByUsername(dto.getUsername().toLowerCase())
                 .ifPresent(
                         existingUser -> {
                             boolean removed = removeNonActivatedUser(existingUser);
                             if (!removed) {
-                                throw new ClientErrorException("");
+                                throw new ClientErrorException("user.username.already.used");
                             }
                         }
                 );
@@ -87,7 +92,7 @@ public class UserService {
                         existingUser -> {
                             boolean removed = removeNonActivatedUser(existingUser);
                             if (!removed) {
-                                throw new ClientErrorException("");
+                                throw new ClientErrorException("user.email.already.used");
                             }
                         }
                 );
@@ -114,23 +119,21 @@ public class UserService {
         String hashForAnonymousUser = hashHelper.hash(HashHelper.HashType.ANONYMOUS_USER, dto.getPassword() + "_" + newUser.getId()); // Because when 2 member use same password then it will not be conflicted
         AnonymousUser anonymousUser = new AnonymousUser(hashForAnonymousUser);
         anonymousUserRepository.save(anonymousUser);
-
-        return createUserJwtResponse(newUser, anonymousUser);
     }
 
     public UserResolveResultDTO resolveToken(String token) {
         try {
-            UserJwtModel model = jwtTokenProvider.getAuthentication(token);
+            UserJwtModel model = jwtTokenProvider.getTokenModel(token);
             UUID anonymousUserId = userSessionService.findAnonymousUserIdToSessionId(model.getUserSessionId());
             return new UserResolveResultDTO(model.getUserId(), anonymousUserId);
         } catch (Exception e) {
-            throw new ClientErrorException("");
+            throw new ClientAuthorizationException();
         }
     }
 
     @NeedLogin
     public void signOut(String token) {
-        UserJwtModel model = jwtTokenProvider.getAuthentication(token);
+        UserJwtModel model = jwtTokenProvider.getTokenModel(token);
         userSessionService.deleteSession(model.getUserSessionId());
     }
 

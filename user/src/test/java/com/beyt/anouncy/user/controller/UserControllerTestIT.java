@@ -63,14 +63,15 @@ class UserControllerTestIT {
     }
 
     @Test
-    void testAll() throws Exception {
-        var userJwtResponse = signUp();
-        signIn();
+    void testAllHappyPath() throws Exception {
+        signUp();
+        activation();
+        var userJwtResponse = signIn();
         var userResolveResultDTO = tokenResolver(userJwtResponse);
         signOut(userResolveResultDTO, userJwtResponse);
     }
 
-    UserService.UserJwtResponse signUp() throws Exception {
+    void signUp() throws Exception {
         UserSignUpDTO validUser = new UserSignUpDTO();
 
         validUser.setUsername(TEST_USER);
@@ -87,11 +88,22 @@ class UserControllerTestIT {
                         .content(TestUtil.convertObjectToJsonBytes(validUser)))
                 .andExpect(status().isOk()).andReturn();
 
-        UserService.UserJwtResponse resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), UserService.UserJwtResponse.class);
+        Boolean resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), Boolean.class);
 
         assertThat(userRepository.findByUsername(TEST_USER)).isPresent();
-        assertThat(resultValue.getToken()).isNotBlank();
-        return resultValue;
+        assertThat(resultValue).isTrue();
+    }
+
+    void activation() throws Exception {
+        Optional<User> userOptional = userRepository.findByUsername(TEST_USER);
+        assertThat(userOptional).isPresent();
+
+        MvcResult mvcResult = mockMvc
+                .perform(get("/user/activate/" + userOptional.get().getActivationKey()))
+                .andExpect(status().isOk()).andReturn();
+
+        Boolean resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), Boolean.class);
+        assertThat(resultValue).isTrue();
     }
 
 

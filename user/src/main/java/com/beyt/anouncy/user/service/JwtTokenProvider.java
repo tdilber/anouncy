@@ -17,7 +17,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private static final String AUTHORITIES_KEY = "auth";
+    private static final String TOKEN_MODEL = "model";
 
     private final ConfigurationService configurationService;
 
@@ -67,17 +67,17 @@ public class JwtTokenProvider {
         return Jwts
                 .builder()
                 .setSubject(userModel.getUsername())
-                .claim(AUTHORITIES_KEY, userModelStr)
+                .claim(TOKEN_MODEL, userModelStr)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
     }
 
     @SneakyThrows
-    public UserJwtModel getAuthentication(String token) {
+    public UserJwtModel getTokenModel(String token) {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();
 
-        return objectMapper.readValue(claims.get(AUTHORITIES_KEY).toString(), UserJwtModel.class);
+        return objectMapper.readValue(claims.get(TOKEN_MODEL).toString(), UserJwtModel.class);
     }
 
     public boolean validateToken(String authToken) {

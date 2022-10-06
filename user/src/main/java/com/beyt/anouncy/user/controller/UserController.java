@@ -21,9 +21,9 @@ public class UserController {
 
 
     @PostMapping("/sign-up")
-    public ResponseEntity<UserService.UserJwtResponse> signUp(@RequestBody @Valid UserSignUpDTO dto) {
-        UserService.UserJwtResponse userJwtResponse = userService.signUp(dto);
-        return ResponseEntity.ok(userJwtResponse);
+    public ResponseEntity<Boolean> signUp(@RequestBody @Valid UserSignUpDTO dto) {
+        userService.signUp(dto);
+        return ResponseEntity.ok(true);
     }
 
     @GetMapping("/activate/{activationCode}")
