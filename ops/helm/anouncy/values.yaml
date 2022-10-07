@@ -6,7 +6,7 @@ ingress:
 
 user:
   deployment:
-    image: "${ANOUNCY_DOCKER_HOST}/anouncy-user:27EB0D6B-AA94-46B5-83D8-D2EF294992EC"
+    image: "${user_deployment_image}"
     imagePullPolicy: Always
     port: 8080
     replicas: 1
