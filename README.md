@@ -7,6 +7,7 @@ https://anouncy.com
 ![image](https://user-images.githubusercontent.com/10117616/190878365-dbe6a9b1-c64d-48a4-890a-363f7e6d261c.png)
 
 Design Revision:
+https://stackoverflow.com/questions/13672559/saving-data-in-bash
 
 - Replace Mongo to Neo4j (Much fit our technical problem)
 
@@ -19,3 +20,8 @@ New Design Ideas:
 - When we start to develop BlobStorage things we need an Image CDN and a Video CDN. Maybe we will not serve first Video
   CDN because much more challenging.
 - Image CDN can develop with Java on GraalVM or GoLang. We can use WebP Cli program from Google Documents.
+
+Long Term TODOs:
+
+- Load Test
+- Autoscaling pods and autoscale nodes.
