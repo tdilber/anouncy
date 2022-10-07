@@ -9,4 +9,13 @@ https://anouncy.com
 Design Revision:
 
 - Replace Mongo to Neo4j (Much fit our technical problem)
-- Use Elastic Search To seaching announce texts.
+
+New Design Ideas:
+
+- Use Elastic Search To seaching announce texts. Actually we have Elastic Search for logging. We can use also for this
+  dev.
+- We can use Minio Helm Chart for blobStorage. https://artifacthub.io/packages/helm/minio-official/minio (Note: 50 GB
+  Volume Claim enough for test)
+- When we start to develop BlobStorage things we need an Image CDN and a Video CDN. Maybe we will not serve first Video
+  CDN because much more challenging.
+- Image CDN can develop with Java on GraalVM or GoLang. We can use WebP Cli program from Google Documents.

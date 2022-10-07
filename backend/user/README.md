@@ -5,3 +5,5 @@ TODOs:
 - Update User profile Endpoint.
 - Delete User Endpoint.
 - New profile add for prod, test
+- Prometheus integration
+- logback settings
