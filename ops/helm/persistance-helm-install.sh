@@ -1,3 +1,4 @@
+kubectl create namespace persist
 helm install prod-redis -n persist bitnami/redis --version 17.3.1 --values "$ANOUNCY_PROJECT_PATH/ops/helm/redis/values.yaml"
 helm install prod-postgresql -n persist bitnami/postgresql --version 11.9.5 --values "$ANOUNCY_PROJECT_PATH/ops/helm/postgres/values.yaml"
 
