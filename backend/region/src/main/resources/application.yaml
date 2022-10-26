@@ -1,1 +1,19 @@
+org:
+  neo4j:
+    driver:
+      pool:
+        metrics-enabled: true
 
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+  neo4j:
+    pool:
+      metrics-enabled: true
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: fromENV
