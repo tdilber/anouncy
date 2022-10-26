@@ -1,6 +1,6 @@
-package com.beyt.anouncy.user.interceptor;
+package com.beyt.anouncy.common.interceptor;
 
-import com.beyt.anouncy.user.context.UserContext;
+import com.beyt.anouncy.common.context.UserContext;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

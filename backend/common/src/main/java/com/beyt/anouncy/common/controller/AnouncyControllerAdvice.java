@@ -1,4 +1,5 @@
-package com.beyt.anouncy.user.controller;
+package com.beyt.anouncy.common.controller;
+
 
 import com.beyt.anouncy.common.dto.general.ApiErrorDTO;
 import com.beyt.anouncy.common.exception.ClientAuthorizationException;

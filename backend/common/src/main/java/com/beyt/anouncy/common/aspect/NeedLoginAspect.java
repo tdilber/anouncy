@@ -1,7 +1,7 @@
-package com.beyt.anouncy.user.aspect;
+package com.beyt.anouncy.common.aspect;
 
-import com.beyt.anouncy.user.context.UserContext;
-import com.beyt.anouncy.user.exception.ClientAuthorizationException;
+import com.beyt.anouncy.common.context.UserContext;
+import com.beyt.anouncy.common.exception.ClientAuthorizationException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

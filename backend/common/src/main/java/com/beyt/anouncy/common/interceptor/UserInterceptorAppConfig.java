@@ -1,4 +1,4 @@
-package com.beyt.anouncy.user.interceptor;
+package com.beyt.anouncy.common.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

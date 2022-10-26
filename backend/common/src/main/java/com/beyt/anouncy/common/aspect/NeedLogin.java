@@ -1,4 +1,4 @@
-package com.beyt.anouncy.user.aspect;
+package com.beyt.anouncy.common.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

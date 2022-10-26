@@ -1,6 +1,5 @@
-package com.beyt.anouncy.user.config;
+package com.beyt.anouncy.common.config;
 
-import com.beyt.anouncy.user.UserApplication;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +28,7 @@ public class MessageConfig {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename(baseName);
         messageSource.setDefaultEncoding(encoding);
-        messageSource.setBundleClassLoader(UserApplication.class.getClassLoader());
+        messageSource.setBundleClassLoader(MessageConfig.class.getClassLoader());
         messageSource.setAlwaysUseMessageFormat(true);
         return messageSource;
     }

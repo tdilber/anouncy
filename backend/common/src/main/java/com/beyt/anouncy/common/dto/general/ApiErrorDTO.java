@@ -1,4 +1,4 @@
-package com.beyt.anouncy.user.dto.general;
+package com.beyt.anouncy.common.dto.general;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

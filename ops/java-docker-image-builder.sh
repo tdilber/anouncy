@@ -5,6 +5,7 @@ then
    exit 1
 fi
 
+cd "$ANOUNCY_PROJECT_PATH/backend/common/" && mvn clean install package
 cd "$ANOUNCY_PROJECT_PATH/backend/$1/" && mvn clean install package
 
 if [[ "$?" -ne 0 ]] ; then

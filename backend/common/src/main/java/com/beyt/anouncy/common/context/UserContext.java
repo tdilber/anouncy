@@ -1,4 +1,4 @@
-package com.beyt.anouncy.user.context;
+package com.beyt.anouncy.common.context;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;

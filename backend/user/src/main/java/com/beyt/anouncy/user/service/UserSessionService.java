@@ -1,7 +1,7 @@
 package com.beyt.anouncy.user.service;
 
+import com.beyt.anouncy.common.exception.ClientErrorException;
 import com.beyt.anouncy.user.entity.AnonymousUserSession;
-import com.beyt.anouncy.user.exception.ClientErrorException;
 import com.beyt.anouncy.user.helper.HashHelper;
 import com.beyt.anouncy.user.repository.AnonymousUserSessionRepository;
 import lombok.RequiredArgsConstructor;
