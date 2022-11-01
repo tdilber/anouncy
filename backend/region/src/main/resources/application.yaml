@@ -1,3 +1,10 @@
+anouncy:
+  cache:
+    redis:
+      version: 1
+      server: redis://localhost:6379
+      cluster: false
+
 org:
   neo4j:
     driver:
@@ -13,7 +20,8 @@ spring:
   neo4j:
     pool:
       metrics-enabled: true
-    uri: bolt://localhost:7687
     authentication:
       username: neo4j
       password: fromENV
+    uri: bolt://localhost:7687
+
