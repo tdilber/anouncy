@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
@@ -70,6 +71,7 @@ public class RedisConfiguration {
         return createCacheManager(redissonClient, 10);
     }
 
+    @Primary
     @Bean("redis1HourCM")
     CacheManager redis1HourCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 60);
