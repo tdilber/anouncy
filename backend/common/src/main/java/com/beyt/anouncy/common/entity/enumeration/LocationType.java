@@ -1,4 +1,4 @@
-package com.beyt.anouncy.location.enumeration;
+package com.beyt.anouncy.common.entity.enumeration;
 
 /**
  * Created by tdilber at 02-Dec-18
