@@ -25,7 +25,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signUp(@RequestBody @Valid UserSignUpDTO dto) {
         userService.signUp(dto);
-        return ResponseEntity.ok("OK");
+        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
 
     @GetMapping("/activate/{activationCode}")

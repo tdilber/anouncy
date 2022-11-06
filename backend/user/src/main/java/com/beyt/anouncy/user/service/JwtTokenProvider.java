@@ -1,7 +1,7 @@
 package com.beyt.anouncy.user.service;
 
+import com.beyt.anouncy.common.model.UserJwtModel;
 import com.beyt.anouncy.user.config.AnouncyApplicationProperties;
-import com.beyt.anouncy.user.dto.UserJwtModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -27,9 +27,7 @@ public class JwtTokenProvider {
 
     private JwtParser jwtParser;
 
-    private final long tokenValidityInMilliseconds;
-
-    private final long tokenValidityInMillisecondsForRememberMe;
+    private final long tokenValidityOneYear;
 
     private final ObjectMapper objectMapper;
 
@@ -37,8 +35,7 @@ public class JwtTokenProvider {
         this.configurationService = configurationService;
         this.applicationProperties = applicationProperties;
         objectMapper = new ObjectMapper();
-        this.tokenValidityInMilliseconds = 3_600_000; // One Hour
-        this.tokenValidityInMillisecondsForRememberMe = 31_556_926_000L;
+        this.tokenValidityOneYear = 31_556_926_000L;
         init();
     }
 
@@ -51,18 +48,13 @@ public class JwtTokenProvider {
     }
 
     @SneakyThrows
-    public String createToken(UserJwtModel userModel, boolean rememberMe) {
+    public String createToken(UserJwtModel userModel) {
 
         long now = (new Date()).getTime();
 
         String userModelStr = objectMapper.writeValueAsString(userModel);
 
-        Date validity;
-        if (rememberMe) {
-            validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
-        } else {
-            validity = new Date(now + this.tokenValidityInMilliseconds);
-        }
+        Date validity = new Date(now + this.tokenValidityOneYear);
 
         return Jwts
                 .builder()

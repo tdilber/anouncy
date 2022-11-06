@@ -1,5 +1,6 @@
 package com.beyt.anouncy.user.controller;
 
+import com.beyt.anouncy.common.model.UserJwtModel;
 import com.beyt.anouncy.user.TestUtil;
 import com.beyt.anouncy.user.UserApplication;
 import com.beyt.anouncy.user.dto.UserResolveResultDTO;
@@ -12,6 +13,7 @@ import com.beyt.anouncy.user.repository.UserRepository;
 import com.beyt.anouncy.user.service.ConfigurationService;
 import com.beyt.anouncy.user.service.JwtTokenProvider;
 import com.beyt.anouncy.user.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +24,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -86,12 +91,12 @@ class UserControllerTestIT {
         MvcResult mvcResult = mockMvc
                 .perform(post("/user/sign-up").contentType(MediaType.APPLICATION_JSON)
                         .content(TestUtil.convertObjectToJsonBytes(validUser)))
-                .andExpect(status().isOk()).andReturn();
+                .andExpect(status().isCreated()).andReturn();
 
-        Boolean resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), Boolean.class);
+        String resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), String.class);
 
         assertThat(userRepository.findByUsername(TEST_USER)).isPresent();
-        assertThat(resultValue).isTrue();
+        assertThat(resultValue).isEqualTo("OK");
     }
 
     void activation() throws Exception {
@@ -102,8 +107,8 @@ class UserControllerTestIT {
                 .perform(get("/user/activate/" + userOptional.get().getActivationKey()))
                 .andExpect(status().isOk()).andReturn();
 
-        Boolean resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), Boolean.class);
-        assertThat(resultValue).isTrue();
+        String resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), String.class);
+        assertThat(resultValue).isEqualTo("OK");
     }
 
 
@@ -140,15 +145,18 @@ class UserControllerTestIT {
     }
 
     void signOut(UserResolveResultDTO dto, UserService.UserJwtResponse jwtResponse) throws Exception {
+        UserJwtModel tokenModel = jwtTokenProvider.getTokenModel(jwtResponse.getToken());
         MvcResult mvcResult = mockMvc
                 .perform(post("/user/sign-out")
                         .header("Authorization", jwtResponse.getToken())
+                        .header("REQUEST-ID", UUID.randomUUID().toString())
                         .header("USER-ID", dto.getUserId())
-                        .header("ANONYMOUS-USER-ID", dto.getAnonymousUserId()))
+                        .header("ANONYMOUS-USER-ID", dto.getAnonymousUserId())
+                        .header("JWT-MODEL", Base64.getEncoder().encodeToString(new ObjectMapper().writeValueAsString(tokenModel).getBytes(StandardCharsets.UTF_8))))
                 .andExpect(status().isOk()).andReturn();
 
-        Boolean resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), Boolean.class);
+        String resultValue = TestUtil.getResultValue(mvcResult.getResponse().getContentAsString(), String.class);
 
-        assertThat(resultValue).isTrue();
+        assertThat(resultValue).isEqualTo("OK");
     }
 }

@@ -4,7 +4,7 @@ import com.beyt.anouncy.common.aspect.NeedLogin;
 import com.beyt.anouncy.common.context.UserContext;
 import com.beyt.anouncy.common.exception.ClientAuthorizationException;
 import com.beyt.anouncy.common.exception.ClientErrorException;
-import com.beyt.anouncy.user.dto.UserJwtModel;
+import com.beyt.anouncy.common.model.UserJwtModel;
 import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
@@ -65,13 +65,13 @@ public class UserService {
 
         AnonymousUser anonymousUser = anonymousUserOpt.orElseThrow(IllegalStateException::new);
 
-        return createUserJwtResponse(user, anonymousUser);
+        return createUserJwtResponse(user, anonymousUser.getId());
     }
 
-    private UserJwtResponse createUserJwtResponse(User user, AnonymousUser anonymousUser) {
-        String newSessionId = userSessionService.createNewSession(anonymousUser.getId());
-        UserJwtModel userJwtModel = new UserJwtModel(user, newSessionId);
-        return new UserJwtResponse(jwtTokenProvider.createToken(userJwtModel, true));
+    private UserJwtResponse createUserJwtResponse(User user, UUID anonymousUserId) {
+        String newSessionId = userSessionService.createNewSession(anonymousUserId);
+        UserJwtModel userJwtModel = user.createJwtModel(newSessionId);
+        return new UserJwtResponse(jwtTokenProvider.createToken(userJwtModel));
     }
 
     @Transactional
@@ -121,14 +121,27 @@ public class UserService {
         anonymousUserRepository.save(anonymousUser);
     }
 
+    @Transactional
     public UserResolveResultDTO resolveToken(String token) {
         try {
             UserJwtModel model = jwtTokenProvider.getTokenModel(token);
             UUID anonymousUserId = userSessionService.findAnonymousUserIdToSessionId(model.getUserSessionId());
-            return new UserResolveResultDTO(model.getUserId(), anonymousUserId);
+            String newToken = null;
+            if (model.isExpired(3600)) { // one hour
+                newToken = refreshSessionAndToken(model, anonymousUserId);
+            }
+            return new UserResolveResultDTO(model.getUserId(), anonymousUserId, newToken);
         } catch (Exception e) {
-            throw new ClientAuthorizationException();
+            throw new ClientAuthorizationException("need.reauthorization", e);
         }
+    }
+
+    private String refreshSessionAndToken(UserJwtModel model, UUID anonymousUserId) {
+        userSessionService.deleteSession(model.getUserSessionId());
+        Optional<User> userOptional = userRepository.findById(model.getUserId());
+        User user = userOptional.orElseThrow(() -> new ClientAuthorizationException("need.reauthorization", new Exception()));
+        UserJwtResponse userJwtResponse = createUserJwtResponse(user, anonymousUserId);
+        return userJwtResponse.getToken();
     }
 
     @NeedLogin
