@@ -1,7 +1,7 @@
 package com.beyt.anouncy.location.dto;
 
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.entity.Location;
-import com.beyt.anouncy.location.enumeration.LocationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

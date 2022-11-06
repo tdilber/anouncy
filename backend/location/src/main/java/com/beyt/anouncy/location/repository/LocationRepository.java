@@ -18,4 +18,6 @@ public interface LocationRepository extends MongoRepository<Location, Long> {
     List<Location> findAllByPointIntersect(Double latitude, Double longitude);
 
     List<Location> findAllByIdIsIn(List<Long> idList);
+
+    List<Location> findAllByParentLocationIdIsIn(List<Long> parentIdList);
 }

@@ -1,9 +1,9 @@
 package com.beyt.anouncy.location.service;
 
+import com.beyt.anouncy.common.entity.enumeration.LocationStatus;
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.dto.LocationDTO;
 import com.beyt.anouncy.location.entity.Location;
-import com.beyt.anouncy.location.enumeration.LocationStatus;
-import com.beyt.anouncy.location.enumeration.LocationType;
 import com.beyt.anouncy.location.model.GeoJsonItem;
 import com.beyt.anouncy.location.repository.LocationRepository;
 import lombok.SneakyThrows;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  * Created by tdilber at 08-Sep-19
  */
 @Slf4j
-@Component
+@Service
 public class LocationService {
     @Value("${anouncy.location.google.key}")
     private String locationGoogleKey;
@@ -55,8 +55,9 @@ public class LocationService {
         jdbcTemplate.setDataSource(dataSource);
     }
 
-    public LocationDTO locationQuery(double latitude, double longitude) {
-        return new LocationDTO();
+    public LocationDTO findAllByParentId(Long parentId) {
+        List<Location> locationList = locationRepository.findAllByParentLocationIdIsIn(List.of(parentId));
+        return new LocationDTO(locationList);
     }
 
     @SneakyThrows
@@ -71,7 +72,7 @@ public class LocationService {
     }
 
     private void fillGeometryTurkey(List<Location> locationList) throws IOException {
-        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/gadm41_TUR_0.json"), StandardCharsets.UTF_8));
+        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/geo-data/gadm41_TUR_0.json"), StandardCharsets.UTF_8));
 
         JSONArray features = locationJsonArray.getJSONArray("features");
         Location country = locationList.stream().filter(l -> slugify(l.getName()).equalsIgnoreCase(slugify("Türkiye"))).findFirst().orElse(null);
@@ -97,7 +98,7 @@ public class LocationService {
     }
 
     private void fillGeometryCity(List<Location> locationList) throws IOException {
-        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/gadm41_TUR_1.json"), StandardCharsets.UTF_8));
+        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/geo-data/gadm41_TUR_1.json"), StandardCharsets.UTF_8));
 
         JSONArray features = locationJsonArray.getJSONArray("features");
         for (int i = 0; i < features.length(); i++) {
@@ -115,7 +116,7 @@ public class LocationService {
     }
 
     private void fillGeometryDistinct(List<Location> locationList) throws IOException {
-        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/gadm41_TUR_2.json"), StandardCharsets.UTF_8));
+        JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/geo-data/gadm41_TUR_2.json"), StandardCharsets.UTF_8));
 
         JSONArray features = locationJsonArray.getJSONArray("features");
         for (int i = 0; i < features.length(); i++) {

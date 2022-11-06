@@ -1,7 +1,7 @@
 package com.beyt.anouncy.location.entity;
 
-import com.beyt.anouncy.location.enumeration.LocationStatus;
-import com.beyt.anouncy.location.enumeration.LocationType;
+import com.beyt.anouncy.common.entity.enumeration.LocationStatus;
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.model.GeoJsonItem;
 import lombok.*;
 import org.apache.logging.log4j.util.Strings;

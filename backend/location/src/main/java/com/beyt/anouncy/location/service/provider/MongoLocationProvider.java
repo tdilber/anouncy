@@ -1,7 +1,7 @@
 package com.beyt.anouncy.location.service.provider;
 
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.entity.Location;
-import com.beyt.anouncy.location.enumeration.LocationType;
 import com.beyt.anouncy.location.repository.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
