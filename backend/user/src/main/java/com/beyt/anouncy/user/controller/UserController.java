@@ -6,6 +6,7 @@ import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +22,16 @@ public class UserController {
 
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Boolean> signUp(@RequestBody @Valid UserSignUpDTO dto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> signUp(@RequestBody @Valid UserSignUpDTO dto) {
         userService.signUp(dto);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok("OK");
     }
 
     @GetMapping("/activate/{activationCode}")
-    public ResponseEntity<Boolean> activateAccount(@PathVariable @NotBlank String activationCode) {
+    public ResponseEntity<String> activateAccount(@PathVariable @NotBlank String activationCode) {
         userService.activateAccount(activationCode);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok("OK");
     }
 
     @PostMapping("/sign-in")
@@ -39,9 +41,9 @@ public class UserController {
     }
 
     @PostMapping("/sign-out")
-    public ResponseEntity<Boolean> signOut(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> signOut(@RequestHeader("Authorization") String token) {
         userService.signOut(token);
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok("OK");
     }
 
     @GetMapping("/token-resolver/{token}")
