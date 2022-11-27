@@ -12,5 +12,4 @@ import java.util.UUID;
 public interface AnnounceRepository extends Neo4jRepository<Announce, String> {
 
     List<Announce> findAllByAnonymousUserId(UUID anonymousUserId, Pageable pageable);
-
 }

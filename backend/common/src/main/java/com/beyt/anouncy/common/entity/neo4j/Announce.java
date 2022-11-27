@@ -9,7 +9,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.Date;
 
 @Node
 @Data
@@ -21,14 +21,20 @@ public class Announce implements Serializable {
     private String id;
 
     @NotNull
-    @Property("anonymous_user_id")
-    private UUID anonymousUserId;
-
-    @NotNull
     @Property("body")
     private String body;
 
-    @Relationship(value = "HAS_REGION", direction = Relationship.Direction.INCOMING)
-    @JsonIgnoreProperties(value = {"region"}, allowSetters = true)
-    private Region region;
+    @Relationship(value = "OWN_USER", direction = Relationship.Direction.INCOMING)
+    @JsonIgnoreProperties(value = {"user"}, allowSetters = true)
+    private AnonymousUser anonymousUser;
+
+    @Relationship(value = "HAS_BEGIN_REGION", direction = Relationship.Direction.INCOMING)
+    private Region beginRegion;
+
+    @Relationship(value = "HAS_CURRENT_REGION", direction = Relationship.Direction.INCOMING)
+    private Region currentRegion;
+
+    @NotNull
+    @Property("create_date")
+    private Date createDate;
 }

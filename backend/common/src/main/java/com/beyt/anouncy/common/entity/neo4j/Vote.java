@@ -9,26 +9,33 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.Date;
 
 @Node
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rate implements Serializable {
+public class Vote implements Serializable {
     @Id
     @GeneratedValue(UUIDStringGenerator.class)
     private String id;
 
     @NotNull
-    @Property("anonymous_user_id")
-    private UUID anonymousUserId;
-
-    @NotNull
     @Property("value")
     private Boolean value;
 
-    @Relationship(value = "HAS_ANNOUNCE", direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "USER_VOTE", direction = Relationship.Direction.INCOMING)
     @JsonIgnoreProperties(value = {"announce"}, allowSetters = true)
     private Announce announce;
+
+    @Relationship(value = "OWN_USER", direction = Relationship.Direction.INCOMING)
+    @JsonIgnoreProperties(value = {"user"}, allowSetters = true)
+    private AnonymousUser anonymousUser;
+
+    @Relationship(value = "VOTED_REGION", direction = Relationship.Direction.INCOMING)
+    private Region region;
+
+    @NotNull
+    @Property("create_date")
+    private Date createDate;
 }

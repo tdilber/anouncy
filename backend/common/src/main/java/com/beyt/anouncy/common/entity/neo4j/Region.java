@@ -48,7 +48,7 @@ public class Region implements Serializable {
     @Property("status")
     private RegionStatus status;
 
-    @Relationship(value = "HAS_REGION", direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "PARENT_REGION", direction = Relationship.Direction.INCOMING)
     @JsonIgnoreProperties(value = {"parentRegion"}, allowSetters = true)
     private Region parentRegion;
 }

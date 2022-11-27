@@ -12,6 +12,8 @@ public interface RegionRepository extends Neo4jRepository<Region, String> {
 
     List<Region> findAllByParentRegionIdIsIn(List<String> parentRegionIdList);
 
+    List<Region> findAllByLocationIdIsIn(List<Long> locationIdList);
+
     Optional<Region> findByLocationId(Long locationId);
 
 }
