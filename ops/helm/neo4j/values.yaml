@@ -1,6 +1,9 @@
 service:
   type: LoadBalancer
 
+name: "neo4j"
+image: "neo4j"
+imageTag: "4.4.15"
 # Use password authentication
 authEnabled: true
 existingPasswordSecret: neo4j-password-secret
