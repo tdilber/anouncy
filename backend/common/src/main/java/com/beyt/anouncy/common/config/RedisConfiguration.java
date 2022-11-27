@@ -1,4 +1,4 @@
-package com.beyt.anouncy.region.config;
+package com.beyt.anouncy.common.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -7,7 +7,6 @@ import org.redisson.config.Config;
 import org.redisson.spring.cache.CacheConfig;
 import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +23,10 @@ public class RedisConfiguration {
     @Value("${anouncy.cache.redis.version:1}")
     private Integer cacheVersion;
 
-    @Value("${anouncy.cache.redis.server}")
+    @Value("${anouncy.cache.redis.server:redis://localhost:6379}")
     private String[] servers;
 
-    @Value("${anouncy.cache.redis.cluster}")
+    @Value("${anouncy.cache.redis.cluster:false}")
     private Boolean isCluster;
 
     @Value("${anouncy.cache.redis.username:none}")
@@ -62,38 +61,38 @@ public class RedisConfiguration {
     }
 
     @Bean("redis1MinCM")
-    CacheManager redis1MinCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis1MinCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 1);
     }
 
     @Bean("redis10MinCM")
-    CacheManager redis10MinCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis10MinCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 10);
     }
 
     @Primary
     @Bean("redis1HourCM")
-    CacheManager redis1HourCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis1HourCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 60);
     }
 
     @Bean("redis3HourCM")
-    CacheManager redis3HourCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis3HourCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 3 * 60);
     }
 
     @Bean("redis6HourCM")
-    CacheManager redis6HourCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis6HourCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 6 * 60);
     }
 
     @Bean("redis12HourCM")
-    CacheManager redis12HourCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis12HourCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 12 * 60);
     }
 
     @Bean("redis1DayCM")
-    CacheManager redis1DayCM(RedissonClient redissonClient) {
+    RedissonSpringCacheManager redis1DayCM(RedissonClient redissonClient) {
         return createCacheManager(redissonClient, 24 * 60);
     }
 
