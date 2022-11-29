@@ -11,7 +11,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VoteSingleCache implements Serializable {
+public class AnnounceVoteDTO implements Serializable {
     private Long yes;
     private Long no;
     private String currentRegionId;
