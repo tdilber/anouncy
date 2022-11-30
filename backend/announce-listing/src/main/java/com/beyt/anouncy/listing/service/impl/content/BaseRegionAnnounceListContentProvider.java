@@ -19,7 +19,7 @@ import java.util.Objects;
 
 
 @RequiredArgsConstructor
-public sealed abstract class BaseRegionAnnounceListContentProvider implements IAnnounceListContentProvider<RegionAnnounceListProviderParam> permits RegionTopRatedAnnounceListContentProvider, RegionTrendingAnnounceListContentProvider {
+public sealed abstract class BaseRegionAnnounceListContentProvider implements IAnnounceListContentProvider<RegionAnnounceListProviderParam> permits RegionTopRatedAnnounceListContentProvider, RegionTrendingAnnounceListContentProvider, RegionNewestAnnounceListContentProvider {
     protected final RedissonClient redissonClient;
     protected final AnnounceRepository announceRepository;
 
