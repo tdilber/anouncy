@@ -3,10 +3,10 @@ package com.beyt.anouncy.listing.dto.enumeration;
 import com.beyt.anouncy.listing.service.base.parameter.BaseAnnounceListProviderParam;
 
 public enum AnnounceListingType {
-    NEW("", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
+    NEW("regionNewestAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
     TOP("regionTopRatedAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
     TRENDING("regionTrendingAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
-    SEARCH("", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class);
+    SEARCH("searchAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class);
 
     private final String contentProviderBean;
     private final String fetchDataLockBean;

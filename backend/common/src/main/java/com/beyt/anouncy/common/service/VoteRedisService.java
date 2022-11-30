@@ -30,9 +30,11 @@ public abstract class VoteRedisService {
     public static final Integer PAGE_SIZE = 10;
     public static final String ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY = "ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY_";
     public static final String ANNOUNCE_REGION_TRENDING_SORTED_SET_KEY = "ANNOUNCE_REGION_TRENDING_SORTED_SET_KEY_";
+    public static final String ANNOUNCE_REGION_NEWEST_LIST_KEY = "ANNOUNCE_REGION_NEWEST_LIST_KEY_";
     public static final String ANNOUNCE_LOCK_KEY = "ANNOUNCE_LOCK_KEY_";
     public static final String ANNOUNCE_SINGLE_VOTE_MAP_PREFIX = "ANNOUNCE_SINGLE_VOTE_MAP_";
     public static final String ANNOUNCE_PAGE_CACHE_MAP = "ANNOUNCE_PAGE_CACHE_MAP";
+    public static final String ANNOUNCE_SEARCH_PAGE_CACHE_MAP = "ANNOUNCE_SEARCH_PAGE_CACHE_MAP";
 
     public void saveVoteYesOrNo(String announceId, String regionId, Boolean yesOrNo) {
         RMap<String, AnnounceVoteDTO> voteMap = redissonClient.getMap(ANNOUNCE_SINGLE_VOTE_MAP_PREFIX + regionId);

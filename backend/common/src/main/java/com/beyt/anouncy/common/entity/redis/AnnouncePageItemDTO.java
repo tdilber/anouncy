@@ -1,5 +1,6 @@
 package com.beyt.anouncy.common.entity.redis;
 
+import com.beyt.anouncy.common.entity.elasticsearch.AnnounceSearchItem;
 import com.beyt.anouncy.common.entity.neo4j.Announce;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,13 @@ public class AnnouncePageItemDTO implements Serializable {
 
     public AnnouncePageItemDTO(Announce announce) {
         this.regionId = announce.getCurrentRegion().getId();
+        this.announceId = announce.getId();
+        this.body = announce.getBody();
+        this.announceCreateDate = announce.getCreateDate();
+    }
+
+    public AnnouncePageItemDTO(AnnounceSearchItem announce) {
+        this.regionId = announce.getBeginRegion().getId(); // TODO think about it
         this.announceId = announce.getId();
         this.body = announce.getBody();
         this.announceCreateDate = announce.getCreateDate();
