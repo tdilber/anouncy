@@ -11,6 +11,22 @@ https://stackoverflow.com/questions/13672559/saving-data-in-bash
 
 - Replace Mongo to Neo4j (Much fit our technical problem)
 
+TODOs:
+
+- Check Cache ttls.
+- Job Create For update Region Change.
+- Write the Logs.
+- Write Tests With test Containers.
+- Create Vote project.
+- Connect to Kafka For votes queue for announce life cycle.
+- Update to Spring Boot 3.
+- Changed to Dockerfile system to native image.
+- Update the traefik custom plugin. we have some missing parts.
+- Migrate to Local communication to gRPC.
+- Check comment TODOs.
+- Write Design Decision Document.
+- Write why do i doing this project. Motivation and purpose.
+
 New Design Ideas:
 
 - Use Elastic Search To seaching announce texts. Actually we have Elastic Search for logging. We can use also for this
