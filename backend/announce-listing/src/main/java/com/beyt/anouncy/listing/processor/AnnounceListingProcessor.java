@@ -1,9 +1,12 @@
-package com.beyt.anouncy.listing.service.base;
+package com.beyt.anouncy.listing.processor;
 
 import com.beyt.anouncy.common.entity.redis.AnnouncePageDTO;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
 import com.beyt.anouncy.listing.dto.enumeration.AnnounceListingType;
+import com.beyt.anouncy.listing.service.base.IAnnounceListContentProvider;
+import com.beyt.anouncy.listing.service.base.IAnnounceListFetchDataLockProvider;
+import com.beyt.anouncy.listing.service.base.IAnnounceListVoteFetch;
 import com.beyt.anouncy.listing.service.base.parameter.BaseAnnounceListProviderParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
