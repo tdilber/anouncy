@@ -20,6 +20,10 @@ public enum AnnounceListingType {
         this.paramClassType = paramClassType;
     }
 
+    public boolean isAvailableForRegionListing() {
+        return this == NEW || this == TOP || this == TRENDING;
+    }
+
     public String getContentProviderBean() {
         return contentProviderBean;
     }

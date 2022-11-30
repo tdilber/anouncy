@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 @RestController
 @RequestMapping("/announce-list")
 @RequiredArgsConstructor
@@ -14,7 +17,7 @@ public class AnnounceListingController {
     private final AnnounceListingService announceListingService;
 
     @GetMapping("/{regionId}/{type}")
-    private ResponseEntity<AnnouncePageDTO> findLocations(@PathVariable String regionId, @PathVariable AnnounceListingType type, @RequestParam Integer page) throws Exception {
+    private ResponseEntity<AnnouncePageDTO> findLocations(@PathVariable String regionId, @PathVariable AnnounceListingType type, @RequestParam @Valid @Min(0) Integer page) throws Exception {
         AnnouncePageDTO dto = announceListingService.list(regionId, type, page);
         return ResponseEntity.ok(dto);
     }

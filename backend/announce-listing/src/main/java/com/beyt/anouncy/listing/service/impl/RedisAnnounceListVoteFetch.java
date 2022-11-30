@@ -6,6 +6,7 @@ import com.beyt.anouncy.common.service.VoteRedisService;
 import com.beyt.anouncy.listing.service.base.IAnnounceListVoteFetch;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,13 @@ public class RedisAnnounceListVoteFetch implements IAnnounceListVoteFetch {
                     List<String> missingAnnounceIdList = announceIdList.stream().filter(a -> !resultMap.containsKey(a)).toList();
 
                     if (CollectionUtils.isNotEmpty(missingAnnounceIdList)) {
-//                        regionIdAnnounceIdSetMap.entrySet().stream().filter(e -> missingAnnounceIdList.stream().anyMatch(e.getValue()))
-//                        neo4jCustomRepository.getVoteCount() TODO
+                        List<Pair<String, String>> regionIdAnnounceIdPairList = regionIdAnnounceIdSetMap.entrySet().stream().filter(e -> CollectionUtils.containsAny(e.getValue(), missingAnnounceIdList))
+                                .flatMap(e -> e.getValue().stream().filter(missingAnnounceIdList::contains).map(v -> Pair.of(e.getKey(), v)))
+                                .toList();
+
+                        regionIdAnnounceIdPairList.forEach(p -> // TODO change foreach To Neo4j Group By multi fetch
+                                neo4jCustomRepository.getVoteCount(p.getLeft(), p.getRight())
+                                        .ifPresent(v -> resultMap.put(p.getRight(), AnnounceVoteDTO.of(v))));
                     }
 
                     return resultMap;

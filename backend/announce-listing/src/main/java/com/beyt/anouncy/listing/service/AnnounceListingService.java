@@ -34,13 +34,21 @@ public class AnnounceListingService {
 
     @Retryable(maxAttempts = 2, value = Exception.class)
     public AnnouncePageDTO list(String regionId, AnnounceListingType type, Integer page) throws Exception {
+        validate(type);
         AnnounceListingProcessor<RegionAnnounceListProviderParam> listingProcessor = getListingProcessor(type);
         AnnouncePageDTO announcePageDTO = listingProcessor.fetchList(RegionAnnounceListProviderParam.of(regionId, page, type));
 
-        if (Objects.nonNull(userContext.getAnonymousUserId())) {
+        if (Objects.nonNull(userContext.getAnonymousUserId())) { // TODO check
             announcePageDTO = populateUserVotes(userContext.getAnonymousUserId(), announcePageDTO);
         }
+
         return announcePageDTO;
+    }
+
+    private void validate(AnnounceListingType type) {
+        if (!type.isAvailableForRegionListing()) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @SuppressWarnings("unchecked")
