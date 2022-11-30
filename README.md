@@ -25,7 +25,8 @@ TODOs:
 - Migrate to Local communication to gRPC.
 - Check comment TODOs.
 - Write Design Decision Document.
-- Write why do i doing this project. Motivation and purpose.
+- Update to Readme Image.
+- Write why do i doing this project. Motivation and purpose. (in Readme)
 
 New Design Ideas:
 
