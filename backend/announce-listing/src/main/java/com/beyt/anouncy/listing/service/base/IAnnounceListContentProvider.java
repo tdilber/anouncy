@@ -20,7 +20,7 @@ public interface IAnnounceListContentProvider<T extends BaseAnnounceListProvider
     @NoArgsConstructor
     @AllArgsConstructor(staticName = "of")
     class Result {
-        List<AnnouncePageItemDTO> existingAnnounceItems;
+        List<AnnouncePageItemDTO> announcePageItems;
         List<AnnouncePageItemDTO> needToVoteFetchAnnounceList;
     }
 }
