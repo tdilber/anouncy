@@ -1,4 +1,4 @@
-package com.beyt.anouncy.listing.service.impl;
+package com.beyt.anouncy.listing.service.impl.order;
 
 import com.beyt.anouncy.common.service.VoteRedisService;
 import com.beyt.anouncy.listing.service.base.IAnnounceListOrderProvider;
@@ -27,6 +27,6 @@ public class RegionTopRatedAnnounceListOrderProvider implements IAnnounceListOrd
     }
 
     private RScoredSortedSet<String> getScoredSortedSet(String regionId) {
-        return redissonClient.getScoredSortedSet(VoteRedisService.ANNOUNCE_REGION_SORTED_SET_KEY + regionId);
+        return redissonClient.getScoredSortedSet(VoteRedisService.ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY + regionId);
     }
 }

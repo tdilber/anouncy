@@ -28,7 +28,8 @@ public abstract class VoteRedisService {
     protected final Neo4jCustomRepository neo4jCustomRepository;
 
     public static final Integer PAGE_SIZE = 10;
-    public static final String ANNOUNCE_REGION_SORTED_SET_KEY = "ANNOUNCE_REGION_SS_KEY_";
+    public static final String ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY = "ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY_";
+    public static final String ANNOUNCE_REGION_TRENDING_SORTED_SET_KEY = "ANNOUNCE_REGION_TRENDING_SORTED_SET_KEY_";
     public static final String ANNOUNCE_LOCK_KEY = "ANNOUNCE_LOCK_KEY_";
     public static final String ANNOUNCE_SINGLE_VOTE_MAP_PREFIX = "ANNOUNCE_SINGLE_VOTE_MAP_";
     public static final String ANNOUNCE_PAGE_CACHE_MAP = "ANNOUNCE_PAGE_CACHE_MAP";
@@ -76,6 +77,6 @@ public abstract class VoteRedisService {
     }
 
     private RScoredSortedSet<String> getScoredSortedSet(String regionId) {
-        return redissonClient.getScoredSortedSet(ANNOUNCE_REGION_SORTED_SET_KEY + regionId);
+        return redissonClient.getScoredSortedSet(ANNOUNCE_REGION_TOP_RATED_SORTED_SET_KEY + regionId);
     }
 }

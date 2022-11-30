@@ -5,7 +5,7 @@ import com.beyt.anouncy.listing.service.base.parameter.BaseAnnounceListProviderP
 public enum AnnounceListingType {
     NEW("", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
     TOP("regionTopRatedAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
-    TRENDING("", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
+    TRENDING("regionTrendingAnnounceListContentProvider", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class),
     SEARCH("", "generalLockAnnounceListFetchDataLockProvider", "redisAnnounceListVoteFetch", BaseAnnounceListProviderParam.class);
 
     private final String contentProviderBean;
