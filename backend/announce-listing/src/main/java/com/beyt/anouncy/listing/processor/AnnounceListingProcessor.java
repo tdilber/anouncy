@@ -99,9 +99,10 @@ public class AnnounceListingProcessor<T extends BaseAnnounceListProviderParam> {
             // This condition wait until lock and get fresh data and this data must be new updated.
             if (lock.isLocked() && lock.tryLock(6, 10, TimeUnit.MILLISECONDS)) { // TODO research how to wait until release.
                 lock.unlockAsync();
+                // Fetch fresh data and return
                 var updatedContentResult = contentProvider.provide(param);
                 announcePageItems = updatedContentResult.getAnnouncePageItems();
-                needToVoteFetchAnnounceList.clear();
+                return new AnnouncePageDTO(announcePageItems);
             } else { // Need Update and Lock Start
                 voteMapAllAsync = voteFetcher.fetchAsync(voteFetchList.stream().collect(Collectors.groupingBy(Pair::getLeft, Collectors.mapping(Pair::getRight, Collectors.toSet()))));
                 isUpdating = true;
