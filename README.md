@@ -13,17 +13,19 @@ https://stackoverflow.com/questions/13672559/saving-data-in-bash
 
 TODOs:
 
-- Check Cache ttls.
-- Job Create For update Region Change.
-- Write the Logs.
-- Write Tests With test Containers.
 - Create Vote project.
-- Connect to Kafka For votes queue for announce life cycle.
 - Update to Spring Boot 3.
 - Changed to Dockerfile system to native image.
+- Write Tests With test Containers.
+- Check Cache ttls.
+- Check comment TODOs.
+- Deploy modules to test env (write helms)
+- Job Create For update Region Change.
+- Write the Logs.
+- Install a swagger supported multi service.
+- Connect to Kafka For votes queue for announce life cycle.
 - Update the traefik custom plugin. we have some missing parts.
 - Migrate to Local communication to gRPC.
-- Check comment TODOs.
 - Write Design Decision Document.
 - Update to Readme Image.
 - Write why do i doing this project. Motivation and purpose. (in Readme)
