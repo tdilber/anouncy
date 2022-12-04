@@ -1,0 +1,44 @@
+server:
+  port: 8082
+
+anouncy:
+  cache:
+    redis:
+      version: 1
+      server: redis://localhost:6379
+      cluster: false
+
+org:
+  neo4j:
+    driver:
+      pool:
+        metrics-enabled: true
+      config:
+        encrypted: true
+
+  level:
+    org.neo4j.ogm.drivers.bolt.request.BoltRequest: debug
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+  elasticsearch:
+    uris: http://localhost:9200
+    password: j6NqYdncJK9T6GHQ
+    username: searcher
+  neo4j:
+    pool:
+      metrics-enabled: true
+    authentication:
+      username: neo4j
+      password: asd123
+    uri: bolt://localhost:7687
+#    authentication:
+#      username: ${ANOUNCY_NEO4J_USERNAME}
+#      password: ${ANOUNCY_NEO4J_PASSWORD}
+#
+#    uri: bolt://${ANOUNCY_TEST_SERVER_IP}:7687
+
