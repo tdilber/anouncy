@@ -20,9 +20,9 @@ public class AnnounceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> receiveAnnounce(@RequestBody @Valid AnnounceCreateDTO dto) {
-        announceService.receiveAnnounce(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+    public ResponseEntity<AnnouncePageItemDTO> receiveAnnounce(@RequestBody @Valid AnnounceCreateDTO dto) {
+        AnnouncePageItemDTO returnDto = announceService.receiveAnnounce(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnDto);
     }
 
     @DeleteMapping("/{announceId}")

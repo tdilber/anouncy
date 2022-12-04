@@ -35,6 +35,20 @@ public class AnnouncePageItemDTO implements Serializable {
         this.announceCreateDate = announce.getCreateDate();
     }
 
+    public static AnnouncePageItemDTO blank(Announce announce) {
+        AnnouncePageItemDTO dto = new AnnouncePageItemDTO();
+        dto.setRegionId(announce.getCurrentRegion().getId());
+        dto.setAnnounceId(announce.getId());
+        dto.setBody(announce.getBody());
+        dto.setAnnounceCreateDate(announce.getCreateDate());
+        dto.setYes(0L);
+        dto.setNo(0L);
+        dto.setRegionOrder(0);
+        dto.setVoteUpdateDate(new Date());
+        dto.setCurrentVote(false);
+        return dto;
+    }
+
     public AnnouncePageItemDTO(AnnounceSearchItem announce) {
         this.regionId = announce.getBeginRegion().getId(); // TODO think about it
         this.announceId = announce.getId();

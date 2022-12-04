@@ -35,7 +35,7 @@ public class AnnounceService {
     private final VoteService voteService;
 
     @NeedLogin
-    public void receiveAnnounce(AnnounceCreateDTO dto) {
+    public AnnouncePageItemDTO receiveAnnounce(AnnounceCreateDTO dto) {
         Announce announce = new Announce();
         announce.setAnonymousUser(anonymousUserService.getCurrentUser());
         announce.setBody(dto.getBody());
@@ -44,6 +44,8 @@ public class AnnounceService {
         announce.setCurrentRegion(relatedRegion);
 
         announceRepository.save(announce);
+
+        return AnnouncePageItemDTO.blank(announce);
     }
 
     @NeedLogin
