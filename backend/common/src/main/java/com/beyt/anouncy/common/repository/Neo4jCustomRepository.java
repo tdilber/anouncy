@@ -16,7 +16,7 @@ public class Neo4jCustomRepository {
 
     private final Neo4jClient neo4jClient;
 
-    public Optional<VoteCount> getVoteCount(String announceId, String regionId) {
+    public Optional<VoteCount> getVoteCount(String regionId, String announceId) {
         return this.neo4jClient
                 .query("""
                         MATCH (announce:Announce)
@@ -35,7 +35,7 @@ public class Neo4jCustomRepository {
                 .first();
     }
 
-    public Collection<VoteCount> getAllVoteCounts(Collection<String> announceIdList, String regionId) {
+    public Collection<VoteCount> getAllVoteCounts(String regionId, Collection<String> announceIdList) {
         return this.neo4jClient
                 .query("""
                         MATCH (announce:Announce)

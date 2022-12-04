@@ -47,7 +47,7 @@ public class VoteService {
                                 .toList();
 
                         regionIdAnnounceIdPairList.forEach(p -> // TODO change foreach To Neo4j Group By multi fetch
-                                neo4jCustomRepository.getVoteCount(p.getLeft(), p.getRight())
+                                neo4jCustomRepository.getVoteCount(p.getRight(), p.getLeft())
                                         .ifPresent(v -> {
                                             AnnounceVoteDTO vote = AnnounceVoteDTO.of(v);
                                             resultMap.put(p.getRight(), vote);

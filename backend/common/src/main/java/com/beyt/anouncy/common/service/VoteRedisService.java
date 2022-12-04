@@ -51,7 +51,7 @@ public abstract class VoteRedisService {
     }
 
     protected AnnounceVoteDTO fetchAnnounceVotes(String announceId, String regionId) {
-        Optional<VoteCount> voteCount = neo4jCustomRepository.getVoteCount(announceId, regionId);
+        Optional<VoteCount> voteCount = neo4jCustomRepository.getVoteCount(regionId, announceId);
         AnnounceVoteDTO voteSingleCache = new AnnounceVoteDTO();
         if (voteCount.isEmpty()) {
             throw new ClientErrorException("announce.not.found");
