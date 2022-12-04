@@ -1,3 +1,6 @@
+server:
+  port: 8085
+
 anouncy:
   location:
     google:
@@ -8,11 +11,6 @@ spring:
       mode: EMBEDDED
   application:
     name: localhost-test
-  datasource:
-    driverClassName: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/location
-    username: root
-    password: fromENV
   data:
     mongodb:
       host: localhost
@@ -20,24 +18,8 @@ spring:
       username: mongo
       password: fromENV
       authentication-database: admin
-      database:
+      database: asd
 
-  jpa:
-    open-in-view: false
-    defer-datasource-initialization: true
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MariaDB103Dialect
-        jdbc.time_zone: UTC
-
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-  messages:
-    basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true

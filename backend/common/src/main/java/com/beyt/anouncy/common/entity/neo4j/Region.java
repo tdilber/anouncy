@@ -3,13 +3,13 @@ package com.beyt.anouncy.common.entity.neo4j;
 import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionStatus;
 import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Node

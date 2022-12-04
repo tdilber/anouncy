@@ -2,13 +2,13 @@ package com.beyt.anouncy.common.entity.elasticsearch;
 
 import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionStatus;
 import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionType;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;

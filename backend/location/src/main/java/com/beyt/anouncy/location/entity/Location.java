@@ -3,13 +3,13 @@ package com.beyt.anouncy.location.entity;
 import com.beyt.anouncy.common.entity.enumeration.LocationStatus;
 import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.model.GeoJsonItem;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;

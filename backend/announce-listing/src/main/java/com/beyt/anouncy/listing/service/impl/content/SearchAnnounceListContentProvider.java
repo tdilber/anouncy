@@ -35,7 +35,7 @@ public class SearchAnnounceListContentProvider implements IAnnounceListContentPr
         List<AnnouncePageItemDTO> needToVoteFetchAnnounceList = new ArrayList<>();
 
         if (Objects.isNull(pageCache)) {
-            Page<AnnounceSearchItem> announceSearchItems = announceSearchRepository.search(param.getQuery(), PageRequest.of(param.getPage() * VoteRedisService.PAGE_SIZE, (param.getPage() + 1) * VoteRedisService.PAGE_SIZE));
+            Page<AnnounceSearchItem> announceSearchItems = announceSearchRepository.findAllByBodyContaining(param.getQuery(), PageRequest.of(param.getPage() * VoteRedisService.PAGE_SIZE, (param.getPage() + 1) * VoteRedisService.PAGE_SIZE));
             List<AnnouncePageItemDTO> announcePageItemDTOS = announceSearchItems.stream().map(AnnouncePageItemDTO::new).toList();
             existingAnnouncePageItems = announcePageItemDTOS;
             needToVoteFetchAnnounceList = announcePageItemDTOS;

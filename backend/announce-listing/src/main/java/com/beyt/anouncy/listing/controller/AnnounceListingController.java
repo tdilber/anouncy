@@ -3,12 +3,11 @@ package com.beyt.anouncy.listing.controller;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageDTO;
 import com.beyt.anouncy.listing.dto.enumeration.AnnounceListingType;
 import com.beyt.anouncy.listing.service.AnnounceListingService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/announce-list")

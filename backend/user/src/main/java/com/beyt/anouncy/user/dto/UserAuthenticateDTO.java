@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAuthenticateDTO {
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String username;
-    @javax.validation.constraints.NotNull
+    @jakarta.validation.constraints.NotNull
     private String password;
 }
