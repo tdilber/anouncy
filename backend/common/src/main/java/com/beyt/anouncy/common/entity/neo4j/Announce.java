@@ -9,7 +9,11 @@ import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Node
 @Data
@@ -37,4 +41,8 @@ public class Announce implements Serializable {
     @NotNull
     @Property("create_date")
     private Date createDate;
+
+    public static Map<String, Set<String>> getRegionAnnounceIdSetMap(Collection<Announce> announceList) {
+        return announceList.stream().collect(Collectors.groupingBy(a -> a.getCurrentRegion().getId(), Collectors.mapping(Announce::getId, Collectors.toSet())));
+    }
 }

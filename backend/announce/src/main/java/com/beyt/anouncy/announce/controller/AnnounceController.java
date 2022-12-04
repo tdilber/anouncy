@@ -2,8 +2,11 @@ package com.beyt.anouncy.announce.controller;
 
 import com.beyt.anouncy.announce.dto.AnnounceCreateDTO;
 import com.beyt.anouncy.announce.service.AnnounceService;
+import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +25,23 @@ public class AnnounceController {
         return ResponseEntity.status(HttpStatus.CREATED).body("OK");
     }
 
+    @DeleteMapping("/{announceId}")
+    public ResponseEntity<String> deleteAnnounce(@PathVariable String announceId) {
+        announceService.deleteAnnounce(announceId);
+        return ResponseEntity.ok("OK");
+    }
 
+
+    @GetMapping("/{announceId}")
+    public ResponseEntity<AnnouncePageItemDTO> getAnnounce(@PathVariable String announceId) {
+        AnnouncePageItemDTO dto = announceService.getAnnounce(announceId);
+        return ResponseEntity.ok(dto);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Page<AnnouncePageItemDTO>> getAnnounceList(Pageable pageable) {
+        Page<AnnouncePageItemDTO> dto = announceService.getAnnounceList(pageable);
+        return ResponseEntity.ok(dto);
+    }
 }

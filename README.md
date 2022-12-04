@@ -13,8 +13,9 @@ https://stackoverflow.com/questions/13672559/saving-data-in-bash
 
 TODOs:
 
-- Create Vote project.
-- Update to Spring Boot 3.
++ Create Vote project.
++ Update to Spring Boot 3.
+
 - Changed to Dockerfile system to native image.
 - Write Tests With test Containers.
 - Check Cache ttls.

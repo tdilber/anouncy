@@ -7,7 +7,6 @@ import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,7 +35,26 @@ public class Neo4jCustomRepository {
                 .first();
     }
 
-    public Collection<VoteSummary> getVoteSummaries(UUID anonymousUserId, String regionId, List<String> announceIdList) {
+    public Collection<VoteCount> getAllVoteCounts(Collection<String> announceIdList, String regionId) {
+        return this.neo4jClient
+                .query("""
+                        MATCH (announce:Announce)
+                        WHERE announce.id IN ($announceIdList)
+                        RETURN announce.id as announceId,
+                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = true AND region.id = $regionId } as yes,
+                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = false AND region.id = $regionId } as no,
+                        announce.currentRegion.id as currentRegionId
+                        """
+                )
+                .bind(announceIdList).to("announceIdList")
+                .bind(regionId).to("regionId")
+                .fetchAs(VoteCount.class)
+                .mappedBy((typeSystem, record) -> new VoteCount(record.get("announceId").asString(),
+                        record.get("yes").asLong(), record.get("no").asLong(), record.get("currentRegionId").asString()))
+                .all();
+    }
+
+    public Collection<VoteSummary> getVoteSummaries(UUID anonymousUserId, String regionId, Collection<String> announceIdList) {
         return this.neo4jClient
                 .query("""
                         MATCH (user:AnonymousUser)-[:OWN_USER]->(announce:Announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region)
