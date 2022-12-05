@@ -19,11 +19,11 @@ public class Neo4jCustomRepository {
     public Optional<VoteCount> getVoteCount(String regionId, String announceId) {
         return this.neo4jClient
                 .query("""
-                        MATCH (announce:Announce)
-                        WHERE announce.id = $announceId
+                        MATCH (announce:Announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region)
+                        WHERE announce.id = $announceId AND region.id = $regionId
                         RETURN announce.id as announceId,
-                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = true AND region.id = $regionId } as yes,
-                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = false AND region.id = $regionId } as no,
+                        sum(CASE WHEN vote.value = true THEN 1 ELSE 0 END) as yes,
+                        sum(CASE WHEN vote.value = false THEN 1 ELSE 0 END) as no,
                         announce.currentRegion.id as currentRegionId
                         """
                 )
@@ -38,11 +38,11 @@ public class Neo4jCustomRepository {
     public Collection<VoteCount> getAllVoteCounts(String regionId, Collection<String> announceIdList) {
         return this.neo4jClient
                 .query("""
-                        MATCH (announce:Announce)
-                        WHERE announce.id IN ($announceIdList)
+                        MATCH (announce:Announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region)
+                        WHERE announce.id IN ($announceIdList) AND region.id = $regionId
                         RETURN announce.id as announceId,
-                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = true AND region.id = $regionId } as yes,
-                        COUNT { MATCH (announce)-[:USER_VOTE]->(vote:Vote)<-[:VOTED_REGION]-(region:Region) WHERE vote.value = false AND region.id = $regionId } as no,
+                        sum(CASE WHEN vote.value = true THEN 1 ELSE 0 END) as yes,
+                        sum(CASE WHEN vote.value = false THEN 1 ELSE 0 END) as no,
                         announce.currentRegion.id as currentRegionId
                         """
                 )
