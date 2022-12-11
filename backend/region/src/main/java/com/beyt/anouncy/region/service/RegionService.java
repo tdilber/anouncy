@@ -17,6 +17,7 @@ public class RegionService {
 
     public RegionDTO findAllByParentId(String parentRegionId) {
         List<Region> regionList = regionRepository.findAllByParentRegionIdIsIn(List.of(parentRegionId));
+
         return new RegionDTO(regionList);
     }
 }

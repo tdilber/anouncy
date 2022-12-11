@@ -8,11 +8,15 @@ anouncy:
       server: redis://localhost:6379
       cluster: false
 
-org:
-  neo4j:
-    driver:
-      pool:
-        metrics-enabled: true
+grpc:
+  server:
+    port: 9094
+  client:
+    persist-grpc-server:
+      address: 'static://127.0.0.1:9096'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 spring:
   devtools:
@@ -20,11 +24,3 @@ spring:
       enabled: true
     livereload:
       enabled: false
-  neo4j:
-    pool:
-      metrics-enabled: true
-    authentication:
-      username: neo4j
-      password: fromENV
-    uri: bolt://localhost:7687
-

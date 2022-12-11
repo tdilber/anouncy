@@ -1,6 +1,5 @@
 package com.beyt.anouncy.common.entity.redis;
 
-import com.beyt.anouncy.common.entity.neo4j.model.VoteCount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,13 +41,13 @@ public class AnnounceVoteDTO implements Serializable {
         }
     }
 
-    public static AnnounceVoteDTO of(VoteCount voteCount) {
-        AnnounceVoteDTO announceVoteDTO = new AnnounceVoteDTO();
-        announceVoteDTO.setYes(voteCount.yes());
-        announceVoteDTO.setNo(voteCount.no());
-        announceVoteDTO.setCurrentRegionId(voteCount.currentRegionId());
-        announceVoteDTO.setRegionOrder(null);
-
-        return announceVoteDTO;
-    }
+//    public static AnnounceVoteDTO of(VoteCount voteCount) {
+//        AnnounceVoteDTO announceVoteDTO = new AnnounceVoteDTO();
+//        announceVoteDTO.setYes(voteCount.yes());
+//        announceVoteDTO.setNo(voteCount.no());
+//        announceVoteDTO.setCurrentRegionId(voteCount.currentRegionId());
+//        announceVoteDTO.setRegionOrder(null);
+//
+//        return announceVoteDTO;
+//    }
 }

@@ -1,7 +1,5 @@
 package com.beyt.anouncy.common.entity.elasticsearch;
 
-import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionStatus;
-import com.beyt.anouncy.common.entity.neo4j.enumeration.RegionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,10 +55,10 @@ public class AnnounceSearchItem implements Serializable {
         @NotNull
         private Long locationId;
 
-        @NotNull
-        private RegionType type;
-
-        @NotNull
-        private RegionStatus status;
+//        @NotNull
+//        private RegionType type;
+//
+//        @NotNull
+//        private RegionStatus status;
     }
 }
