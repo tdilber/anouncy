@@ -9,6 +9,7 @@ message AnnounceVotePTO {
   string currentRegionId = 3;
   int32 regionOrder = 4;
   string regionId = 5;
+  string announceId = 6;
 }
 
 message AnnounceVoteListPTO {
@@ -35,5 +36,5 @@ service VoteFetchService {
 
   rpc getAllVoteCounts(VoteCountMultiRequest) returns (VoteCountListPTO);
   rpc getVoteCount(VoteCountSingleRequest) returns (VoteCountPTO);
-  rpc getVoteSummaries(VoteSummaryRequest) returns (VoteSummaryPTO);
+  rpc getVoteSummaries(VoteSummaryRequest) returns (VoteSummaryListPTO);
 }

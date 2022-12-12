@@ -3,22 +3,23 @@ package com.beyt.anouncy.announce.service;
 import com.beyt.anouncy.announce.dto.AnnounceCreateDTO;
 import com.beyt.anouncy.common.aspect.NeedLogin;
 import com.beyt.anouncy.common.context.UserContext;
-import com.beyt.anouncy.common.entity.neo4j.Announce;
-import com.beyt.anouncy.common.entity.neo4j.model.VoteSummary;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
-import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
 import com.beyt.anouncy.common.exception.ClientErrorException;
 import com.beyt.anouncy.common.persist.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -85,35 +86,41 @@ public class AnnounceService {
 
     protected void fillCurrentUserVoteIfLogin(AnnouncePageItemDTO dto) { // TODO test it
         if (Objects.nonNull(userContext.getAnonymousUserId())) {
-            VoteSummaryPTO voteSummaries = voteFetchServiceBlockingStub.getVoteSummaries(VoteSummaryRequest.newBuilder().setAnonymousUserId(userContext.getAnonymousUserId().toString()).setRegionId(dto.getRegionId()).addAllAnnounceIdList(List.of(dto.getAnnounceId())).build());
-            voteSummaries
-                    .stream().findFirst().ifPresent(v -> dto.setCurrentVote(v.value()));
+            VoteSummaryRequest ptoParam = VoteSummaryRequest.newBuilder().setAnonymousUserId(userContext.getAnonymousUserId().toString()).setRegionId(dto.getRegionId()).addAllAnnounceIdList(List.of(dto.getAnnounceId())).build();
+            VoteSummaryListPTO voteSummaries = voteFetchServiceBlockingStub.getVoteSummaries(ptoParam);
+            voteSummaries.getVoteSummaryListList().stream().findFirst().ifPresent(v -> dto.setCurrentVote(v.getValue()));
         }
     }
 
     @NeedLogin
     public Page<AnnouncePageItemDTO> getAnnounceList(Pageable pageable) {
-        Page<Announce> announceList = announcePersistServiceBlockingStub.findAllByAnonymousUserId(userContext.getAnonymousUserId(), pageable);
-        List<AnnouncePageItemDTO> dtoList = announceList.stream().map(AnnouncePageItemDTO::new).toList();
+        var ptoParam = IdWithPageable.newBuilder().setPageable(PageablePTO.newBuilder().setPage(pageable.getPageNumber()).setSize(pageable.getPageSize()).build()).setId(userContext.getAnonymousUserId().toString()).build();
+        AnnounceListPTO announceList = announcePersistServiceBlockingStub.findAllByAnonymousUserId(ptoParam);
+        List<AnnouncePageItemDTO> dtoList = announceList.getAnnounceListList().stream().map(AnnouncePageItemDTO::new).toList();
         Map<String, Set<String>> regionAnnounceIdSetMap = AnnouncePageItemDTO.getRegionAnnounceIdSetMap(dtoList);
         populateVoteCountToAnnounceItemList(dtoList, regionAnnounceIdSetMap);
         populateCurrentVoteToAnnounceList(dtoList, regionAnnounceIdSetMap);
-        return new PageImpl<>(dtoList, announceList.getPageable(), announceList.getTotalElements());
+        return new PageImpl<>(dtoList, pageable, 0L); // TODO announceList.getTotalElements()
     }
 
     private void populateCurrentVoteToAnnounceList(List<AnnouncePageItemDTO> dtoList, Map<String, Set<String>> regionAnnounceIdSetMap) {
         regionAnnounceIdSetMap.forEach((regionId, announceSet) -> {
-            Collection<VoteSummary> voteSummaries = voteFetchServiceBlockingStub.getVoteSummaries(userContext.getAnonymousUserId(), regionId, announceSet);
-            dtoList.forEach(dto -> voteSummaries.stream().filter(v -> v.announceId().equals(dto.getAnnounceId())).findFirst()
-                    .ifPresent(v -> dto.setCurrentVote(v.value())));
+            VoteSummaryListPTO voteSummaries = voteFetchServiceBlockingStub.getVoteSummaries(VoteSummaryRequest.newBuilder().setAnonymousUserId(userContext.getAnonymousUserId().toString()).addAllAnnounceIdList(announceSet).setRegionId(regionId).build());
+            if (Objects.nonNull(voteSummaries) && CollectionUtils.isNotEmpty(voteSummaries.getVoteSummaryListList())) {
+                dtoList.forEach(dto -> voteSummaries.getVoteSummaryListList().stream().filter(v -> v.getAnnounceId().equals(dto.getAnnounceId())).findFirst()
+                        .ifPresent(v -> dto.setCurrentVote(v.getValue())));
+            }
         });
     }
 
     private void populateVoteCountToAnnounceItemList(List<AnnouncePageItemDTO> dtoList, Map<String, Set<String>> regionAnnounceIdSetMap) {
-        Map<String, AnnounceVoteDTO> voteCounts = voteFetchServiceBlockingStub.fetchAll(regionAnnounceIdSetMap);
-        voteCounts.forEach((announceId, voteCount) -> {
-            dtoList.stream().filter(dto -> announceId.equals(dto.getAnnounceId())).findFirst()
-                    .ifPresent(a -> a.update(voteCount));
-        });
+        AnnounceVoteFetchAllRequest request = AnnounceVoteFetchAllRequest.newBuilder().addAllMap(regionAnnounceIdSetMap.entrySet().stream().map(e -> AnnounceVoteFetchAllRequestItem.newBuilder().addAllAnnounceIdList(e.getValue()).setRegionId(e.getKey()).build()).toList()).build();
+        AnnounceVoteListPTO voteCounts = voteFetchServiceBlockingStub.fetchAll(request);
+        if (Objects.nonNull(voteCounts) && CollectionUtils.isNotEmpty(voteCounts.getVoteListList())) {
+            voteCounts.getVoteListList().forEach(voteCountPTO -> {
+                dtoList.stream().filter(dto -> voteCountPTO.getAnnounceId().equals(dto.getAnnounceId())).findFirst()
+                        .ifPresent(a -> a.update(voteCountPTO));
+            });
+        }
     }
 }

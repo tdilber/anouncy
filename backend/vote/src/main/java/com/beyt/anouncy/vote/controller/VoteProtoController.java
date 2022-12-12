@@ -34,7 +34,7 @@ public class VoteProtoController extends VoteFetchServiceGrpc.VoteFetchServiceIm
     }
 
     @Override
-    public void getVoteSummaries(VoteSummaryRequest request, StreamObserver<VoteSummaryPTO> responseObserver) {
+    public void getVoteSummaries(VoteSummaryRequest request, StreamObserver<VoteSummaryListPTO> responseObserver) {
         responseObserver.onNext(votePersistServiceBlockingStub.getVoteSummaries(request));
         responseObserver.onCompleted();
     }

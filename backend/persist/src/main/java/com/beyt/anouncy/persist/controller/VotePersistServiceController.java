@@ -4,6 +4,7 @@ import com.beyt.anouncy.common.persist.*;
 import com.beyt.anouncy.persist.controller.base.BasePersistServiceController;
 import com.beyt.anouncy.persist.entity.Vote;
 import com.beyt.anouncy.persist.entity.model.VoteCount;
+import com.beyt.anouncy.persist.entity.model.VoteSummary;
 import com.beyt.anouncy.persist.helper.VotePtoConverter;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import com.beyt.anouncy.persist.repository.Neo4jCustomRepository;
@@ -39,9 +40,10 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
     }
 
     @Override
-    public void getVoteSummaries(VoteSummaryRequest request, StreamObserver<VoteSummaryPTO> responseObserver) {
+    public void getVoteSummaries(VoteSummaryRequest request, StreamObserver<VoteSummaryListPTO> responseObserver) {
         Collection<com.beyt.anouncy.persist.entity.model.VoteSummary> voteSummaries = neo4jCustomRepository.getVoteSummaries(UUID.fromString(request.getAnonymousUserId()), request.getRegionId(), request.getAnnounceIdListList());
-        voteSummaries.forEach(v -> responseObserver.onNext(v.convert()));
+        var result = VoteSummaryListPTO.newBuilder().addAllVoteSummaryList(voteSummaries.stream().map(VoteSummary::convert).toList()).build();
+        responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
 

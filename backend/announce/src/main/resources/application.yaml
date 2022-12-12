@@ -17,6 +17,16 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+    vote-grpc-server:
+      address: 'static://127.0.0.1:9092'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    region-grpc-server:
+      address: 'static://127.0.0.1:9094'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 spring:
   devtools:

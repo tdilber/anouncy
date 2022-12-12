@@ -3,6 +3,8 @@ package com.beyt.anouncy.listing.processor;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageDTO;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
+import com.beyt.anouncy.common.persist.AnnounceVoteListPTO;
+import com.beyt.anouncy.common.persist.AnnounceVotePTO;
 import com.beyt.anouncy.listing.dto.enumeration.AnnounceListingType;
 import com.beyt.anouncy.listing.service.base.IAnnounceListContentProvider;
 import com.beyt.anouncy.listing.service.base.IAnnounceListFetchDataLockProvider;
@@ -93,7 +95,7 @@ public class AnnounceListingProcessor<T extends BaseAnnounceListProviderParam> {
         voteFetchList.addAll(needToVoteFetchAnnounceList.stream().map(a -> Pair.of(a.getRegionId(), a.getAnnounceId())).toList());
 
         boolean isUpdating = false;
-        Future<Map<String, AnnounceVoteDTO>> voteMapAllAsync = null;
+        Future<AnnounceVoteListPTO> voteMapAllAsync = null;
         // If need Update starting.
         if (CollectionUtils.isNotEmpty(voteFetchList)) {
             // This condition wait until lock and get fresh data and this data must be new updated.
@@ -113,7 +115,7 @@ public class AnnounceListingProcessor<T extends BaseAnnounceListProviderParam> {
         if (Objects.nonNull(voteMapAllAsync)) {
             // Map using because Announce Votes Fetched Base On Current Region.
             // Then we group the announces based on current regions.
-            Map<String, AnnounceVoteDTO> fetchResult = voteMapAllAsync.get();
+            Map<String, AnnounceVoteDTO> fetchResult = voteMapAllAsync.get().getVoteListList().stream().collect(Collectors.toMap(AnnounceVotePTO::getAnnounceId, AnnounceVoteDTO::of));
             // vote fetch complete and updates applying.
             announcePageItems.forEach(item -> {
                 AnnounceVoteDTO vote = fetchResult.get(item.getAnnounceId());

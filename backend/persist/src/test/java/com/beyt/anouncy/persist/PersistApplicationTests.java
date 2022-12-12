@@ -27,6 +27,7 @@ class PersistApplicationTests {
 	@Test
 //	@DirtiesContext
 	void contextLoads() {
+//		VotePersistServiceGrpc.VotePersistServiceBlockingStub mock = Mockito.mock(VotePersistServiceGrpc.VotePersistServiceBlockingStub.class);
 		Count count = votePersistServiceBlockingStub.count(Empty.newBuilder().build());
 	}
 

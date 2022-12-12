@@ -14,10 +14,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnnounceVoteDTO implements Serializable {
+
+    private String announceId;
     private Long yes;
     private Long no;
     private String currentRegionId;
     private Integer regionOrder;
+
+    public static AnnounceVoteDTO of(AnnounceVotePTO pto) {
+        AnnounceVoteDTO dto = new AnnounceVoteDTO();
+        dto.setAnnounceId(pto.getAnnounceId());
+        dto.setYes(pto.getYes());
+        dto.setNo(pto.getNo());
+        dto.setCurrentRegionId(pto.getCurrentRegionId());
+        dto.setRegionOrder(pto.getRegionOrder());
+        return dto;
+    }
 
     public void receiveVote(String regionId, Boolean yesOrNo) {
         if (Objects.isNull(yesOrNo) || Objects.isNull(regionId)) {
@@ -55,6 +67,7 @@ public class AnnounceVoteDTO implements Serializable {
 
     public static AnnounceVotePTO of(AnnounceVoteDTO voteCount, String regionId) {
         return AnnounceVotePTO.newBuilder()
+                .setAnnounceId(voteCount.getAnnounceId())
                 .setYes(voteCount.getYes())
                 .setNo(voteCount.getNo())
                 .setCurrentRegionId(voteCount.getCurrentRegionId())
