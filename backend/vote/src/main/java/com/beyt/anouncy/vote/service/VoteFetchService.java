@@ -56,7 +56,7 @@ public class VoteFetchService {
                         {
                             VoteCountPTO voteCount = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(p.getRight()).setAnnounceId(p.getLeft()).build());
                             if (Objects.nonNull(voteCount)) {
-                                AnnounceVoteDTO vote = AnnounceVoteDTO.of(p.getLeft(), voteCount);
+                                AnnounceVoteDTO vote = AnnounceVoteDTO.of(voteCount);
                                 resultMap.put(p.getRight(), vote);
                                 regionIdVoteRedisMapMap.get(p.getRight()).fastPutAsync(p.getLeft(), vote);
 
@@ -84,7 +84,7 @@ public class VoteFetchService {
 
         VoteCountPTO voteCount = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setAnnounceId(announceId).setRegionId(regionId).build());
         if (Objects.nonNull(voteCount)) {
-            AnnounceVoteDTO dto = AnnounceVoteDTO.of(announceId, voteCount);
+            AnnounceVoteDTO dto = AnnounceVoteDTO.of(voteCount);
             voteMap.fastPutAsync(announceId, dto);
             return dto;
         } else {
