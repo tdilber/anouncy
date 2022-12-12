@@ -71,6 +71,11 @@ message AnonymousUserPTO {
 message AnnounceListPTO {
   repeated AnnouncePTO announceList = 1;
 }
+message AnnouncePagePTO {
+  repeated AnnouncePTO announceList = 1;
+  PageablePTO pageable = 2;
+  int64 totalElement = 3;
+}
 
 message VoteListPTO {
   repeated VotePTO voteList = 1;
@@ -148,7 +153,7 @@ service AnnouncePersistService {
   rpc deleteAll(AnnounceListPTO) returns (Empty);
 
 
-  rpc findAllByAnonymousUserId(IdWithPageable) returns (AnnounceListPTO);
+  rpc findAllByAnonymousUserId(IdWithPageable) returns (AnnouncePagePTO);
   rpc findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId) returns (AnnouncePTO);
 }
 

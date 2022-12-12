@@ -2,6 +2,9 @@ package com.beyt.anouncy.common.util;
 
 import com.beyt.anouncy.common.persist.IdStr;
 import com.beyt.anouncy.common.persist.IdStrList;
+import com.beyt.anouncy.common.persist.PageablePTO;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
@@ -33,5 +36,13 @@ public final class ProtoUtil {
 
     public static IdStr toIdStr(String i) {
         return IdStr.newBuilder().setId(i).build();
+    }
+
+    public static PageablePTO toPageable(Pageable pageable) {
+        return PageablePTO.newBuilder().setSize(pageable.getPageSize()).setPage(pageable.getPageNumber()).build();
+    }
+
+    public static Pageable toPageable(PageablePTO pageable) {
+        return PageRequest.of(pageable.getPage(), pageable.getSize());
     }
 }

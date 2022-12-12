@@ -95,12 +95,12 @@ public class AnnounceService {
     @NeedLogin
     public Page<AnnouncePageItemDTO> getAnnounceList(Pageable pageable) {
         var ptoParam = IdWithPageable.newBuilder().setPageable(PageablePTO.newBuilder().setPage(pageable.getPageNumber()).setSize(pageable.getPageSize()).build()).setId(userContext.getAnonymousUserId().toString()).build();
-        AnnounceListPTO announceList = announcePersistServiceBlockingStub.findAllByAnonymousUserId(ptoParam);
+        AnnouncePagePTO announceList = announcePersistServiceBlockingStub.findAllByAnonymousUserId(ptoParam);
         List<AnnouncePageItemDTO> dtoList = announceList.getAnnounceListList().stream().map(AnnouncePageItemDTO::new).toList();
         Map<String, Set<String>> regionAnnounceIdSetMap = AnnouncePageItemDTO.getRegionAnnounceIdSetMap(dtoList);
         populateVoteCountToAnnounceItemList(dtoList, regionAnnounceIdSetMap);
         populateCurrentVoteToAnnounceList(dtoList, regionAnnounceIdSetMap);
-        return new PageImpl<>(dtoList, pageable, 0L); // TODO announceList.getTotalElements()
+        return new PageImpl<>(dtoList, pageable, announceList.getTotalElement());
     }
 
     private void populateCurrentVoteToAnnounceList(List<AnnouncePageItemDTO> dtoList, Map<String, Set<String>> regionAnnounceIdSetMap) {

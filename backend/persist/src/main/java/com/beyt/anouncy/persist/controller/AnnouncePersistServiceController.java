@@ -1,6 +1,7 @@
 package com.beyt.anouncy.persist.controller;
 
 import com.beyt.anouncy.common.persist.*;
+import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.persist.controller.base.BasePersistServiceController;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.helper.AnnouncePtoConverter;
@@ -24,9 +25,9 @@ public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc
 
 
     @Override
-    public void findAllByAnonymousUserId(IdWithPageable request, StreamObserver<AnnounceListPTO> responseObserver) {
+    public void findAllByAnonymousUserId(IdWithPageable request, StreamObserver<AnnouncePagePTO> responseObserver) {
         Page<Announce> announcePage = announceRepository.findAllByAnonymousUserId(UUID.fromString(request.getId()), PageRequest.of(request.getPageable().getPage(), request.getPageable().getSize()));
-        responseObserver.onNext(announcePtoConverter.toPtoList(announcePage.getContent()));
+        responseObserver.onNext(AnnouncePagePTO.newBuilder().addAllAnnounceList(announcePage.getContent().stream().map(announcePtoConverter::toPto).toList()).setPageable(ProtoUtil.toPageable(announcePage.getPageable())).setTotalElement(announcePage.getTotalElements()).build());
         responseObserver.onCompleted();
     }
 
