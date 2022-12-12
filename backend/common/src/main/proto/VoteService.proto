@@ -1,0 +1,39 @@
+syntax = "proto3";
+import "PersistService.proto";
+option java_multiple_files = true;
+package com.beyt.anouncy.common.persist;
+
+message AnnounceVotePTO {
+  int64 yes = 1;
+  int64 no = 2;
+  string currentRegionId = 3;
+  int32 regionOrder = 4;
+  string regionId = 5;
+}
+
+message AnnounceVoteListPTO {
+  repeated AnnounceVotePTO voteList = 1;
+}
+
+message AnnounceVoteFetchAllRequestItem {
+  string regionId = 1;
+  repeated string announceIdList = 2;
+}
+
+message AnnounceVoteFetchAllRequest {
+  repeated AnnounceVoteFetchAllRequestItem map = 1;
+}
+
+message AnnounceVoteFetchOneRequest {
+  string regionId = 1;
+  string announceId = 2;
+}
+
+service VoteFetchService {
+  rpc fetchAll(AnnounceVoteFetchAllRequest) returns (AnnounceVoteListPTO);
+  rpc fetchOne(AnnounceVoteFetchOneRequest) returns (AnnounceVotePTO);
+
+  rpc getAllVoteCounts(VoteCountMultiRequest) returns (VoteCountListPTO);
+  rpc getVoteCount(VoteCountSingleRequest) returns (VoteCountPTO);
+  rpc getVoteSummaries(VoteSummaryRequest) returns (VoteSummaryPTO);
+}

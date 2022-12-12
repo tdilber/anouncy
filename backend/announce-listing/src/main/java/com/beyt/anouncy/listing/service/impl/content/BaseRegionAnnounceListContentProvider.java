@@ -2,12 +2,14 @@ package com.beyt.anouncy.listing.service.impl.content;
 
 import com.beyt.anouncy.common.entity.redis.AnnouncePageDTO;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
-import com.beyt.anouncy.common.repository.AnnounceRepository;
+import com.beyt.anouncy.common.persist.AnnouncePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
+import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.listing.service.base.IAnnounceListContentProvider;
 import com.beyt.anouncy.listing.service.base.IAnnounceListOrderProvider;
 import com.beyt.anouncy.listing.service.base.parameter.RegionAnnounceListProviderParam;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.redisson.api.RFuture;
 import org.redisson.api.RMap;
@@ -21,7 +23,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public sealed abstract class BaseRegionAnnounceListContentProvider implements IAnnounceListContentProvider<RegionAnnounceListProviderParam> permits RegionTopRatedAnnounceListContentProvider, RegionTrendingAnnounceListContentProvider, RegionNewestAnnounceListContentProvider {
     protected final RedissonClient redissonClient;
-    protected final AnnounceRepository announceRepository;
+
+    @GrpcClient("persist-grpc-server")
+    private AnnouncePersistServiceGrpc.AnnouncePersistServiceBlockingStub announcePersistServiceBlockingStub;
 
     public abstract IAnnounceListOrderProvider<RegionAnnounceListProviderParam> getOrderProvider();
 
@@ -49,7 +53,8 @@ public sealed abstract class BaseRegionAnnounceListContentProvider implements IA
         }
 
         if (CollectionUtils.isNotEmpty(missingAnnounceIdList)) {
-            var announceList = announceRepository.findAllById(missingAnnounceIdList).stream().map(AnnouncePageItemDTO::new).toList();
+            var announcePTOList = announcePersistServiceBlockingStub.findAllById(ProtoUtil.toIdStrList(missingAnnounceIdList));
+            var announceList = announcePTOList.getAnnounceListList().stream().map(AnnouncePageItemDTO::new).toList();
             needToVoteFetchAnnounceList.addAll(announceList);
             existingAnnouncePageItems.addAll(announceList);
         }

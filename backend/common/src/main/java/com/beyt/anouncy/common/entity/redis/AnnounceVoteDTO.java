@@ -1,5 +1,7 @@
 package com.beyt.anouncy.common.entity.redis;
 
+import com.beyt.anouncy.common.persist.AnnounceVotePTO;
+import com.beyt.anouncy.common.persist.VoteCountPTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,13 +43,21 @@ public class AnnounceVoteDTO implements Serializable {
         }
     }
 
-//    public static AnnounceVoteDTO of(VoteCount voteCount) {
-//        AnnounceVoteDTO announceVoteDTO = new AnnounceVoteDTO();
-//        announceVoteDTO.setYes(voteCount.yes());
-//        announceVoteDTO.setNo(voteCount.no());
-//        announceVoteDTO.setCurrentRegionId(voteCount.currentRegionId());
-//        announceVoteDTO.setRegionOrder(null);
-//
-//        return announceVoteDTO;
-//    }
+    public static AnnounceVoteDTO of(VoteCountPTO voteCount) {
+        AnnounceVoteDTO announceVoteDTO = new AnnounceVoteDTO();
+        announceVoteDTO.setYes(voteCount.getYes());
+        announceVoteDTO.setNo(voteCount.getNo());
+        announceVoteDTO.setCurrentRegionId(voteCount.getCurrentRegionId());
+        announceVoteDTO.setRegionOrder(null);
+
+        return announceVoteDTO;
+    }
+
+    public static AnnounceVotePTO of(AnnounceVoteDTO voteCount, String regionId) {
+        return AnnounceVotePTO.newBuilder()
+                .setYes(voteCount.getYes())
+                .setNo(voteCount.getNo())
+                .setCurrentRegionId(voteCount.getCurrentRegionId())
+                .setRegionOrder(voteCount.getRegionOrder()).setRegionId(regionId).build();
+    }
 }

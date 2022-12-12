@@ -3,9 +3,9 @@ package com.beyt.anouncy.vote.service;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
 import com.beyt.anouncy.common.exception.ClientErrorException;
-import com.beyt.anouncy.common.persist.PersistServiceGrpc;
-import com.beyt.anouncy.common.persist.VoteCount;
+import com.beyt.anouncy.common.persist.VoteCountPTO;
 import com.beyt.anouncy.common.persist.VoteCountSingleRequest;
+import com.beyt.anouncy.common.persist.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
 import com.beyt.anouncy.vote.dto.VoteCreateDTO;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class VoteService {
     private final RedissonClient redissonClient;
 
     @GrpcClient("persist-grpc-server")
-    private PersistServiceGrpc.PersistServiceBlockingStub persistServiceBlockingStub;
+    private VotePersistServiceGrpc.VotePersistServiceBlockingStub votePersistServiceBlockingStub;
 
     public AnnouncePageItemDTO receiveVote(String announceId, VoteCreateDTO dto) {
         return null;
@@ -57,7 +57,7 @@ public class VoteService {
     }
 
     protected AnnounceVoteDTO fetchAnnounceVotes(String announceId, String regionId) {
-        VoteCount count = persistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(regionId).setAnnounceId(announceId).build());
+        VoteCountPTO count = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(regionId).setAnnounceId(announceId).build());
         AnnounceVoteDTO voteSingleCache = new AnnounceVoteDTO();
         if (Objects.isNull(count)) {
             throw new ClientErrorException("announce.not.found");

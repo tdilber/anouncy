@@ -1,7 +1,7 @@
 package com.beyt.anouncy.region.dto;
 
 import com.beyt.anouncy.common.entity.enumeration.LocationType;
-import com.beyt.anouncy.common.entity.neo4j.Region;
+import com.beyt.anouncy.common.persist.RegionPTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class RegionDTO implements Serializable {
     private List<RegionItemDTO> regions = null;
 
-    public RegionDTO(List<Region> regionList) {
+    public RegionDTO(List<RegionPTO> regionList) {
         if (CollectionUtils.isNotEmpty(regionList)) {
             this.regions = regionList.stream().map(RegionItemDTO::new).toList();
         }
@@ -31,11 +31,11 @@ public class RegionDTO implements Serializable {
         private String name;
         private LocationType type;
 
-        public RegionItemDTO(Region region) {
+        public RegionItemDTO(RegionPTO region) {
             this.regionId = region.getId();
             this.name = region.getName();
-            this.type = region.getType().convert();
-            this.parentLocationId = Optional.ofNullable(region.getParentRegion()).map(Region::getId).orElse(null);
+            this.type = LocationType.convert(region.getType());
+            this.parentLocationId = Optional.ofNullable(region.getParentRegion()).map(RegionPTO::getId).orElse(null);
         }
     }
 }

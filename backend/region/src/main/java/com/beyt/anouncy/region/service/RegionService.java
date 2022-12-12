@@ -1,10 +1,12 @@
 package com.beyt.anouncy.region.service;
 
-import com.beyt.anouncy.common.entity.neo4j.Region;
-import com.beyt.anouncy.common.repository.RegionRepository;
+import com.beyt.anouncy.common.persist.RegionListPTO;
+import com.beyt.anouncy.common.persist.RegionPersistServiceGrpc;
+import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.region.dto.RegionDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,11 +15,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RegionService {
-    private final RegionRepository regionRepository;
+
+    @GrpcClient("persist-grpc-server")
+    private RegionPersistServiceGrpc.RegionPersistServiceBlockingStub regionPersistServiceBlockingStub;
 
     public RegionDTO findAllByParentId(String parentRegionId) {
-        List<Region> regionList = regionRepository.findAllByParentRegionIdIsIn(List.of(parentRegionId));
+        RegionListPTO regionListPTO = regionPersistServiceBlockingStub.findAllByParentRegionIdIsIn(ProtoUtil.toIdStrList(List.of(parentRegionId)));
 
-        return new RegionDTO(regionList);
+        return new RegionDTO(regionListPTO.getRegionListList());
     }
 }

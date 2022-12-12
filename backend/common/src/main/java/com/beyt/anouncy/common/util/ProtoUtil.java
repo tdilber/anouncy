@@ -26,4 +26,12 @@ public final class ProtoUtil {
     public static List<String> of(IdStrList idStrList) {
         return idStrList.getIdListList().stream().map(ProtoUtil::of).toList();
     }
+
+    public static IdStrList toIdStrList(List<String> idList) {
+        return IdStrList.newBuilder().addAllIdList(idList.stream().map(ProtoUtil::toIdStr).toList()).build();
+    }
+
+    public static IdStr toIdStr(String i) {
+        return IdStr.newBuilder().setId(i).build();
+    }
 }
