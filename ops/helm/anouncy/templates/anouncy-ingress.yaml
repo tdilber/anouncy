@@ -78,3 +78,10 @@ spec:
                 name: location-service
                 port:
                   number: {{ .Values.location.deployment.port }}
+          - pathType: Prefix
+            path: "/v3/grouped-api-docs" # for grouped swagger
+            backend:
+              service:
+                name: location-service
+                port:
+                  number: {{ .Values.location.deployment.port }}

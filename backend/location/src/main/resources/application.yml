@@ -36,6 +36,8 @@ spring:
         size: 2
 
 springdoc:
+  swagger-ui:
+    path: "/location/swagger-ui/index.html" # this is for treafik route with prefix
   grouping:
     enable: true
     refreshTimeoutMs: 4000
