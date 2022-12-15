@@ -1,6 +1,7 @@
 package com.beyt.anouncy.common.entity.redis;
 
-import com.beyt.anouncy.common.entity.neo4j.model.VoteCount;
+import com.beyt.anouncy.common.persist.AnnounceVotePTO;
+import com.beyt.anouncy.common.persist.VoteCountPTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,22 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnnounceVoteDTO implements Serializable {
+
+    private String announceId;
     private Long yes;
     private Long no;
     private String currentRegionId;
     private Integer regionOrder;
+
+    public static AnnounceVoteDTO of(AnnounceVotePTO pto) {
+        AnnounceVoteDTO dto = new AnnounceVoteDTO();
+        dto.setAnnounceId(pto.getAnnounceId());
+        dto.setYes(pto.getYes());
+        dto.setNo(pto.getNo());
+        dto.setCurrentRegionId(pto.getCurrentRegionId());
+        dto.setRegionOrder(pto.getRegionOrder());
+        return dto;
+    }
 
     public void receiveVote(String regionId, Boolean yesOrNo) {
         if (Objects.isNull(yesOrNo) || Objects.isNull(regionId)) {
@@ -42,13 +55,22 @@ public class AnnounceVoteDTO implements Serializable {
         }
     }
 
-    public static AnnounceVoteDTO of(VoteCount voteCount) {
+    public static AnnounceVoteDTO of(VoteCountPTO voteCount) {
         AnnounceVoteDTO announceVoteDTO = new AnnounceVoteDTO();
-        announceVoteDTO.setYes(voteCount.yes());
-        announceVoteDTO.setNo(voteCount.no());
-        announceVoteDTO.setCurrentRegionId(voteCount.currentRegionId());
+        announceVoteDTO.setYes(voteCount.getYes());
+        announceVoteDTO.setNo(voteCount.getNo());
+        announceVoteDTO.setCurrentRegionId(voteCount.getCurrentRegionId());
         announceVoteDTO.setRegionOrder(null);
 
         return announceVoteDTO;
+    }
+
+    public static AnnounceVotePTO of(AnnounceVoteDTO voteCount, String regionId) {
+        return AnnounceVotePTO.newBuilder()
+                .setAnnounceId(voteCount.getAnnounceId())
+                .setYes(voteCount.getYes())
+                .setNo(voteCount.getNo())
+                .setCurrentRegionId(voteCount.getCurrentRegionId())
+                .setRegionOrder(voteCount.getRegionOrder()).setRegionId(regionId).build();
     }
 }

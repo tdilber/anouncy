@@ -1,5 +1,10 @@
 package com.beyt.anouncy.common.entity.enumeration;
 
+import com.beyt.anouncy.common.exception.DeveloperMistakeException;
+import com.beyt.anouncy.common.persist.RegionTypePTO;
+
+import java.util.Objects;
+
 /**
  * Created by tdilber at 02-Dec-18
  */
@@ -27,5 +32,24 @@ public enum LocationType {
 
     public String getMeaning() {
         return meaning;
+    }
+
+    public static LocationType convert(RegionTypePTO regionType) {
+        if (Objects.isNull(regionType)) {
+            return null;
+        }
+
+        switch (regionType) {
+            case COUNTRY -> {
+                return LocationType.COUNTRY;
+            }
+            case CITY -> {
+                return LocationType.CITY;
+            }
+            case COUNTY -> {
+                return LocationType.COUNTY;
+            }
+            default -> throw new DeveloperMistakeException("Unsuitable Enum Value LocationType");
+        }
     }
 }
