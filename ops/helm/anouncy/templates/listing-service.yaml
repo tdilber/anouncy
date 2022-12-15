@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: listing-service
+  namespace: default
+  {{- with .Values.listing.service.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: {{ .Values.listing.deployment.port }}
+      port: {{ .Values.listing.deployment.port }}
+      name: listing-prometheus-port
+  selector:
+    app: listing

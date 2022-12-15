@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote
+  labels:
+    app: vote
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: {{ .Values.vote.deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.vote.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.vote.deployment.maxSurge }}
+  template:
+    metadata:
+      {{- with .Values.vote.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: vote
+        octopusexport: OctopusExport
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.vote.deployment.terminationGracePeriodSeconds }}
+      imagePullSecrets:
+        - name: docker-login-secret
+      containers:
+        - name: vote-container
+          image: {{ .Values.vote.deployment.image }}
+          imagePullPolicy: {{ .Values.vote.deployment.imagePullPolicy }}
+          ports:
+            - name: vote-port
+              containerPort: {{ .Values.vote.deployment.port }}
+
+          resources:
+            requests:
+              memory: {{ .Values.vote.deployment.memoryRequest }}
+            limits:
+              memory: {{ .Values.vote.deployment.memoryLimit }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.vote.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.vote.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.vote.deployment.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.vote.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.vote.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.vote.deployment.port }}

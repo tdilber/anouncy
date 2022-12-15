@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: persist
+  labels:
+    app: persist
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: {{ .Values.persist.deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.persist.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.persist.deployment.maxSurge }}
+  template:
+    metadata:
+      {{- with .Values.persist.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: persist
+        octopusexport: OctopusExport
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.persist.deployment.terminationGracePeriodSeconds }}
+      imagePullSecrets:
+        - name: docker-login-secret
+      containers:
+        - name: persist-container
+          image: {{ .Values.persist.deployment.image }}
+          imagePullPolicy: {{ .Values.persist.deployment.imagePullPolicy }}
+          ports:
+            - name: persist-port
+              containerPort: {{ .Values.persist.deployment.port }}
+
+          resources:
+            requests:
+              memory: {{ .Values.persist.deployment.memoryRequest }}
+            limits:
+              memory: {{ .Values.persist.deployment.memoryLimit }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.persist.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.persist.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.persist.deployment.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.persist.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.persist.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.persist.deployment.port }}

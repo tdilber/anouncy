@@ -21,4 +21,125 @@ user:
   service:
     annotations:
   ingress:
-    host: "user.anouncy.com"
+    host: "api.anouncy.com"
+    prefix: "/user"
+
+announce:
+  deployment:
+    image: "${announce_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/announce"
+
+listing:
+  deployment:
+    image: "${listing_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/listing"
+
+vote:
+  deployment:
+    image: "${vote_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/vote"
+
+region:
+  deployment:
+    image: "${region_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/region"
+
+persist:
+  deployment:
+    image: "${persist_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/persist"
+
+location:
+  deployment:
+    image: "${location_deployment_image}"
+    imagePullPolicy: Always
+    port: 8080
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readynessLivenessInitialDelay: 10
+    readynessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/location"

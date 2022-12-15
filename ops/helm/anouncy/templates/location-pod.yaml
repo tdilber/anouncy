@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location
+  labels:
+    app: location
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: {{ .Values.location.deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.location.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.location.deployment.maxSurge }}
+  template:
+    metadata:
+      {{- with .Values.location.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: location
+        octopusexport: OctopusExport
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.location.deployment.terminationGracePeriodSeconds }}
+      imagePullSecrets:
+        - name: docker-login-secret
+      containers:
+        - name: location-container
+          image: {{ .Values.location.deployment.image }}
+          imagePullPolicy: {{ .Values.location.deployment.imagePullPolicy }}
+          ports:
+            - name: location-port
+              containerPort: {{ .Values.location.deployment.port }}
+
+          resources:
+            requests:
+              memory: {{ .Values.location.deployment.memoryRequest }}
+            limits:
+              memory: {{ .Values.location.deployment.memoryLimit }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.location.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.location.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.location.deployment.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.location.deployment.readynessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.location.deployment.readynessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.location.deployment.port }}

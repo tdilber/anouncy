@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote-service
+  namespace: default
+  {{- with .Values.vote.service.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: {{ .Values.vote.deployment.port }}
+      port: {{ .Values.vote.deployment.port }}
+      name: vote-prometheus-port
+  selector:
+    app: vote

@@ -12,9 +12,69 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: {{ .Values.user.ingress.prefix }}
             backend:
               service:
                 name: user-service
                 port:
                   number: {{ .Values.user.deployment.port }}
+    - host: {{ .Values.announce.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.announce.ingress.prefix }}
+            backend:
+              service:
+                name: announce-service
+                port:
+                  number: {{ .Values.announce.deployment.port }}
+    - host: {{ .Values.listing.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.listing.ingress.prefix }}
+            backend:
+              service:
+                name: listing-service
+                port:
+                  number: {{ .Values.listing.deployment.port }}
+    - host: {{ .Values.vote.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.vote.ingress.prefix }}
+            backend:
+              service:
+                name: vote-service
+                port:
+                  number: {{ .Values.vote.deployment.port }}
+    - host: {{ .Values.region.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.region.ingress.prefix }}
+            backend:
+              service:
+                name: region-service
+                port:
+                  number: {{ .Values.region.deployment.port }}
+    - host: {{ .Values.persist.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.persist.ingress.prefix }}
+            backend:
+              service:
+                name: persist-service
+                port:
+                  number: {{ .Values.persist.deployment.port }}
+    - host: {{ .Values.location.ingress.host }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: {{ .Values.location.ingress.prefix }}
+            backend:
+              service:
+                name: location-service
+                port:
+                  number: {{ .Values.location.deployment.port }}
