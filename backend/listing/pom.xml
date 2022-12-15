@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.beyt.anouncy</groupId>
-	<artifactId>announce-listing</artifactId>
+	<artifactId>listing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>announce-listing</name>
 	<description>Anouncy Announce Listing Microservice</description>
