@@ -5,8 +5,14 @@ then
    exit 1
 fi
 
-cd "$ANOUNCY_PROJECT_PATH/backend/common/" && mvn clean install package
-cd "$ANOUNCY_PROJECT_PATH/backend/$1/" && mvn clean install package
+if [ ! -z "$3" ]
+then
+  echo "Common Build Skipping"
+else
+  cd "$ANOUNCY_PROJECT_PATH/backend/common/" && mvn clean install package -Dmaven.test.skip=true
+fi
+
+cd "$ANOUNCY_PROJECT_PATH/backend/$1/" && mvn clean install package -Dmaven.test.skip=true
 
 if [[ "$?" -ne 0 ]] ; then
   echo 'module compile fail'; exit $?
