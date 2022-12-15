@@ -8,6 +8,12 @@ anouncy:
       server: redis://localhost:6379
       cluster: false
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 grpc:
   server:
     port: 9092
@@ -29,4 +35,5 @@ spring:
     password: j6NqYdncJK9T6GHQ
     username: searcher
 
-
+springdoc:
+  enable-native-support: true
