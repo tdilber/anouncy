@@ -32,4 +32,4 @@ do
 done < "$variables"
 
 truncate -s 0 "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy/values-variables.txt"
-echo -e "$replaceResult" > "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy/values-variables.txt"
+echo "$replaceResult" > "$ANOUNCY_PROJECT_PATH/ops/helm/anouncy/values-variables.txt"
