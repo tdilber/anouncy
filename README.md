@@ -15,6 +15,8 @@ TODOs:
 
 + Create Vote project.
 + Update to Spring Boot 3.
++ Migrate to Local communication to gRPC.
++ Install a swagger supported multi service.
 
 - Changed to Dockerfile system to native image.
 - Write Tests With test Containers.
@@ -23,10 +25,8 @@ TODOs:
 - Deploy modules to test env (write helms)
 - Job Create For update Region Change.
 - Write the Logs.
-- Install a swagger supported multi service.
 - Connect to Kafka For votes queue for announce life cycle.
 - Update the traefik custom plugin. we have some missing parts.
-- Migrate to Local communication to gRPC.
 - Write Design Decision Document.
 - Update to Readme Image.
 - Write why do i doing this project. Motivation and purpose. (in Readme)
