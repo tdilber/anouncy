@@ -11,18 +11,21 @@ https://stackoverflow.com/questions/13672559/saving-data-in-bash
 
 - Replace Mongo to Neo4j (Much fit our technical problem)
 
-TODOs:
+#### TODOs:
+
+**dones**
 
 + Create Vote project.
 + Update to Spring Boot 3.
 + Migrate to Local communication to gRPC.
-+ Install a swagger supported multi service.
++ Install a swagger supported multi service. (I created and serve in github public repo :) )
++ Deploy modules to test env (write helms)
 
+**waitings**
 - Changed to Dockerfile system to native image.
 - Write Tests With test Containers.
 - Check Cache ttls.
 - Check comment TODOs.
-- Deploy modules to test env (write helms)
 - Job Create For update Region Change.
 - Write the Logs.
 - Connect to Kafka For votes queue for announce life cycle.
@@ -31,7 +34,7 @@ TODOs:
 - Update to Readme Image.
 - Write why do i doing this project. Motivation and purpose. (in Readme)
 
-New Design Ideas:
+### New Design Ideas:
 
 - Use Elastic Search To seaching announce texts. Actually we have Elastic Search for logging. We can use also for this
   dev.
