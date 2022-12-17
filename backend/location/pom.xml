@@ -45,6 +45,11 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java-util</artifactId>
+			<version>3.21.10</version>
+		</dependency>
+		<dependency>
 			<groupId>com.beyt.doc</groupId>
 			<artifactId>swagger-aggregator-springdoc-openapi</artifactId>
 			<version>0.0.1</version>
