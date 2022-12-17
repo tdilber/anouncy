@@ -3,10 +3,13 @@ package com.beyt.anouncy.persist.helper;
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
 import com.beyt.anouncy.common.persist.AnnounceListPTO;
 import com.beyt.anouncy.common.persist.AnnouncePTO;
+import com.beyt.anouncy.common.persist.Empty;
+import com.beyt.anouncy.common.persist.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +22,16 @@ public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO,
     private final AnonymousUserPtoConverter anonymousUserPtoConverter;
     private final RegionPtoConverter regionPtoConverter;
 
+    @GrpcClient("persist-grpc-server")
+    private VotePersistServiceGrpc.VotePersistServiceBlockingStub votePersistServiceBlockingStub;
+
 
     @Override
     public Announce toEntity(AnnouncePTO pto) {
         if (Objects.isNull(pto)) {
             return null;
         }
+        votePersistServiceBlockingStub.count(Empty.newBuilder().build());
         Announce announce = new Announce();
         announce.setId(pto.getId());
         announce.setBody(pto.getBody());
@@ -47,13 +54,16 @@ public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO,
 
     @Override
     public AnnouncePTO toPto(Announce announce) {
-        return AnnouncePTO.newBuilder()
+        AnnouncePTO.Builder builder = AnnouncePTO.newBuilder()
                 .setId(announce.getId())
                 .setBody(announce.getBody())
-                .setAnonymousUser(Optional.ofNullable(announce.getAnonymousUser()).map(anonymousUserPtoConverter::toPto).orElse(null))
-                .setBeginRegion(Optional.ofNullable(announce.getBeginRegion()).map(regionPtoConverter::toPto).orElse(null))
-                .setCurrentRegion(Optional.ofNullable(announce.getCurrentRegion()).map(regionPtoConverter::toPto).orElse(null))
-                .setCreateDate(Optional.ofNullable(announce.getCreateDate()).map(Date::getTime).orElseThrow(() -> new DeveloperMistakeException("Create Date Mistake Announce")))
+                .setCreateDate(Optional.ofNullable(announce.getCreateDate()).map(Date::getTime).orElseThrow(() -> new DeveloperMistakeException("Create Date Mistake Announce")));
+
+        Optional.ofNullable(announce.getAnonymousUser()).map(anonymousUserPtoConverter::toPto).ifPresent(builder::setAnonymousUser);
+        Optional.ofNullable(announce.getBeginRegion()).map(regionPtoConverter::toPto).ifPresent(builder::setBeginRegion);
+        Optional.ofNullable(announce.getCurrentRegion()).map(regionPtoConverter::toPto).ifPresent(builder::setCurrentRegion);
+
+        return builder
                 .build();
     }
 

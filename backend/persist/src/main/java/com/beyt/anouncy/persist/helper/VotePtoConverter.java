@@ -49,13 +49,16 @@ public class VotePtoConverter implements PtoConverter<Vote, VotePTO, VoteListPTO
 
     @Override
     public VotePTO toPto(Vote vote) {
-        return VotePTO.newBuilder()
+        VotePTO.Builder builder = VotePTO.newBuilder()
                 .setId(vote.getId())
                 .setValue(vote.getValue())
-                .setAnnounce(Optional.ofNullable(vote.getAnnounce()).map(announcePtoConverter::toPto).orElse(null))
-                .setAnonymousUser(Optional.ofNullable(vote.getAnonymousUser()).map(anonymousUserPtoConverter::toPto).orElse(null))
-                .setRegion(Optional.ofNullable(vote.getRegion()).map(regionPtoConverter::toPto).orElse(null))
-                .setCreateDate(Optional.ofNullable(vote.getCreateDate()).map(Date::getTime).orElseThrow(() -> new DeveloperMistakeException("Create Date Mistake Vote")))
+                .setCreateDate(Optional.ofNullable(vote.getCreateDate()).map(Date::getTime).orElseThrow(() -> new DeveloperMistakeException("Create Date Mistake Vote")));
+
+        Optional.ofNullable(vote.getAnnounce()).map(announcePtoConverter::toPto).ifPresent(builder::setAnnounce);
+        Optional.ofNullable(vote.getAnonymousUser()).map(anonymousUserPtoConverter::toPto).ifPresent(builder::setAnonymousUser);
+        Optional.ofNullable(vote.getRegion()).map(regionPtoConverter::toPto).ifPresent(builder::setRegion);
+
+        return builder
                 .build();
     }
 

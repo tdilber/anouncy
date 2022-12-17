@@ -7,6 +7,7 @@ import com.beyt.anouncy.persist.entity.enumeration.RegionStatus;
 import com.beyt.anouncy.persist.entity.enumeration.RegionType;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -34,7 +35,11 @@ public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, Regio
         region.setLocationId(pto.getLocationId());
         region.setType(RegionType.of(pto.getType()));
         region.setStatus(RegionStatus.of(pto.getStatus()));
-        region.setParentRegion(toEntity(pto.getParentRegion()));
+        if (Strings.isNotBlank(pto.getParentRegionId())) {
+            Region parentRegion = new Region();
+            parentRegion.setId(pto.getParentRegionId());
+            region.setParentRegion(parentRegion);
+        }
 
         return region;
     }
@@ -50,16 +55,18 @@ public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, Regio
 
     @Override
     public RegionPTO toPto(Region region) {
-        return RegionPTO.newBuilder()
+        RegionPTO.Builder builder = RegionPTO.newBuilder()
                 .setId(region.getId())
                 .setName(region.getName())
                 .setOrdinal(region.getOrdinal())
                 .setLatitude(region.getLatitude())
                 .setLongitude(region.getLongitude())
-                .setLocationId(region.getLocationId())
-                .setType(Optional.ofNullable(region.getType()).map(RegionType::of).orElse(null))
-                .setStatus(Optional.ofNullable(region.getStatus()).map(RegionStatus::of).orElse(null))
-                .setParentRegion(Optional.ofNullable(region.getParentRegion()).map(this::toPto).orElse(null))
+                .setLocationId(region.getLocationId());
+        Optional.ofNullable(region.getParentRegion()).map(Region::getId).ifPresent(builder::setParentRegionId);
+        Optional.ofNullable(region.getType()).map(RegionType::of).ifPresent(builder::setType);
+        Optional.ofNullable(region.getStatus()).map(RegionStatus::of).ifPresent(builder::setStatus);
+
+        return builder
                 .build();
     }
 
