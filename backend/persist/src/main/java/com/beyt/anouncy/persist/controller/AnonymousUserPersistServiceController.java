@@ -9,7 +9,7 @@ import com.beyt.anouncy.persist.repository.AnonymousUserRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 
 @GrpcService
@@ -20,7 +20,7 @@ public class AnonymousUserPersistServiceController extends AnonymousUserPersistS
 
     // For Crud
     @Override
-    public CrudRepository<AnonymousUser, String> getRepository() {
+    public Neo4jRepository<AnonymousUser, String> getRepository() {
         return anonymousUserRepository;
     }
 
@@ -52,6 +52,11 @@ public class AnonymousUserPersistServiceController extends AnonymousUserPersistS
     @Override
     public void findAllById(IdStrList request, StreamObserver<AnonymousUserListPTO> responseObserver) {
         BasePersistServiceController.super.findAllById(request, responseObserver);
+    }
+
+    @Override
+    public void findAll(PageablePTO request, StreamObserver<AnonymousUserListPTO> responseObserver) {
+        BasePersistServiceController.super.findAll(request, responseObserver);
     }
 
     @Override

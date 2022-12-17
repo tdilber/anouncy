@@ -4,14 +4,14 @@ import com.beyt.anouncy.common.persist.*;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import io.grpc.stub.StreamObserver;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.util.Objects;
 import java.util.Optional;
 
 public interface BasePersistServiceController<Entity, Pto, PtoList> {
 
-    CrudRepository<Entity, String> getRepository();
+    Neo4jRepository<Entity, String> getRepository();
 
     PtoConverter<Entity, Pto, PtoList> getConverter();
 
@@ -42,6 +42,12 @@ public interface BasePersistServiceController<Entity, Pto, PtoList> {
 
     default void findAllById(IdStrList request, StreamObserver<PtoList> responseObserver) {
         Iterable<Entity> voteList = getRepository().findAllById(ProtoUtil.of(request));
+        responseObserver.onNext(getConverter().toPtoList(voteList));
+        responseObserver.onCompleted();
+    }
+
+    default void findAll(PageablePTO request, StreamObserver<PtoList> responseObserver) {
+        Iterable<Entity> voteList = getRepository().findAll(ProtoUtil.toPageable(request));
         responseObserver.onNext(getConverter().toPtoList(voteList));
         responseObserver.onCompleted();
     }

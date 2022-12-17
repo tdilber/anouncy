@@ -10,7 +10,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 
 @GrpcService
@@ -37,7 +37,7 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
 
     // For Crud
     @Override
-    public CrudRepository<Region, String> getRepository() {
+    public Neo4jRepository<Region, String> getRepository() {
         return regionRepository;
     }
 
@@ -69,6 +69,11 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
     @Override
     public void findAllById(IdStrList request, StreamObserver<RegionListPTO> responseObserver) {
         BasePersistServiceController.super.findAllById(request, responseObserver);
+    }
+
+    @Override
+    public void findAll(PageablePTO request, StreamObserver<RegionListPTO> responseObserver) {
+        BasePersistServiceController.super.findAll(request, responseObserver);
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.beyt.anouncy.persist.repository.VoteRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -49,7 +49,7 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
 
     // CRUD Side
     @Override
-    public CrudRepository<Vote, String> getRepository() {
+    public Neo4jRepository<Vote, String> getRepository() {
         return voteRepository;
     }
 
@@ -81,6 +81,11 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
     @Override
     public void findAllById(IdStrList request, StreamObserver<VoteListPTO> responseObserver) {
         BasePersistServiceController.super.findAllById(request, responseObserver);
+    }
+
+    @Override
+    public void findAll(PageablePTO request, StreamObserver<VoteListPTO> responseObserver) {
+        BasePersistServiceController.super.findAll(request, responseObserver);
     }
 
     @Override

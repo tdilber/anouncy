@@ -43,7 +43,7 @@ message RegionPTO {
   int64 locationId = 6;
   RegionTypePTO type = 7;
   RegionStatusPTO status = 8;
-  RegionPTO parentRegion = 9;
+  optional string parentRegionId = 9;
 }
 
 message VotePTO {
@@ -146,6 +146,7 @@ service AnnouncePersistService {
   rpc findById(IdStr) returns (AnnouncePTO);
   rpc existsById(IdStr) returns (Exist);
   rpc findAllById(IdStrList) returns (AnnounceListPTO);
+  rpc findAll(PageablePTO) returns (AnnounceListPTO);
   rpc count(Empty) returns (Count);
   rpc deleteById(IdStr) returns (Empty);
   rpc delete(AnnouncePTO) returns (Empty);
@@ -163,6 +164,7 @@ service VotePersistService {
   rpc findById(IdStr) returns (VotePTO);
   rpc existsById(IdStr) returns (Exist);
   rpc findAllById(IdStrList) returns (VoteListPTO);
+  rpc findAll(PageablePTO) returns (VoteListPTO);
   rpc count(Empty) returns (Count);
   rpc deleteById(IdStr) returns (Empty);
   rpc delete(VotePTO) returns (Empty);
@@ -180,6 +182,7 @@ service RegionPersistService {
   rpc findById(IdStr) returns (RegionPTO);
   rpc existsById(IdStr) returns (Exist);
   rpc findAllById(IdStrList) returns (RegionListPTO);
+  rpc findAll(PageablePTO) returns (RegionListPTO);
   rpc count(Empty) returns (Count);
   rpc deleteById(IdStr) returns (Empty);
   rpc delete(RegionPTO) returns (Empty);
@@ -197,6 +200,7 @@ service AnonymousUserPersistService {
   rpc findById(IdStr) returns (AnonymousUserPTO);
   rpc existsById(IdStr) returns (Exist);
   rpc findAllById(IdStrList) returns (AnonymousUserListPTO);
+  rpc findAll(PageablePTO) returns (AnonymousUserListPTO);
   rpc count(Empty) returns (Count);
   rpc deleteById(IdStr) returns (Empty);
   rpc delete(AnonymousUserPTO) returns (Empty);

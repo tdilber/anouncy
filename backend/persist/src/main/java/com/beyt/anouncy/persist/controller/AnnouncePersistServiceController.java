@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -22,7 +22,6 @@ import java.util.UUID;
 public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc.AnnouncePersistServiceImplBase implements BasePersistServiceController<Announce, AnnouncePTO, AnnounceListPTO> {
     private final AnnounceRepository announceRepository;
     private final AnnouncePtoConverter announcePtoConverter;
-
 
     @Override
     public void findAllByAnonymousUserId(IdWithPageable request, StreamObserver<AnnouncePagePTO> responseObserver) {
@@ -41,7 +40,7 @@ public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc
 
     // For Crud
     @Override
-    public CrudRepository<Announce, String> getRepository() {
+    public Neo4jRepository<Announce, String> getRepository() {
         return announceRepository;
     }
 
@@ -73,6 +72,11 @@ public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc
     @Override
     public void findAllById(IdStrList request, StreamObserver<AnnounceListPTO> responseObserver) {
         BasePersistServiceController.super.findAllById(request, responseObserver);
+    }
+
+    @Override
+    public void findAll(PageablePTO request, StreamObserver<AnnounceListPTO> responseObserver) {
+        BasePersistServiceController.super.findAll(request, responseObserver);
     }
 
     @Override
