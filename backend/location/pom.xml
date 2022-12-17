@@ -55,6 +55,11 @@
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
+			<groupId>com.beyt.doc</groupId>
+			<artifactId>grpc-swagger-springdoc-openapi</artifactId>
+			<version>0.0.1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
 			<scope>runtime</scope>
@@ -86,6 +91,11 @@
 			<id>github</id>
 			<name>GitHub Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/tdilber/swagger-aggregator-springdoc-openapi</url>
+		</repository>
+		<repository>
+			<id>github2</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/tdilber/grpc-swagger-springdoc-openapi</url>
 		</repository>
 	</repositories>
 
