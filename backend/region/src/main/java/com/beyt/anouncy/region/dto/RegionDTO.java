@@ -1,7 +1,7 @@
 package com.beyt.anouncy.region.dto;
 
 import com.beyt.anouncy.common.entity.enumeration.LocationType;
-import com.beyt.anouncy.common.persist.RegionPTO;
+import com.beyt.anouncy.common.v1.RegionPTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,6 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -35,7 +34,7 @@ public class RegionDTO implements Serializable {
             this.regionId = region.getId();
             this.name = region.getName();
             this.type = LocationType.convert(region.getType());
-            this.parentLocationId = Optional.ofNullable(region.getParentRegion()).map(RegionPTO::getId).orElse(null);
+            this.parentLocationId = region.getParentRegionId();
         }
     }
 }

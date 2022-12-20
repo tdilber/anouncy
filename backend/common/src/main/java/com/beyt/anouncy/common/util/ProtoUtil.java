@@ -1,8 +1,8 @@
 package com.beyt.anouncy.common.util;
 
-import com.beyt.anouncy.common.persist.IdStr;
-import com.beyt.anouncy.common.persist.IdStrList;
-import com.beyt.anouncy.common.persist.PageablePTO;
+import com.beyt.anouncy.common.v1.IdStr;
+import com.beyt.anouncy.common.v1.IdStrList;
+import com.beyt.anouncy.common.v1.PageablePTO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 

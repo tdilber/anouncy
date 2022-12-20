@@ -1,7 +1,8 @@
 package com.beyt.anouncy.persist.controller;
 
-import com.beyt.anouncy.common.persist.*;
+import com.beyt.anouncy.common.persist.v1.AnnouncePersistServiceGrpc;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.*;
 import com.beyt.anouncy.persist.controller.base.BasePersistServiceController;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.helper.AnnouncePtoConverter;

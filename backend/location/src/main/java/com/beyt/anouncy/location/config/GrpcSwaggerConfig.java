@@ -1,9 +1,9 @@
 package com.beyt.anouncy.location.config;
 
-import com.beyt.anouncy.common.persist.AnnouncePersistServiceGrpc;
-import com.beyt.anouncy.common.persist.AnonymousUserPersistServiceGrpc;
-import com.beyt.anouncy.common.persist.RegionPersistServiceGrpc;
-import com.beyt.anouncy.common.persist.VotePersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.AnnouncePersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.AnonymousUserPersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.RegionPersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
 import com.beyt.doc.grpc.service.GrpcRepositoryCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

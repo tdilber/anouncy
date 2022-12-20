@@ -1,6 +1,6 @@
 package com.beyt.anouncy.listing.service.base;
 
-import com.beyt.anouncy.common.persist.AnnounceVoteListPTO;
+import com.beyt.anouncy.common.vote.v1.AnnounceVoteListPTO;
 
 import java.util.Map;
 import java.util.Set;

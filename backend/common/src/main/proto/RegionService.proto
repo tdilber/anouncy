@@ -1,10 +1,10 @@
 syntax = "proto3";
-import "PersistService.proto";
+import "Common.proto";
 option java_multiple_files = true;
-package com.beyt.anouncy.common.persist;
+package com.beyt.anouncy.common.region.v1;
 
 service RegionService {
-  rpc findAllByParentRegionIdIsIn(IdStrList) returns (RegionListPTO);
-  rpc findAllByLocationIdIsIn(IdStrList) returns (RegionListPTO);
-  rpc findByLocationId(IdStr) returns (RegionPTO);
+  rpc findAllByParentRegionIdIsIn(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findAllByLocationIdIsIn(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findByLocationId(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.RegionPTO);
 }

@@ -1,7 +1,7 @@
 syntax = "proto3";
-import "PersistService.proto";
+import "Common.proto";
 option java_multiple_files = true;
-package com.beyt.anouncy.common.persist;
+package com.beyt.anouncy.common.vote.v1;
 
 message AnnounceVotePTO {
   int64 yes = 1;
@@ -34,7 +34,7 @@ service VoteFetchService {
   rpc fetchAll(AnnounceVoteFetchAllRequest) returns (AnnounceVoteListPTO);
   rpc fetchOne(AnnounceVoteFetchOneRequest) returns (AnnounceVotePTO);
 
-  rpc getAllVoteCounts(VoteCountMultiRequest) returns (VoteCountListPTO);
-  rpc getVoteCount(VoteCountSingleRequest) returns (VoteCountPTO);
-  rpc getVoteSummaries(VoteSummaryRequest) returns (VoteSummaryListPTO);
+  rpc getAllVoteCounts(com.beyt.anouncy.common.v1.VoteCountMultiRequest) returns (com.beyt.anouncy.common.v1.VoteCountListPTO);
+  rpc getVoteCount(com.beyt.anouncy.common.v1.VoteCountSingleRequest) returns (com.beyt.anouncy.common.v1.VoteCountPTO);
+  rpc getVoteSummaries(com.beyt.anouncy.common.v1.VoteSummaryRequest) returns (com.beyt.anouncy.common.v1.VoteSummaryListPTO);
 }

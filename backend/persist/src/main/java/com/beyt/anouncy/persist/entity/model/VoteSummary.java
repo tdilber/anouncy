@@ -1,6 +1,7 @@
 package com.beyt.anouncy.persist.entity.model;
 
-import com.beyt.anouncy.common.persist.VoteSummaryPTO;
+
+import com.beyt.anouncy.common.v1.VoteSummaryPTO;
 
 public record VoteSummary(String id, Boolean value, String announceId) {
 

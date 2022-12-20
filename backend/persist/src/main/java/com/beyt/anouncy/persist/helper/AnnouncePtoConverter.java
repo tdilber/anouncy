@@ -1,11 +1,11 @@
 package com.beyt.anouncy.persist.helper;
 
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
-import com.beyt.anouncy.common.persist.AnnounceListPTO;
-import com.beyt.anouncy.common.persist.AnnouncePTO;
-import com.beyt.anouncy.common.persist.Empty;
-import com.beyt.anouncy.common.persist.VotePersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.AnnounceListPTO;
+import com.beyt.anouncy.common.v1.AnnouncePTO;
+import com.beyt.anouncy.common.v1.Empty;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import lombok.RequiredArgsConstructor;

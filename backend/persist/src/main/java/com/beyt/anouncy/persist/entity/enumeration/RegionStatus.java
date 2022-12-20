@@ -1,7 +1,7 @@
 package com.beyt.anouncy.persist.entity.enumeration;
 
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
-import com.beyt.anouncy.common.persist.RegionStatusPTO;
+import com.beyt.anouncy.common.v1.RegionStatusPTO;
 
 import java.util.Objects;
 

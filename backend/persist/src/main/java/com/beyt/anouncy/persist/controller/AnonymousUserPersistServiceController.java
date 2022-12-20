@@ -1,6 +1,7 @@
 package com.beyt.anouncy.persist.controller;
 
-import com.beyt.anouncy.common.persist.*;
+import com.beyt.anouncy.common.persist.v1.AnonymousUserPersistServiceGrpc;
+import com.beyt.anouncy.common.v1.*;
 import com.beyt.anouncy.persist.controller.base.BasePersistServiceController;
 import com.beyt.anouncy.persist.entity.AnonymousUser;
 import com.beyt.anouncy.persist.helper.AnonymousUserPtoConverter;

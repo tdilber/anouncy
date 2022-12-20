@@ -1,7 +1,7 @@
 package com.beyt.anouncy.persist.controller.base;
 
-import com.beyt.anouncy.common.persist.*;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.*;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import io.grpc.stub.StreamObserver;
 import org.springframework.data.neo4j.repository.Neo4jRepository;

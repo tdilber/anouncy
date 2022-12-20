@@ -2,7 +2,7 @@ package com.beyt.anouncy.listing.service.impl.content;
 
 import com.beyt.anouncy.common.entity.redis.AnnouncePageDTO;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
-import com.beyt.anouncy.common.persist.AnnouncePersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.AnnouncePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.listing.service.base.IAnnounceListContentProvider;

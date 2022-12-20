@@ -1,10 +1,10 @@
 package com.beyt.anouncy.vote.service;
 
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
-import com.beyt.anouncy.common.persist.VoteCountPTO;
-import com.beyt.anouncy.common.persist.VoteCountSingleRequest;
-import com.beyt.anouncy.common.persist.VotePersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
+import com.beyt.anouncy.common.v1.VoteCountPTO;
+import com.beyt.anouncy.common.v1.VoteCountSingleRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.devh.boot.grpc.client.inject.GrpcClient;

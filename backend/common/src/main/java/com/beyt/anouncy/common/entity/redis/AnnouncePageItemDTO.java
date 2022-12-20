@@ -1,10 +1,10 @@
 package com.beyt.anouncy.common.entity.redis;
 
 import com.beyt.anouncy.common.entity.elasticsearch.AnnounceSearchItem;
-import com.beyt.anouncy.common.persist.AnnouncePTO;
-import com.beyt.anouncy.common.persist.AnnounceVotePTO;
-import com.beyt.anouncy.common.persist.VoteCountPTO;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.AnnouncePTO;
+import com.beyt.anouncy.common.v1.VoteCountPTO;
+import com.beyt.anouncy.common.vote.v1.AnnounceVotePTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

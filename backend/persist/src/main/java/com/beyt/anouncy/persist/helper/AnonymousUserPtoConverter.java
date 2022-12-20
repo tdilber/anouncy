@@ -1,7 +1,8 @@
 package com.beyt.anouncy.persist.helper;
 
-import com.beyt.anouncy.common.persist.AnonymousUserListPTO;
-import com.beyt.anouncy.common.persist.AnonymousUserPTO;
+
+import com.beyt.anouncy.common.v1.AnonymousUserListPTO;
+import com.beyt.anouncy.common.v1.AnonymousUserPTO;
 import com.beyt.anouncy.persist.entity.AnonymousUser;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import org.apache.commons.collections4.CollectionUtils;

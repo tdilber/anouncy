@@ -1,9 +1,9 @@
 package com.beyt.anouncy.listing.service.impl;
 
-import com.beyt.anouncy.common.persist.AnnounceVoteFetchAllRequest;
-import com.beyt.anouncy.common.persist.AnnounceVoteFetchAllRequestItem;
-import com.beyt.anouncy.common.persist.AnnounceVoteListPTO;
-import com.beyt.anouncy.common.persist.VoteFetchServiceGrpc;
+import com.beyt.anouncy.common.vote.v1.AnnounceVoteFetchAllRequest;
+import com.beyt.anouncy.common.vote.v1.AnnounceVoteFetchAllRequestItem;
+import com.beyt.anouncy.common.vote.v1.AnnounceVoteListPTO;
+import com.beyt.anouncy.common.vote.v1.VoteFetchServiceGrpc;
 import com.beyt.anouncy.listing.service.base.IAnnounceListVoteFetch;
 import com.google.common.util.concurrent.ListenableFuture;
 import lombok.RequiredArgsConstructor;

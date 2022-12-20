@@ -1,7 +1,9 @@
 package com.beyt.anouncy.vote.controller;
 
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
-import com.beyt.anouncy.common.persist.*;
+import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
+import com.beyt.anouncy.common.v1.*;
+import com.beyt.anouncy.common.vote.v1.*;
 import com.beyt.anouncy.vote.service.VoteFetchService;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;

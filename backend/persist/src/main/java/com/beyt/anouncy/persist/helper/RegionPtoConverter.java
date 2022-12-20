@@ -1,7 +1,8 @@
 package com.beyt.anouncy.persist.helper;
 
-import com.beyt.anouncy.common.persist.RegionListPTO;
-import com.beyt.anouncy.common.persist.RegionPTO;
+
+import com.beyt.anouncy.common.v1.RegionListPTO;
+import com.beyt.anouncy.common.v1.RegionPTO;
 import com.beyt.anouncy.persist.entity.Region;
 import com.beyt.anouncy.persist.entity.enumeration.RegionStatus;
 import com.beyt.anouncy.persist.entity.enumeration.RegionType;

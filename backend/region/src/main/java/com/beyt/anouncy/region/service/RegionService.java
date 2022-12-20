@@ -1,8 +1,8 @@
 package com.beyt.anouncy.region.service;
 
-import com.beyt.anouncy.common.persist.RegionListPTO;
-import com.beyt.anouncy.common.persist.RegionPersistServiceGrpc;
+import com.beyt.anouncy.common.persist.v1.RegionPersistServiceGrpc;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.RegionListPTO;
 import com.beyt.anouncy.region.dto.RegionDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

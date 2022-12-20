@@ -1,209 +1,72 @@
 syntax = "proto3";
+import "Common.proto";
 option java_multiple_files = true;
-package com.beyt.anouncy.common.persist;
-
-message VoteSummaryRequest {
-  string anonymousUserId = 1;
-  string regionId = 2;
-  repeated string announceIdList = 3;
-}
-
-message VoteSummaryPTO {
-  string id = 1;
-  bool value = 2;
-  string announceId = 3;
-}
-
-message VoteSummaryListPTO {
-  repeated VoteSummaryPTO voteSummaryList = 1;
-}
-
-message VoteCountSingleRequest {
-  string regionId = 1;
-  string announceId = 2;
-}
-
-enum RegionTypePTO {
-  COUNTRY = 0;
-  CITY = 1;
-  COUNTY = 2;
-}
-
-enum RegionStatusPTO {
-  ACTIVE = 0;
-  INACTIVE = 1;
-}
-
-message RegionPTO {
-  string id = 1;
-  string name = 2;
-  int32 ordinal = 3;
-  double latitude = 4;
-  double longitude = 5;
-  int64 locationId = 6;
-  RegionTypePTO type = 7;
-  RegionStatusPTO status = 8;
-  optional string parentRegionId = 9;
-}
-
-message VotePTO {
-  string id = 1;
-  bool value = 2;
-  AnnouncePTO announce = 3;
-  AnonymousUserPTO anonymousUser = 4;
-  RegionPTO region = 5;
-  int64 createDate = 6;
-}
-
-message AnnouncePTO {
-  string id = 1;
-  string body = 2;
-  AnonymousUserPTO anonymousUser = 3;
-  RegionPTO beginRegion = 4;
-  RegionPTO currentRegion = 5;
-  int64 createDate = 6;
-}
-
-message AnonymousUserPTO {
-  string id = 1;
-}
-
-message AnnounceListPTO {
-  repeated AnnouncePTO announceList = 1;
-}
-message AnnouncePagePTO {
-  repeated AnnouncePTO announceList = 1;
-  PageablePTO pageable = 2;
-  int64 totalElement = 3;
-}
-
-message VoteListPTO {
-  repeated VotePTO voteList = 1;
-}
-
-message RegionListPTO {
-  repeated RegionPTO regionList = 1;
-}
-
-message AnonymousUserListPTO {
-  repeated AnonymousUserPTO anonymousUserList = 1;
-}
-
-message VoteCountMultiRequest {
-  string regionId = 1;
-  repeated string announceIdList = 2;
-}
-
-message VoteCountPTO {
-  string announceId = 1;
-  int64 yes = 2;
-  int64 no = 3;
-  string currentRegionId = 4;
-}
-
-message IdStr {
-  string id = 1;
-}
-
-message IdStrList {
-  repeated IdStr idList = 1;
-}
-
-message VoteCountListPTO {
-  repeated VoteCountPTO voteCountList = 1;
-}
-
-message Count {
-  int64 count = 1;
-}
-
-message Exist {
-  bool exist = 1;
-}
-
-message Empty {
-
-}
-
-message IdWithPageable {
-  string id = 1;
-  PageablePTO pageable = 2;
-}
-
-message PageablePTO {
-  int32 page = 1;
-  int32 size = 2;
-}
-
-message AnnounceIdAndAnonymousUserId {
-  string announceId = 1;
-  string anonymousUserId = 2;
-}
+package com.beyt.anouncy.common.persist.v1;
 
 service AnnouncePersistService {
-  rpc save(AnnouncePTO) returns (AnnouncePTO);
-  rpc saveAll(AnnounceListPTO) returns (AnnounceListPTO);
-  rpc findById(IdStr) returns (AnnouncePTO);
-  rpc existsById(IdStr) returns (Exist);
-  rpc findAllById(IdStrList) returns (AnnounceListPTO);
-  rpc findAll(PageablePTO) returns (AnnounceListPTO);
-  rpc count(Empty) returns (Count);
-  rpc deleteById(IdStr) returns (Empty);
-  rpc delete(AnnouncePTO) returns (Empty);
-  rpc deleteAllById(IdStrList) returns (Empty);
-  rpc deleteAll(AnnounceListPTO) returns (Empty);
+  rpc save(com.beyt.anouncy.common.v1.AnnouncePTO) returns (com.beyt.anouncy.common.v1.AnnouncePTO);
+  rpc saveAll(com.beyt.anouncy.common.v1.AnnounceListPTO) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);
+  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.AnnouncePTO);
+  rpc existsById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Exist);
+  rpc findAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);
+  rpc findAll(com.beyt.anouncy.common.v1.PageablePTO) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);
+  rpc count(com.beyt.anouncy.common.v1.Empty) returns (com.beyt.anouncy.common.v1.Count);
+  rpc deleteById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc delete(com.beyt.anouncy.common.v1.AnnouncePTO) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAll(com.beyt.anouncy.common.v1.AnnounceListPTO) returns (com.beyt.anouncy.common.v1.Empty);
 
 
-  rpc findAllByAnonymousUserId(IdWithPageable) returns (AnnouncePagePTO);
-  rpc findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId) returns (AnnouncePTO);
+  rpc findAllByAnonymousUserId(com.beyt.anouncy.common.v1.IdWithPageable) returns (com.beyt.anouncy.common.v1.AnnouncePagePTO);
+  rpc findByIdAndAnonymousUserId(com.beyt.anouncy.common.v1.AnnounceIdAndAnonymousUserId) returns (com.beyt.anouncy.common.v1.AnnouncePTO);
 }
 
 service VotePersistService {
-  rpc save(VotePTO) returns (VotePTO);
-  rpc saveAll(VoteListPTO) returns (VoteListPTO);
-  rpc findById(IdStr) returns (VotePTO);
-  rpc existsById(IdStr) returns (Exist);
-  rpc findAllById(IdStrList) returns (VoteListPTO);
-  rpc findAll(PageablePTO) returns (VoteListPTO);
-  rpc count(Empty) returns (Count);
-  rpc deleteById(IdStr) returns (Empty);
-  rpc delete(VotePTO) returns (Empty);
-  rpc deleteAllById(IdStrList) returns (Empty);
-  rpc deleteAll(VoteListPTO) returns (Empty);
+  rpc save(com.beyt.anouncy.common.v1.VotePTO) returns (com.beyt.anouncy.common.v1.VotePTO);
+  rpc saveAll(com.beyt.anouncy.common.v1.VoteListPTO) returns (com.beyt.anouncy.common.v1.VoteListPTO);
+  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.VotePTO);
+  rpc existsById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Exist);
+  rpc findAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.VoteListPTO);
+  rpc findAll(com.beyt.anouncy.common.v1.PageablePTO) returns (com.beyt.anouncy.common.v1.VoteListPTO);
+  rpc count(com.beyt.anouncy.common.v1.Empty) returns (com.beyt.anouncy.common.v1.Count);
+  rpc deleteById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc delete(com.beyt.anouncy.common.v1.VotePTO) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAll(com.beyt.anouncy.common.v1.VoteListPTO) returns (com.beyt.anouncy.common.v1.Empty);
 
-  rpc getAllVoteCounts(VoteCountMultiRequest) returns (VoteCountListPTO);
-  rpc getVoteCount(VoteCountSingleRequest) returns (VoteCountPTO);
-  rpc getVoteSummaries(VoteSummaryRequest) returns (VoteSummaryListPTO);
+  rpc getAllVoteCounts(com.beyt.anouncy.common.v1.VoteCountMultiRequest) returns (com.beyt.anouncy.common.v1.VoteCountListPTO);
+  rpc getVoteCount(com.beyt.anouncy.common.v1.VoteCountSingleRequest) returns (com.beyt.anouncy.common.v1.VoteCountPTO);
+  rpc getVoteSummaries(com.beyt.anouncy.common.v1.VoteSummaryRequest) returns (com.beyt.anouncy.common.v1.VoteSummaryListPTO);
 }
 
 service RegionPersistService {
-  rpc save(RegionPTO) returns (RegionPTO);
-  rpc saveAll(RegionListPTO) returns (RegionListPTO);
-  rpc findById(IdStr) returns (RegionPTO);
-  rpc existsById(IdStr) returns (Exist);
-  rpc findAllById(IdStrList) returns (RegionListPTO);
-  rpc findAll(PageablePTO) returns (RegionListPTO);
-  rpc count(Empty) returns (Count);
-  rpc deleteById(IdStr) returns (Empty);
-  rpc delete(RegionPTO) returns (Empty);
-  rpc deleteAllById(IdStrList) returns (Empty);
-  rpc deleteAll(RegionListPTO) returns (Empty);
+  rpc save(com.beyt.anouncy.common.v1.RegionPTO) returns (com.beyt.anouncy.common.v1.RegionPTO);
+  rpc saveAll(com.beyt.anouncy.common.v1.RegionListPTO) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.RegionPTO);
+  rpc existsById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Exist);
+  rpc findAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findAll(com.beyt.anouncy.common.v1.PageablePTO) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc count(com.beyt.anouncy.common.v1.Empty) returns (com.beyt.anouncy.common.v1.Count);
+  rpc deleteById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc delete(com.beyt.anouncy.common.v1.RegionPTO) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAll(com.beyt.anouncy.common.v1.RegionListPTO) returns (com.beyt.anouncy.common.v1.Empty);
 
-  rpc findAllByParentRegionIdIsIn(IdStrList) returns (RegionListPTO);
-  rpc findAllByLocationIdIsIn(IdStrList) returns (RegionListPTO);
-  rpc findByLocationId(IdStr) returns (RegionPTO);
+  rpc findAllByParentRegionIdIsIn(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findAllByLocationIdIsIn(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.RegionListPTO);
+  rpc findByLocationId(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.RegionPTO);
 }
 
 service AnonymousUserPersistService {
-  rpc save(AnonymousUserPTO) returns (AnonymousUserPTO);
-  rpc saveAll(AnonymousUserListPTO) returns (AnonymousUserListPTO);
-  rpc findById(IdStr) returns (AnonymousUserPTO);
-  rpc existsById(IdStr) returns (Exist);
-  rpc findAllById(IdStrList) returns (AnonymousUserListPTO);
-  rpc findAll(PageablePTO) returns (AnonymousUserListPTO);
-  rpc count(Empty) returns (Count);
-  rpc deleteById(IdStr) returns (Empty);
-  rpc delete(AnonymousUserPTO) returns (Empty);
-  rpc deleteAllById(IdStrList) returns (Empty);
-  rpc deleteAll(AnonymousUserListPTO) returns (Empty);
+  rpc save(com.beyt.anouncy.common.v1.AnonymousUserPTO) returns (com.beyt.anouncy.common.v1.AnonymousUserPTO);
+  rpc saveAll(com.beyt.anouncy.common.v1.AnonymousUserListPTO) returns (com.beyt.anouncy.common.v1.AnonymousUserListPTO);
+  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.AnonymousUserPTO);
+  rpc existsById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Exist);
+  rpc findAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.AnonymousUserListPTO);
+  rpc findAll(com.beyt.anouncy.common.v1.PageablePTO) returns (com.beyt.anouncy.common.v1.AnonymousUserListPTO);
+  rpc count(com.beyt.anouncy.common.v1.Empty) returns (com.beyt.anouncy.common.v1.Count);
+  rpc deleteById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc delete(com.beyt.anouncy.common.v1.AnonymousUserPTO) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.Empty);
+  rpc deleteAll(com.beyt.anouncy.common.v1.AnonymousUserListPTO) returns (com.beyt.anouncy.common.v1.Empty);
 }

@@ -1,9 +1,9 @@
 package com.beyt.anouncy.persist.helper;
 
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
-import com.beyt.anouncy.common.persist.VoteListPTO;
-import com.beyt.anouncy.common.persist.VotePTO;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.VoteListPTO;
+import com.beyt.anouncy.common.v1.VotePTO;
 import com.beyt.anouncy.persist.entity.Vote;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import lombok.RequiredArgsConstructor;
