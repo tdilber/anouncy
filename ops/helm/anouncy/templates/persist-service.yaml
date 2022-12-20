@@ -13,5 +13,8 @@ spec:
     - targetPort: {{ .Values.persist.deployment.port }}
       port: {{ .Values.persist.deployment.port }}
       name: persist-prometheus-port
+    - targetPort: {{ .Values.persist.deployment.grpcPort }}
+      port: {{ .Values.persist.deployment.grpcPort }}
+      name: persist-grpc-port
   selector:
     app: persist

@@ -30,28 +30,31 @@ spec:
       containers:
         - name: user-container
           image: {{ .Values.user.deployment.image }}
-          imagePullPolicy:  {{ .Values.user.deployment.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.user.deployment.imagePullPolicy }}
           ports:
             - name: user-port
-              containerPort:  {{ .Values.user.deployment.port }}
+              containerPort: {{ .Values.user.deployment.port }}
           envFrom:
             - secretRef:
                 name: postgres-db-secret
                 optional: false
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.user.deployment.jvmOpts }}
           resources:
             requests:
-              memory:  {{ .Values.user.deployment.memoryRequest }}
+              memory: {{ .Values.user.deployment.memoryRequest }}
             limits:
-              memory:  {{ .Values.user.deployment.memoryLimit }}
+              memory: {{ .Values.user.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds:  {{ .Values.user.deployment.readynessLivenessInitialDelay }}
-            periodSeconds:  {{ .Values.user.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.user.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.user.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.user.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.user.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.user.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.user.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.user.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.user.deployment.port }}

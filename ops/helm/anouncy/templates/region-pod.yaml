@@ -34,21 +34,25 @@ spec:
           ports:
             - name: region-port
               containerPort: {{ .Values.region.deployment.port }}
-
+            - name: region-grpc-port
+              containerPort: {{ .Values.region.deployment.grpcPort }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.region.deployment.jvmOpts }}
           resources:
             requests:
               memory: {{ .Values.region.deployment.memoryRequest }}
             limits:
               memory: {{ .Values.region.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds: {{ .Values.region.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.region.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.region.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.region.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.region.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.region.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.region.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.region.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.region.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.region.deployment.port }}

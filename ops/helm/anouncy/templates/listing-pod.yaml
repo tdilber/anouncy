@@ -34,20 +34,23 @@ spec:
           ports:
             - name: listing-port
               containerPort: {{ .Values.listing.deployment.port }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.listing.deployment.jvmOpts }}
           resources:
             requests:
               memory: {{ .Values.listing.deployment.memoryRequest }}
             limits:
               memory: {{ .Values.listing.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds: {{ .Values.listing.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.listing.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.listing.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.listing.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.listing.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.listing.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.listing.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.listing.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.listing.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.listing.deployment.port }}

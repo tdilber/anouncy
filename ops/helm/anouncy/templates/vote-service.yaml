@@ -13,5 +13,8 @@ spec:
     - targetPort: {{ .Values.vote.deployment.port }}
       port: {{ .Values.vote.deployment.port }}
       name: vote-prometheus-port
+    - targetPort: {{ .Values.vote.deployment.grpcPort }}
+      port: {{ .Values.vote.deployment.grpcPort }}
+      name: vote-grpc-port
   selector:
     app: vote

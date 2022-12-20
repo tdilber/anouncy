@@ -34,21 +34,25 @@ spec:
           ports:
             - name: persist-port
               containerPort: {{ .Values.persist.deployment.port }}
-
+            - name: persist-grpc-port
+              containerPort: {{ .Values.persist.deployment.grpcPort }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.persist.deployment.jvmOpts }}
           resources:
             requests:
               memory: {{ .Values.persist.deployment.memoryRequest }}
             limits:
               memory: {{ .Values.persist.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds: {{ .Values.persist.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.persist.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.persist.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.persist.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.persist.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.persist.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.persist.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.persist.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.persist.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.persist.deployment.port }}

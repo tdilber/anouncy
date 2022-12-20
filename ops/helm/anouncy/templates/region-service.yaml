@@ -13,5 +13,8 @@ spec:
     - targetPort: {{ .Values.region.deployment.port }}
       port: {{ .Values.region.deployment.port }}
       name: region-prometheus-port
+    - targetPort: {{ .Values.region.deployment.grpcPort }}
+      port: {{ .Values.region.deployment.grpcPort }}
+      name: region-grpc-port
   selector:
     app: region

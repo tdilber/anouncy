@@ -7,14 +7,15 @@ ingress:
 user:
   deployment:
     image: "${user_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
     port: 8080
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -27,14 +28,15 @@ user:
 announce:
   deployment:
     image: "${announce_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
-    port: 8080
+    port: 8081
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -43,38 +45,19 @@ announce:
   ingress:
     host: "api.anouncy.com"
     prefix: "/announce"
-
-listing:
-  deployment:
-    image: "${listing_deployment_image}"
-    imagePullPolicy: Always
-    port: 8080
-    replicas: 1
-    maxUnavailable: 0
-    maxSurge: 2
-    terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
-    memoryRequest: '256Mi'
-    memoryLimit: '768Mi'
-    annotations:
-  service:
-    annotations:
-  ingress:
-    host: "api.anouncy.com"
-    prefix: "/listing"
-
 vote:
   deployment:
     image: "${vote_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
-    port: 8080
+    port: 8082
+    grpcPort: 9092
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -84,17 +67,41 @@ vote:
     host: "api.anouncy.com"
     prefix: "/vote"
 
-region:
+listing:
   deployment:
-    image: "${region_deployment_image}"
+    image: "${listing_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
-    port: 8080
+    port: 8083
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/listing"
+
+
+region:
+  deployment:
+    image: "${region_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
+    imagePullPolicy: Always
+    port: 8084
+    grpcPort: 9094
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -104,37 +111,18 @@ region:
     host: "api.anouncy.com"
     prefix: "/region"
 
-persist:
-  deployment:
-    image: "${persist_deployment_image}"
-    imagePullPolicy: Always
-    port: 8080
-    replicas: 1
-    maxUnavailable: 0
-    maxSurge: 2
-    terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
-    memoryRequest: '256Mi'
-    memoryLimit: '768Mi'
-    annotations:
-  service:
-    annotations:
-  ingress:
-    host: "api.anouncy.com"
-    prefix: "/persist"
-
 location:
   deployment:
     image: "${location_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
-    port: 8080
+    port: 8085
     replicas: 1
     maxUnavailable: 0
     maxSurge: 2
     terminationGracePeriodSeconds: 10
-    readynessLivenessInitialDelay: 10
-    readynessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -143,3 +131,25 @@ location:
   ingress:
     host: "api.anouncy.com"
     prefix: "/location"
+
+persist:
+  deployment:
+    image: "${persist_deployment_image}"
+    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true -Dspring.neo4j.authentication.password=asd123"
+    imagePullPolicy: Always
+    port: 8086
+    grpcPort: 9096
+    replicas: 1
+    maxUnavailable: 0
+    maxSurge: 2
+    terminationGracePeriodSeconds: 10
+    readinessLivenessInitialDelay: 10
+    readinessLivenessPeriod: 5
+    memoryRequest: '256Mi'
+    memoryLimit: '768Mi'
+    annotations:
+  service:
+    annotations:
+  ingress:
+    host: "api.anouncy.com"
+    prefix: "/persist"

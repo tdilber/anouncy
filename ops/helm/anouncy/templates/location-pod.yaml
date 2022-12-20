@@ -34,21 +34,23 @@ spec:
           ports:
             - name: location-port
               containerPort: {{ .Values.location.deployment.port }}
-
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.location.deployment.jvmOpts }}
           resources:
             requests:
               memory: {{ .Values.location.deployment.memoryRequest }}
             limits:
               memory: {{ .Values.location.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds: {{ .Values.location.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.location.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.location.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.location.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.location.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.location.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.location.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.location.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.location.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.location.deployment.port }}

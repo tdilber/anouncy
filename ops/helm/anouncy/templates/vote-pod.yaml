@@ -34,21 +34,25 @@ spec:
           ports:
             - name: vote-port
               containerPort: {{ .Values.vote.deployment.port }}
-
+            - name: vote-grpc-port
+              containerPort: {{ .Values.vote.deployment.grpcPort }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.vote.deployment.jvmOpts }}
           resources:
             requests:
               memory: {{ .Values.vote.deployment.memoryRequest }}
             limits:
               memory: {{ .Values.vote.deployment.memoryLimit }}
           livenessProbe:
-            initialDelaySeconds: {{ .Values.vote.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.vote.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.vote.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.vote.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.vote.deployment.port }}
           readinessProbe:
-            initialDelaySeconds: {{ .Values.vote.deployment.readynessLivenessInitialDelay }}
-            periodSeconds: {{ .Values.vote.deployment.readynessLivenessPeriod }}
+            initialDelaySeconds: {{ .Values.vote.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.vote.deployment.readinessLivenessPeriod }}
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.vote.deployment.port }}
