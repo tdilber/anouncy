@@ -1,6 +1,9 @@
 server:
   port: 8082
 
+logging:
+  config: classpath:logback-local.xml
+
 anouncy:
   cache:
     redis:

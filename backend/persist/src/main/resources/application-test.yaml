@@ -2,7 +2,7 @@ server:
   port: 8086
 
 logging:
-  config: classpath:logback-local.xml
+  config: classpath:logback-test.xml
 
 org:
   neo4j:
@@ -20,7 +20,7 @@ grpc:
     port: 9096
   client:
     persist-grpc-server:
-      address: 'static://127.0.0.1:9096'
+      address: 'static://persist-service.default.svc.cluster.local:9096'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
@@ -37,7 +37,7 @@ spring:
     authentication:
       username: neo4j
       password: asd123
-    uri: bolt://localhost:7687
+    uri: bolt://prod-neo4j-neo4j-community.persist.svc.cluster.local:7687
 #    authentication:
 #      username: ${ANOUNCY_NEO4J_USERNAME}
 #      password: ${ANOUNCY_NEO4J_PASSWORD}

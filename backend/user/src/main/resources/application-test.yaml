@@ -2,7 +2,7 @@ server:
   port: 8080
 
 logging:
-  config: classpath:logback-local.xml
+  config: classpath:logback-test.xml
 
 spring:
   datasource:
@@ -18,7 +18,7 @@ grpc:
     port: 9090
   client:
     persist-grpc-server:
-      address: 'static://127.0.0.1:9096'
+      address: 'static://persist-service.default.svc.cluster.local:9096'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext

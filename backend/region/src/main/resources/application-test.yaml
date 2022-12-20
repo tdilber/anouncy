@@ -2,13 +2,13 @@ server:
   port: 8084
 
 logging:
-  config: classpath:logback-local.xml
+  config: classpath:logback-test.xml
 
 anouncy:
   cache:
     redis:
       version: 1
-      server: redis://localhost:6379
+      server: redis://redis-master.persist.svc.cluster.local:6379
       cluster: false
 
 grpc:
@@ -16,7 +16,7 @@ grpc:
     port: 9094
   client:
     persist-grpc-server:
-      address: 'static://127.0.0.1:9096'
+      address: 'static://persist-service.default.svc.cluster.local:9096'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext

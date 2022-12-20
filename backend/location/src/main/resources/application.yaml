@@ -1,6 +1,9 @@
 server:
   port: 8085
 
+logging:
+  config: classpath:logback-local.xml
+
 anouncy:
   location:
     google:
@@ -16,9 +19,9 @@ spring:
       host: localhost
       port: 27017
       username: mongo
-      password: fromENV
+      password: asd123
       authentication-database: admin
-      database: asd
+      database: twitch-observer
 
   main:
     allow-bean-definition-overriding: true
