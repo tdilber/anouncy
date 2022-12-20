@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.util.Strings;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,6 +30,8 @@ public class UserContextInterceptor implements HandlerInterceptor {
         String userId = request.getHeader("USER-ID");
         String anonymousUserId = request.getHeader("ANONYMOUS-USER-ID");
         String jwtModel = request.getHeader("JWT-MODEL");
+
+        MDC.put("requestId", Strings.isNotBlank(requestId) ? requestId : UUID.randomUUID().toString());
 
         if (Strings.isNotBlank(userId) || Strings.isNotBlank(anonymousUserId) || Strings.isNotBlank(jwtModel) || Strings.isNotBlank(requestId)) {
             try {
