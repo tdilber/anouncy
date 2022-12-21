@@ -37,8 +37,4 @@ spring:
       enabled: true
     livereload:
       enabled: false
-  elasticsearch:
-    uris: http://localhost:9200
-    password: j6NqYdncJK9T6GHQ
-    username: searcher
 
