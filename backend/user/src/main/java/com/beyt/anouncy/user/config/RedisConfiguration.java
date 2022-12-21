@@ -1,4 +1,4 @@
-package com.beyt.anouncy.common.config;
+package com.beyt.anouncy.user.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

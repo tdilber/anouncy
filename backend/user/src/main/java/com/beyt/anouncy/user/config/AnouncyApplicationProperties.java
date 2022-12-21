@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "anouncy", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "anouncy", ignoreUnknownFields = true)
 public class AnouncyApplicationProperties {
     private final Password password = new Password();
     private final JwtToken jwtToken = new JwtToken();

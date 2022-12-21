@@ -4,15 +4,6 @@ server:
 logging:
   config: classpath:logback-test.xml
 
-spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://${ANOUNCY_TEST_SERVER_IP}:5432/user_management
-    username: postgres_db_user
-    password: 8HdN8WD746iQ
-    hikari:
-      poolName: Hikari
-      auto-commit: false
 grpc:
   server:
     port: 9090
@@ -23,6 +14,15 @@ grpc:
       keepAliveWithoutCalls: true
       negotiationType: plaintext
 
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://postgres.persist.svc.cluster.local:5432/user_management
+    username: postgres_db_user
+    password: 8HdN8WD746iQ
+    hikari:
+      poolName: Hikari
+      auto-commit: false
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
@@ -57,6 +57,11 @@ management:
         enabled: true
 
 anouncy:
+  cache:
+    redis:
+      version: 1
+      server: redis://redis-master.persist.svc.cluster.local:6379
+      cluster: false
   jwtToken:
     secret: asdasdwqeqdaasdasdasdasdasdasdasdasdasdlmaslkdmalskdmalksdmalksmdlamksdlkadsasdasdasdasdasdasdasdasdweqweasdadqweqwe
   password:
