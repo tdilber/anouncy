@@ -25,6 +25,11 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+    search-grpc-server:
+      address: 'static://search-service.default.svc.cluster.local:9097'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 spring:
   devtools:
@@ -32,8 +37,4 @@ spring:
       enabled: true
     livereload:
       enabled: false
-  elasticsearch:
-    uris: http://elastic.persist.svc.cluster.local:9200
-    password: j6NqYdncJK9T6GHQ
-    username: searcher
 

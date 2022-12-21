@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: search-service
+  namespace: default
+  {{- with .Values.search.service.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: {{ .Values.search.deployment.port }}
+      port: {{ .Values.search.deployment.port }}
+      name: search-prometheus-port
+    - targetPort: {{ .Values.search.deployment.grpcPort }}
+      port: {{ .Values.search.deployment.grpcPort }}
+      name: search-grpc-port
+  selector:
+    app: search

@@ -1,5 +1,7 @@
-package com.beyt.anouncy.common.entity.elasticsearch;
+package com.beyt.anouncy.search.entity;
 
+import com.beyt.anouncy.common.entity.enumeration.RegionStatus;
+import com.beyt.anouncy.common.entity.enumeration.RegionType;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +11,6 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class AnnounceSearchItem implements Serializable {
     private String body;
 
     @NotNull
-    private UUID anonymousUserId;
+    private String anonymousUserId;
 
     @NotNull
     private RegionSearchItem beginRegion;
@@ -55,10 +56,10 @@ public class AnnounceSearchItem implements Serializable {
         @NotNull
         private Long locationId;
 
-//        @NotNull
-//        private RegionType type;
-//
-//        @NotNull
-//        private RegionStatus status;
+        @NotNull
+        private RegionType type;
+
+        @NotNull
+        private RegionStatus status;
     }
 }

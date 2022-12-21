@@ -1,0 +1,22 @@
+server:
+  port: 8087
+
+logging:
+  config: classpath:logback-test.xml
+
+grpc:
+  server:
+    port: 9097
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+  elasticsearch:
+    uris: https://logging-elasticsearch.logging.svc.cluster.local:9200
+    password: FROM_ENV
+    username: FROM_ENV
+
+

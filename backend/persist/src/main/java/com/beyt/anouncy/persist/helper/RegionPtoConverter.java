@@ -1,11 +1,11 @@
 package com.beyt.anouncy.persist.helper;
 
 
+import com.beyt.anouncy.common.entity.enumeration.RegionStatus;
+import com.beyt.anouncy.common.entity.enumeration.RegionType;
 import com.beyt.anouncy.common.v1.RegionListPTO;
 import com.beyt.anouncy.common.v1.RegionPTO;
 import com.beyt.anouncy.persist.entity.Region;
-import com.beyt.anouncy.persist.entity.enumeration.RegionStatus;
-import com.beyt.anouncy.persist.entity.enumeration.RegionType;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.logging.log4j.util.Strings;

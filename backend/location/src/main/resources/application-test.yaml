@@ -18,8 +18,8 @@ spring:
     mongodb:
       host: mongo.persist.svc.cluster.local
       port: 27017
-      username: mongo
-      password: asd123
+      username: ENV_PARAM
+      password: ENV_PARAM
       authentication-database: admin
       database: twitch-observer
 
@@ -40,7 +40,7 @@ spring:
 grpc:
   client:
     persist-grpc-server:
-      address: 'static://127.0.0.1:9096'
+      address: 'static://persist-service.default.svc.cluster.local:9096'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
@@ -53,23 +53,30 @@ springdoc:
     refreshTimeoutMs: 4000
     baseModule:
       description: "Location Service"
-      url: http://127.0.0.1:8085/v3/api-docs.yaml
+      apiUrl: https://api.anouncy.com/location
+      configUrl: http://location-service.default.svc.cluster.local:8085/v3/api-docs.yaml
     modules:
       module1:
         description: "User Service"
-        url: http://127.0.0.1:8080/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/user
+        configUrl: http://user-service.default.svc.cluster.local:8080/v3/api-docs.yaml
       module2:
         description: "Announce Service"
-        url: http://127.0.0.1:8081/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/announce
+        configUrl: http://announce-service.default.svc.cluster.local:8081/v3/api-docs.yaml
       module3:
         description: "Vote Service"
-        url: http://127.0.0.1:8082/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/vote
+        configUrl: http://vote-service.default.svc.cluster.local:8082/v3/api-docs.yaml
       module4:
         description: "Announce Listing Service"
-        url: http://127.0.0.1:8083/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/listing
+        configUrl: http://listing-service.default.svc.cluster.local:8083/v3/api-docs.yaml
       module5:
         description: "Region Service"
-        url: http://127.0.0.1:8084/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/region
+        configUrl: http://region-service.default.svc.cluster.local:8084/v3/api-docs.yaml
       module6:
         description: "Persist Service"
-        url: http://127.0.0.1:8086/v3/api-docs.yaml
+        apiUrl: https://api.anouncy.com/persist
+        configUrl: http://persist-service.default.svc.cluster.local:8086/v3/api-docs.yaml

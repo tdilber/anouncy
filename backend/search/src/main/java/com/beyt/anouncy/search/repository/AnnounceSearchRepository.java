@@ -1,6 +1,6 @@
-package com.beyt.anouncy.common.repository.elasticsearch;
+package com.beyt.anouncy.search.repository;
 
-import com.beyt.anouncy.common.entity.elasticsearch.AnnounceSearchItem;
+import com.beyt.anouncy.search.entity.AnnounceSearchItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

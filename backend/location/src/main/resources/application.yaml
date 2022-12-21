@@ -18,8 +18,8 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      username: mongo
-      password: asd123
+      username: ${ANOUNCY_MONGODB_USERNAME}
+      password: ${ANOUNCY_MONGODB_PASSWORD}
       authentication-database: admin
       database: twitch-observer
 
@@ -46,30 +46,35 @@ grpc:
       negotiationType: plaintext
 
 springdoc:
-  swagger-ui:
-    path: "/location/swagger-ui/index.html" # this is for treafik route with prefix
   grouping:
     enable: true
     refreshTimeoutMs: 4000
     baseModule:
       description: "Location Service"
-      url: http://127.0.0.1:8085/v3/api-docs.yaml
+      apiUrl: http://127.0.0.1:8085/v3/api-docs.yaml
+      configUrl: http://127.0.0.1:8085/v3/api-docs.yaml
     modules:
       module1:
         description: "User Service"
-        url: http://127.0.0.1:8080/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8080/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8080/v3/api-docs.yaml
       module2:
         description: "Announce Service"
-        url: http://127.0.0.1:8081/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8081/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8081/v3/api-docs.yaml
       module3:
         description: "Vote Service"
-        url: http://127.0.0.1:8082/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8082/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8082/v3/api-docs.yaml
       module4:
         description: "Announce Listing Service"
-        url: http://127.0.0.1:8083/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8083/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8083/v3/api-docs.yaml
       module5:
         description: "Region Service"
-        url: http://127.0.0.1:8084/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8084/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8084/v3/api-docs.yaml
       module6:
         description: "Persist Service"
-        url: http://127.0.0.1:8086/v3/api-docs.yaml
+        apiUrl: http://127.0.0.1:8086/v3/api-docs.yaml
+        configUrl: http://127.0.0.1:8086/v3/api-docs.yaml

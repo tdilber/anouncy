@@ -1,11 +1,11 @@
 package com.beyt.anouncy.persist;
 
+import com.beyt.anouncy.common.entity.enumeration.RegionStatus;
+import com.beyt.anouncy.common.entity.enumeration.RegionType;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.entity.AnonymousUser;
 import com.beyt.anouncy.persist.entity.Region;
 import com.beyt.anouncy.persist.entity.Vote;
-import com.beyt.anouncy.persist.entity.enumeration.RegionStatus;
-import com.beyt.anouncy.persist.entity.enumeration.RegionType;
 import com.beyt.anouncy.persist.entity.model.VoteCount;
 import com.beyt.anouncy.persist.repository.*;
 import org.assertj.core.api.Assertions;

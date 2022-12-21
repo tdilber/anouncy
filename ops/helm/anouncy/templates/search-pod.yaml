@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search
+  labels:
+    app: search
+spec:
+  selector:
+    matchLabels:
+      octopusexport: OctopusExport
+  replicas: {{ .Values.search.deployment.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.search.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.search.deployment.maxSurge }}
+  template:
+    metadata:
+      {{- with .Values.search.deployment.annotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: search
+        octopusexport: OctopusExport
+    spec:
+      terminationGracePeriodSeconds: {{ .Values.search.deployment.terminationGracePeriodSeconds }}
+      imagePullSecrets:
+        - name: docker-login-secret
+      containers:
+        - name: search-container
+          image: {{ .Values.search.deployment.image }}
+          imagePullPolicy: {{ .Values.search.deployment.imagePullPolicy }}
+          ports:
+            - name: search-port
+              containerPort: {{ .Values.search.deployment.port }}
+            - name: search-g-port
+              containerPort: {{ .Values.search.deployment.grpcPort }}
+          env:
+            - name: JAVA_OPTS
+              value: {{ .Values.search.deployment.jvmOpts }}
+          resources:
+            requests:
+              memory: {{ .Values.search.deployment.memoryRequest }}
+            limits:
+              memory: {{ .Values.search.deployment.memoryLimit }}
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.search.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.search.deployment.readinessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.search.deployment.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.search.deployment.readinessLivenessInitialDelay }}
+            periodSeconds: {{ .Values.search.deployment.readinessLivenessPeriod }}
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.search.deployment.port }}

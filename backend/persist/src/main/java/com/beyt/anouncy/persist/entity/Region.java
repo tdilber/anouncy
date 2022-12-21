@@ -1,7 +1,7 @@
 package com.beyt.anouncy.persist.entity;
 
-import com.beyt.anouncy.persist.entity.enumeration.RegionStatus;
-import com.beyt.anouncy.persist.entity.enumeration.RegionType;
+import com.beyt.anouncy.common.entity.enumeration.RegionStatus;
+import com.beyt.anouncy.common.entity.enumeration.RegionType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

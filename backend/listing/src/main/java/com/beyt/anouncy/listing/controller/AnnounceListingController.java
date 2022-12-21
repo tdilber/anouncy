@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/announce-list")
+@RequestMapping("/listing")
 @RequiredArgsConstructor
 public class AnnounceListingController {
     private final AnnounceListingService announceListingService;

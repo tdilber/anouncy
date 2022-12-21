@@ -1,4 +1,4 @@
-package com.beyt.anouncy.persist.entity.enumeration;
+package com.beyt.anouncy.common.entity.enumeration;
 
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
 import com.beyt.anouncy.common.v1.RegionStatusPTO;

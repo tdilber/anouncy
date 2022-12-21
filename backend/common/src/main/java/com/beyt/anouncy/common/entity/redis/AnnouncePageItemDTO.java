@@ -1,6 +1,5 @@
 package com.beyt.anouncy.common.entity.redis;
 
-import com.beyt.anouncy.common.entity.elasticsearch.AnnounceSearchItem;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.common.v1.AnnouncePTO;
 import com.beyt.anouncy.common.v1.VoteCountPTO;
@@ -49,13 +48,6 @@ public class AnnouncePageItemDTO implements Serializable {
         dto.setVoteUpdateDate(new Date());
         dto.setCurrentVote(false);
         return dto;
-    }
-
-    public AnnouncePageItemDTO(AnnounceSearchItem announce) {
-        this.regionId = announce.getBeginRegion().getId(); // TODO think about it
-        this.announceId = announce.getId();
-        this.body = announce.getBody();
-        this.announceCreateDate = announce.getCreateDate();
     }
 
     public void update(AnnounceVoteDTO vote) {

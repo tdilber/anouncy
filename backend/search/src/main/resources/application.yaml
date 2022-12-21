@@ -1,0 +1,21 @@
+server:
+  port: 8087
+
+logging:
+  config: classpath:logback-local.xml
+
+grpc:
+  server:
+    port: 9097
+
+spring:
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: false
+  elasticsearch:
+    uris: http://localhost:9200
+    password: j6NqYdncJK9T6GHQ
+    username: searcher
+

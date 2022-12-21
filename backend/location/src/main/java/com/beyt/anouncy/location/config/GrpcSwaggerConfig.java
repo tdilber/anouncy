@@ -4,6 +4,8 @@ import com.beyt.anouncy.common.persist.v1.AnnouncePersistServiceGrpc;
 import com.beyt.anouncy.common.persist.v1.AnonymousUserPersistServiceGrpc;
 import com.beyt.anouncy.common.persist.v1.RegionPersistServiceGrpc;
 import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
+import com.beyt.anouncy.common.search.v1.AnnounceSearchServiceGrpc;
+import com.beyt.anouncy.common.vote.v1.VoteFetchServiceGrpc;
 import com.beyt.doc.grpc.service.GrpcRepositoryCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -38,4 +40,13 @@ public class GrpcSwaggerConfig {
         return grpcRepositoryCreator.createGrpcController(AnnouncePersistServiceGrpc.AnnouncePersistServiceBlockingStub.class, "persist-grpc-server", "announce");
     }
 
+    @Bean
+    public Object createControllerSearch(GrpcRepositoryCreator grpcRepositoryCreator) {
+        return grpcRepositoryCreator.createGrpcController(AnnounceSearchServiceGrpc.AnnounceSearchServiceBlockingStub.class, "search-grpc-server", "search");
+    }
+
+    @Bean
+    public Object createControllerVoteService(GrpcRepositoryCreator grpcRepositoryCreator) {
+        return grpcRepositoryCreator.createGrpcController(VoteFetchServiceGrpc.VoteFetchServiceBlockingStub.class, "vote-grpc-server", "vote-service");
+    }
 }
