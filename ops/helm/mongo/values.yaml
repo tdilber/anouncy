@@ -1,0 +1,12 @@
+nameOverride: mongo
+fullnameOverride: mongo
+auth:
+  rootUser: mongo_db_user
+existingSecret: mongo-password-secret
+replicaCount: 2
+persistence:
+  enabled: true
+volumePermissions:
+  enabled: true
+service:
+  type: LoadBalancer
