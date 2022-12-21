@@ -34,7 +34,7 @@ spec:
           ports:
             - name: persist-port
               containerPort: {{ .Values.persist.deployment.port }}
-            - name: persist-grpc-port
+            - name: persist-g-port
               containerPort: {{ .Values.persist.deployment.grpcPort }}
           env:
             - name: JAVA_OPTS

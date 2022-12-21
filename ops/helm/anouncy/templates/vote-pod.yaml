@@ -34,7 +34,7 @@ spec:
           ports:
             - name: vote-port
               containerPort: {{ .Values.vote.deployment.port }}
-            - name: vote-grpc-port
+            - name: vote-g-port
               containerPort: {{ .Values.vote.deployment.grpcPort }}
           env:
             - name: JAVA_OPTS
