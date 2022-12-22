@@ -145,7 +145,7 @@ class UserControllerTestIT {
     }
 
     void signOut(UserResolveResultDTO dto, UserService.UserJwtResponse jwtResponse) throws Exception {
-        UserJwtModel tokenModel = jwtTokenProvider.getTokenModel(jwtResponse.getToken());
+        UserJwtModel tokenModel = jwtTokenProvider.getTokenModel(jwtResponse.getToken()).getSecond();
         MvcResult mvcResult = mockMvc
                 .perform(post("/user/sign-out")
                         .header("Authorization", jwtResponse.getToken())
@@ -160,3 +160,4 @@ class UserControllerTestIT {
         assertThat(resultValue).isEqualTo("OK");
     }
 }
+
