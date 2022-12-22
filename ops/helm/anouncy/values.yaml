@@ -115,7 +115,7 @@ region:
 location:
   deployment:
     image: "${location_deployment_image}"
-    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true -Dspring.data.mongodb.username=${mongodb_username} -Dspring.data.mongodb.password=${mongodb_password}"
+    jvmOpts: "-Dspring.profiles.active=test -Dspringdoc.grpc.enable=false -Dspring.data.mongodb.username=${mongodb_username} -Dspring.data.mongodb.password=${mongodb_password} -Dfile.encoding=UTF-8 -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
     port: 8085
     replicas: 1
@@ -158,7 +158,7 @@ persist:
 search:
   deployment:
     image: "${search_deployment_image}"
-    jvmOpts: "-Dspringdoc.grpc.enable=false -Dspring.profiles.active=test -Dspring.elasticsearch.username=${elasticsearch_username} -Dspring.elasticsearch.password=${elasticsearch_password} -Dfile.encoding=UTF-8 -Dlog4j2.formatMsgNoLookups=true"
+    jvmOpts: "-Dspring.profiles.active=test -Dspring.elasticsearch.username=${elasticsearch_username} -Dspring.elasticsearch.password=${elasticsearch_password} -Dfile.encoding=UTF-8 -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
     port: 8087
     grpcPort: 9097
