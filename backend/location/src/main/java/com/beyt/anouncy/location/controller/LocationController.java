@@ -4,14 +4,16 @@ import com.beyt.anouncy.location.dto.LocationDTO;
 import com.beyt.anouncy.location.entity.Location;
 import com.beyt.anouncy.location.service.LocationService;
 import com.beyt.anouncy.location.service.provider.LocationProviderManager;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(description = "/location/v1", name = "Location Service (Select Location Service)")
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/location/v1")
 @RequiredArgsConstructor
 public class LocationController {
     private final LocationProviderManager locationProviderManager;

@@ -4,6 +4,7 @@ import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
 import com.beyt.anouncy.user.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(description = "/user/v1", name = "User Service (Select User Service)")
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user/v1")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

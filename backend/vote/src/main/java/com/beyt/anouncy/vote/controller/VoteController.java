@@ -12,9 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(description = "/vote", name = "Vote Service (Select Vote Service)")
+@Tag(description = "/vote/v1", name = "Vote Service (Select Vote Service)")
 @RestController
-@RequestMapping("/vote")
+@RequestMapping("/vote/v1")
 @RequiredArgsConstructor
 public class VoteController {
     private final VoteService voteService;

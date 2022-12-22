@@ -3,6 +3,7 @@ package com.beyt.anouncy.announce.controller;
 import com.beyt.anouncy.announce.dto.AnnounceCreateDTO;
 import com.beyt.anouncy.announce.service.AnnounceService;
 import com.beyt.anouncy.common.entity.redis.AnnouncePageItemDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,8 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+@Tag(description = "/announce/v1", name = "Announce Service (Select Announce Service)")
 @RestController
-@RequestMapping("/announce")
+@RequestMapping("/announce/v1")
 @RequiredArgsConstructor
 public class AnnounceController {
     private final AnnounceService announceService;
