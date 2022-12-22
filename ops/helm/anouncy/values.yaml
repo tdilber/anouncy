@@ -158,7 +158,7 @@ persist:
 search:
   deployment:
     image: "${search_deployment_image}"
-    jvmOpts: "-Dfile.encoding=UTF-8 -Dspring.profiles.active=test -Dlog4j2.formatMsgNoLookups=true -Dspring.elasticsearch.username=${elasticsearch_username} -Dspring.elasticsearch.password=${elasticsearch_password}"
+    jvmOpts: "-Dspringdoc.grpc.enable=false -Dspring.profiles.active=test -Dspring.elasticsearch.username=${elasticsearch_username} -Dspring.elasticsearch.password=${elasticsearch_password} -Dfile.encoding=UTF-8 -Dlog4j2.formatMsgNoLookups=true"
     imagePullPolicy: Always
     port: 8087
     grpcPort: 9097

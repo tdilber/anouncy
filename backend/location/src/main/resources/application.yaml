@@ -46,6 +46,9 @@ grpc:
       negotiationType: plaintext
 
 springdoc:
+  grpc:
+    enable:
+      false
   grouping:
     enable: true
     refreshTimeoutMs: 4000

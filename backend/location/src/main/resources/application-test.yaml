@@ -46,6 +46,9 @@ grpc:
       negotiationType: plaintext
 
 springdoc:
+  grpc:
+    enable:
+      true
   swagger-ui:
     path: "/location/swagger-ui/index.html" # this is for treafik route with prefix
   grouping:

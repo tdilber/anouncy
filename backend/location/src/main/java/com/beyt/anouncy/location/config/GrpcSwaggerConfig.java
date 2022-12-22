@@ -8,11 +8,13 @@ import com.beyt.anouncy.common.search.v1.AnnounceSearchServiceGrpc;
 import com.beyt.anouncy.common.vote.v1.VoteFetchServiceGrpc;
 import com.beyt.doc.grpc.service.GrpcRepositoryCreator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
+@ConditionalOnProperty("springdoc.grpc.enable")
 public class GrpcSwaggerConfig {
 
     @Bean
