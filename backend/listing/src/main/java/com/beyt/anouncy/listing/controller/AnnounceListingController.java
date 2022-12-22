@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(description = "/listing/v1", name = "Listing Service (Select Listing Service)")
+@Tag(description = "/listing/v1", name = "Listing Service")
 @RestController
 @RequestMapping("/listing/v1")
 @RequiredArgsConstructor

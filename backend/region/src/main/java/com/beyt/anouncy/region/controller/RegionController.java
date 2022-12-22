@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(description = "/region/v1", name = "Region Service (Select Region Service)")
+@Tag(description = "/region/v1", name = "Region Service")
 @RestController
 @RequestMapping("/region/v1")
 @RequiredArgsConstructor

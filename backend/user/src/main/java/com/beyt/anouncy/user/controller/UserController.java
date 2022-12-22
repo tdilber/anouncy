@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(description = "/user/v1", name = "User Service (Select User Service)")
+@Tag(description = "/user/v1", name = "User Service")
 @Slf4j
 @RestController
 @RequestMapping("/user/v1")

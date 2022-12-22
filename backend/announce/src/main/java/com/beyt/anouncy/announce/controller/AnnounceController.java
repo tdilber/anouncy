@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(description = "/announce/v1", name = "Announce Service (Select Announce Service)")
+@Tag(description = "/announce/v1", name = "Announce Service")
 @RestController
 @RequestMapping("/announce/v1")
 @RequiredArgsConstructor

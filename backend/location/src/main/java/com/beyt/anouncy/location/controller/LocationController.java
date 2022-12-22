@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(description = "/location/v1", name = "Location Service (Select Location Service)")
+@Tag(description = "/location/v1", name = "Location Service")
 @RestController
 @RequestMapping("/location/v1")
 @RequiredArgsConstructor
