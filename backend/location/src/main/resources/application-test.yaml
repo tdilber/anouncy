@@ -44,42 +44,49 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+    vote-grpc-server:
+      address: 'static://vote-service.default.svc.cluster.local:9092'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    search-grpc-server:
+      address: 'static://search-service.default.svc.cluster.local:9097'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 springdoc:
   grpc:
     enable:
       true
   swagger-ui:
-    path: "/location/swagger-ui/index.html" # this is for treafik route with prefix
+    path: "/location/swagger-ui.html"
+    url: "https://api.anouncy.com/v3/grouped-api-docs"
   grouping:
     enable: true
     refreshTimeoutMs: 4000
     baseModule:
       description: "Location Service"
-      apiUrl: https://api.anouncy.com/location
+      apiUrl: https://api.anouncy.com
       configUrl: http://location-service.default.svc.cluster.local:8085/v3/api-docs.yaml
     modules:
       module1:
         description: "User Service"
-        apiUrl: https://api.anouncy.com/user
+        apiUrl: https://api.anouncy.com
         configUrl: http://user-service.default.svc.cluster.local:8080/v3/api-docs.yaml
       module2:
         description: "Announce Service"
-        apiUrl: https://api.anouncy.com/announce
+        apiUrl: https://api.anouncy.com
         configUrl: http://announce-service.default.svc.cluster.local:8081/v3/api-docs.yaml
       module3:
         description: "Vote Service"
-        apiUrl: https://api.anouncy.com/vote
+        apiUrl: https://api.anouncy.com
         configUrl: http://vote-service.default.svc.cluster.local:8082/v3/api-docs.yaml
       module4:
         description: "Announce Listing Service"
-        apiUrl: https://api.anouncy.com/listing
+        apiUrl: https://api.anouncy.com
         configUrl: http://listing-service.default.svc.cluster.local:8083/v3/api-docs.yaml
       module5:
         description: "Region Service"
-        apiUrl: https://api.anouncy.com/region
+        apiUrl: https://api.anouncy.com
         configUrl: http://region-service.default.svc.cluster.local:8084/v3/api-docs.yaml
-      module6:
-        description: "Persist Service"
-        apiUrl: https://api.anouncy.com/persist
-        configUrl: http://persist-service.default.svc.cluster.local:8086/v3/api-docs.yaml

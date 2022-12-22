@@ -52,12 +52,12 @@
 		<dependency>
 			<groupId>com.beyt.doc</groupId>
 			<artifactId>swagger-aggregator-springdoc-openapi</artifactId>
-			<version>0.0.2</version>
+			<version>0.0.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.beyt.doc</groupId>
 			<artifactId>grpc-swagger-springdoc-openapi</artifactId>
-			<version>0.0.1.1</version>
+			<version>0.0.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>

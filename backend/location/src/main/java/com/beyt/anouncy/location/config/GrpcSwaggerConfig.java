@@ -24,31 +24,31 @@ public class GrpcSwaggerConfig {
 
     @Bean
     public Object createControllerVote(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(VotePersistServiceGrpc.VotePersistServiceBlockingStub.class, "persist-grpc-server", "vote");
+        return grpcRepositoryCreator.createGrpcController(VotePersistServiceGrpc.VotePersistServiceBlockingStub.class, "persist-grpc-server", "location/vote");
     }
 
     @Bean
     public Object createControllerRegion(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(RegionPersistServiceGrpc.RegionPersistServiceBlockingStub.class, "persist-grpc-server", "region");
+        return grpcRepositoryCreator.createGrpcController(RegionPersistServiceGrpc.RegionPersistServiceBlockingStub.class, "persist-grpc-server", "location/region");
     }
 
     @Bean
     public Object createControllerAnonymousUser(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(AnonymousUserPersistServiceGrpc.AnonymousUserPersistServiceBlockingStub.class, "persist-grpc-server", "anonymous-user");
+        return grpcRepositoryCreator.createGrpcController(AnonymousUserPersistServiceGrpc.AnonymousUserPersistServiceBlockingStub.class, "persist-grpc-server", "location/anonymous-user");
     }
 
     @Bean
     public Object createControllerAnnounce(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(AnnouncePersistServiceGrpc.AnnouncePersistServiceBlockingStub.class, "persist-grpc-server", "announce");
+        return grpcRepositoryCreator.createGrpcController(AnnouncePersistServiceGrpc.AnnouncePersistServiceBlockingStub.class, "persist-grpc-server", "location/announce");
     }
 
     @Bean
     public Object createControllerSearch(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(AnnounceSearchServiceGrpc.AnnounceSearchServiceBlockingStub.class, "search-grpc-server", "search");
+        return grpcRepositoryCreator.createGrpcController(AnnounceSearchServiceGrpc.AnnounceSearchServiceBlockingStub.class, "search-grpc-server", "location/search");
     }
 
     @Bean
     public Object createControllerVoteService(GrpcRepositoryCreator grpcRepositoryCreator) {
-        return grpcRepositoryCreator.createGrpcController(VoteFetchServiceGrpc.VoteFetchServiceBlockingStub.class, "vote-grpc-server", "vote-service");
+        return grpcRepositoryCreator.createGrpcController(VoteFetchServiceGrpc.VoteFetchServiceBlockingStub.class, "vote-grpc-server", "location/vote-service");
     }
 }
