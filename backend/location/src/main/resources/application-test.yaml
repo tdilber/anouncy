@@ -64,7 +64,7 @@ springdoc:
     url: "https://api.anouncy.com/v3/grouped-api-docs"
   grouping:
     enable: true
-    refreshTimeoutMs: 4000
+    refreshTimeoutMs: 15000
     baseModule:
       description: "Location Service"
       apiUrl: https://api.anouncy.com
