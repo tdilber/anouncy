@@ -6,6 +6,8 @@ import com.beyt.anouncy.common.model.UserJwtModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class UserContextInterceptor implements HandlerInterceptor {
 
@@ -31,7 +34,14 @@ public class UserContextInterceptor implements HandlerInterceptor {
         String anonymousUserId = request.getHeader("ANONYMOUS-USER-ID");
         String jwtModel = request.getHeader("JWT-MODEL");
 
-        MDC.put("requestId", Strings.isNotBlank(requestId) ? requestId : UUID.randomUUID().toString());
+        String requestIdNotBlank = Strings.isNotBlank(requestId) ? requestId : UUID.randomUUID().toString();
+        MDC.put("requestId", requestIdNotBlank);
+
+        if (StringUtils.endsWithIgnoreCase(request.getServletPath(), "/v3/api-docs.yaml")) {
+            log.debug("Rest Call Url: {}", request.getServletPath());
+        } else {
+            log.info("Rest Call Url: {}", request.getServletPath());
+        }
 
         if (Strings.isNotBlank(userId) || Strings.isNotBlank(anonymousUserId) || Strings.isNotBlank(jwtModel) || Strings.isNotBlank(requestId)) {
             try {
