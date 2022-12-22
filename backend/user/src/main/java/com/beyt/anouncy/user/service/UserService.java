@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,13 +125,15 @@ public class UserService {
     @Transactional
     public UserResolveResultDTO resolveToken(String token) {
         try {
-            UserJwtModel model = jwtTokenProvider.getTokenModel(token);
+            Pair<String, UserJwtModel> tokenModel = jwtTokenProvider.getTokenModel(token);
+            UserJwtModel model = tokenModel.getSecond();
+            String jwtModelStr = tokenModel.getFirst();
             UUID anonymousUserId = userSessionService.findAnonymousUserIdToSessionId(model.getUserSessionId());
             String newToken = null;
             if (model.isExpired(3600)) { // one hour
                 newToken = refreshSessionAndToken(model, anonymousUserId);
             }
-            return new UserResolveResultDTO(model.getUserId(), anonymousUserId, newToken);
+            return new UserResolveResultDTO(model.getUserId(), anonymousUserId, jwtModelStr, newToken);
         } catch (Exception e) {
             throw new ClientAuthorizationException("need.reauthorization", e);
         }
@@ -146,7 +149,7 @@ public class UserService {
 
     @NeedLogin
     public void signOut(String token) {
-        UserJwtModel model = jwtTokenProvider.getTokenModel(token);
+        UserJwtModel model = jwtTokenProvider.getTokenModel(token).getSecond();
         userSessionService.deleteSession(model.getUserSessionId());
     }
 

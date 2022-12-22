@@ -8,9 +8,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Slf4j
@@ -66,10 +68,13 @@ public class JwtTokenProvider {
     }
 
     @SneakyThrows
-    public UserJwtModel getTokenModel(String token) {
+    public Pair<String, UserJwtModel> getTokenModel(String token) {
         Claims claims = jwtParser.parseClaimsJws(token).getBody();
 
-        return objectMapper.readValue(claims.get(TOKEN_MODEL).toString(), UserJwtModel.class);
+        String jwtModelStr = claims.get(TOKEN_MODEL).toString();
+        String jwtModelBase64 = Base64.getEncoder().encodeToString(jwtModelStr.getBytes());
+        UserJwtModel userJwtModel = objectMapper.readValue(jwtModelStr, UserJwtModel.class);
+        return Pair.of(jwtModelBase64, userJwtModel);
     }
 
     public boolean validateToken(String authToken) {

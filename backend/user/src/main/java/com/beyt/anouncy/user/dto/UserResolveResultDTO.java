@@ -12,5 +12,6 @@ import java.util.UUID;
 public class UserResolveResultDTO {
     private UUID userId;
     private UUID anonymousUserId;
+    private String jwtModel;
     private String newToken;
 }
