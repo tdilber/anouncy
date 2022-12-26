@@ -2,10 +2,7 @@ package com.beyt.anouncy.region.controller;
 
 import com.beyt.anouncy.common.persist.v1.RegionPersistServiceGrpc;
 import com.beyt.anouncy.common.region.v1.RegionServiceGrpc;
-import com.beyt.anouncy.common.v1.IdStr;
-import com.beyt.anouncy.common.v1.IdStrList;
-import com.beyt.anouncy.common.v1.RegionListPTO;
-import com.beyt.anouncy.common.v1.RegionPTO;
+import com.beyt.anouncy.common.v1.*;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -25,13 +22,13 @@ public class RegionProtoController extends RegionServiceGrpc.RegionServiceImplBa
     }
 
     @Override
-    public void findAllByLocationIdIsIn(IdStrList request, StreamObserver<RegionListPTO> responseObserver) {
+    public void findAllByLocationIdIsIn(IdLongList request, StreamObserver<RegionListPTO> responseObserver) {
         responseObserver.onNext(regionPersistServiceBlockingStub.findAllByLocationIdIsIn(request));
         responseObserver.onCompleted();
     }
 
     @Override
-    public void findByLocationId(IdStr request, StreamObserver<RegionPTO> responseObserver) {
+    public void findByLocationId(IdLong request, StreamObserver<RegionPTO> responseObserver) {
         responseObserver.onNext(regionPersistServiceBlockingStub.findByLocationId(request));
         responseObserver.onCompleted();
     }
