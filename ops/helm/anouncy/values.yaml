@@ -11,11 +11,11 @@ user:
     imagePullPolicy: Always
     port: 8080
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -32,11 +32,11 @@ announce:
     imagePullPolicy: Always
     port: 8081
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -54,11 +54,11 @@ vote:
     port: 8082
     grpcPort: 9092
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -75,11 +75,11 @@ listing:
     imagePullPolicy: Always
     port: 8083
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -98,11 +98,11 @@ region:
     port: 8084
     grpcPort: 9094
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -119,11 +119,11 @@ location:
     imagePullPolicy: Always
     port: 8085
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -141,11 +141,11 @@ persist:
     port: 8086
     grpcPort: 9096
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
@@ -163,11 +163,11 @@ search:
     port: 8087
     grpcPort: 9097
     replicas: 1
-    maxUnavailable: 1
-    maxSurge: 0
+    maxUnavailable: 0
+    maxSurge: 1
     terminationGracePeriodSeconds: 10
-    readinessLivenessInitialDelay: 10
-    readinessLivenessPeriod: 5
+    readinessLivenessInitialDelay: 20
+    readinessLivenessPeriod: 7
     memoryRequest: '256Mi'
     memoryLimit: '768Mi'
     annotations:
