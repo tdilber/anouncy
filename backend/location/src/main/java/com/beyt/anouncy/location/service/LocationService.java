@@ -1,5 +1,6 @@
 package com.beyt.anouncy.location.service;
 
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.dto.LocationDTO;
 import com.beyt.anouncy.location.entity.Location;
 import com.beyt.anouncy.location.model.GeoJsonItem;
@@ -21,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -37,9 +39,16 @@ public class LocationService {
     @Autowired
     private LocationRepository locationRepository;
 
-    public LocationDTO findAllByParentId(Long parentId) {
+    public LocationDTO findAllDTOByParentId(Long parentId) {
         List<Location> locationList = locationRepository.findAllByParentLocationIdIsIn(List.of(parentId));
         return new LocationDTO(locationList);
+    }
+
+    public List<Location> findAllByParentId(Long parentId) {
+        return locationRepository.findById(parentId).map(l ->
+                        locationRepository.findAllByIdIsIn(l.getParentLocationIdWithSelfList()).stream()
+                                .filter(loc -> !LocationType.REGION.equals(loc.getType())).toList())
+                .orElseGet(ArrayList::new);
     }
 
     private void fillGeometryTurkey(List<Location> locationList) throws IOException {

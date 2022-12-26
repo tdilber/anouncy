@@ -69,7 +69,7 @@ public class UserService {
         return createUserJwtResponse(user, anonymousUser.getId());
     }
 
-    private UserJwtResponse createUserJwtResponse(User user, UUID anonymousUserId) {
+    UserJwtResponse createUserJwtResponse(User user, UUID anonymousUserId) {
         String newSessionId = userSessionService.createNewSession(anonymousUserId);
         UserJwtModel userJwtModel = user.createJwtModel(newSessionId);
         return new UserJwtResponse(jwtTokenProvider.createToken(userJwtModel));

@@ -18,8 +18,8 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      username: ${ANOUNCY_MONGODB_USERNAME}
-      password: ${ANOUNCY_MONGODB_PASSWORD}
+      username: mongo
+      password: asd123
       authentication-database: admin
       database: twitch-observer
 
@@ -38,6 +38,8 @@ spring:
       pool:
         size: 2
 grpc:
+  server:
+    port: 9095
   client:
     persist-grpc-server:
       address: 'static://127.0.0.1:9096'

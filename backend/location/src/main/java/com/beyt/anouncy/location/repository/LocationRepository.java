@@ -20,4 +20,6 @@ public interface LocationRepository extends MongoRepository<Location, Long> {
     List<Location> findAllByIdIsIn(List<Long> idList);
 
     List<Location> findAllByParentLocationIdIsIn(List<Long> parentIdList);
+
+    List<Location> findAllByParentLocationIdIsInAndId(List<Long> parentIdList, Long locationId);
 }

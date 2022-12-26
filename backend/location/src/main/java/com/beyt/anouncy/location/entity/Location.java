@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by tdilber at 25-Aug-19
@@ -73,6 +74,12 @@ public class Location implements Serializable {
             return Collections.EMPTY_LIST;
         }
 
-        return Arrays.stream(path.split("/|")).filter(Strings::isNotBlank).map(Long::parseLong).toList();
+        return Arrays.stream(path.split("\\|")).filter(Strings::isNotBlank).map(Long::parseLong).collect(Collectors.toList());
+    }
+
+    public List<Long> getParentLocationIdWithSelfList() {
+        List<Long> parentLocationIdList = getParentLocationIdList();
+        parentLocationIdList.add(this.getId());
+        return parentLocationIdList;
     }
 }

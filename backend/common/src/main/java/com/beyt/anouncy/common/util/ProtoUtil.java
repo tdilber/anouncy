@@ -1,8 +1,6 @@
 package com.beyt.anouncy.common.util;
 
-import com.beyt.anouncy.common.v1.IdStr;
-import com.beyt.anouncy.common.v1.IdStrList;
-import com.beyt.anouncy.common.v1.PageablePTO;
+import com.beyt.anouncy.common.v1.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -36,6 +34,22 @@ public final class ProtoUtil {
 
     public static IdStr toIdStr(String i) {
         return IdStr.newBuilder().setId(i).build();
+    }
+
+    public static Long of(IdLong idStr) {
+        return idStr.getId();
+    }
+
+    public static List<Long> of(IdLongList idStrList) {
+        return idStrList.getIdListList().stream().map(ProtoUtil::of).toList();
+    }
+
+    public static IdLongList toIdLongList(List<Long> idList) {
+        return IdLongList.newBuilder().addAllIdList(idList.stream().map(ProtoUtil::toIdLong).toList()).build();
+    }
+
+    public static IdLong toIdLong(Long i) {
+        return IdLong.newBuilder().setId(i).build();
     }
 
     public static PageablePTO toPageable(Pageable pageable) {

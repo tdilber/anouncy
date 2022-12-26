@@ -1,0 +1,8 @@
+syntax = "proto3";
+import "Common.proto";
+option java_multiple_files = true;
+package com.beyt.anouncy.common.location.v1;
+
+service LocationService {
+  rpc findAllParents(com.beyt.anouncy.common.v1.IdLong) returns (com.beyt.anouncy.common.v1.LocationListPTO);
+}

@@ -19,3 +19,5 @@ spring:
     password: j6NqYdncJK9T6GHQ
     username: searcher
 
+springdoc:
+  enable-native-support: true

@@ -14,13 +14,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @Table(name = "users")
@@ -93,7 +91,7 @@ public class User extends BaseUuidEntity {
             return List.of();
         }
 
-        return Arrays.stream(Optional.ofNullable(StringUtils.split(selectedLocationIds, LOCATION_IDS_SEPARATOR)).orElse(new String[0])).map(idStr -> Long.parseLong(idStr.trim())).toList();
+        return Arrays.stream(selectedLocationIds.split(LOCATION_IDS_SEPARATOR)).filter(Strings::isNotBlank).map(idStr -> Long.parseLong(idStr.trim())).toList();
     }
 
     public void setSelectedLocationIdList(List<Long> selectedLocationIdList) {

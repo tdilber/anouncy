@@ -3,6 +3,7 @@ package com.beyt.anouncy.user.controller;
 import com.beyt.anouncy.user.dto.UserResolveResultDTO;
 import com.beyt.anouncy.user.dto.UserSignInDTO;
 import com.beyt.anouncy.user.dto.UserSignUpDTO;
+import com.beyt.anouncy.user.service.UserLocationService;
 import com.beyt.anouncy.user.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserLocationService userLocationService;
 
 
     @PostMapping("/sign-up")
@@ -51,6 +53,12 @@ public class UserController {
     public ResponseEntity<UserResolveResultDTO> tokenResolver(@PathVariable @NotBlank String token) {
         UserResolveResultDTO dto = userService.resolveToken(token);
         return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/profile/location")
+    public ResponseEntity<UserService.UserJwtResponse> updateLocation(@RequestParam Long locationId) {
+        UserService.UserJwtResponse userJwtResponse = userLocationService.updateOrSaveLocation(locationId);
+        return ResponseEntity.ok(userJwtResponse);
     }
 }
 

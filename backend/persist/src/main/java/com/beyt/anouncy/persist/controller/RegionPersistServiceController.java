@@ -1,6 +1,7 @@
 package com.beyt.anouncy.persist.controller;
 
 import com.beyt.anouncy.common.persist.v1.RegionPersistServiceGrpc;
+import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.common.v1.*;
 import com.beyt.anouncy.persist.controller.base.BasePersistServiceController;
 import com.beyt.anouncy.persist.entity.Region;
@@ -10,8 +11,10 @@ import com.beyt.anouncy.persist.repository.RegionRepository;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @GrpcService
@@ -23,17 +26,23 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
 
     @Override
     public void findAllByParentRegionIdIsIn(IdStrList request, StreamObserver<RegionListPTO> responseObserver) {
-        throw new NotImplementedException();
+        List<Region> regionList = regionRepository.findAllByParentRegionIdIsIn(ProtoUtil.of(request));
+        responseObserver.onNext(regionPtoConverter.toPtoList(regionList));
+        responseObserver.onCompleted();
     }
 
     @Override
-    public void findAllByLocationIdIsIn(IdStrList request, StreamObserver<RegionListPTO> responseObserver) {
-        throw new NotImplementedException();
+    public void findAllByLocationIdIsIn(IdLongList request, StreamObserver<RegionListPTO> responseObserver) {
+        List<Region> regionList = regionRepository.findAllByLocationIdIsIn(ProtoUtil.of(request));
+        responseObserver.onNext(regionPtoConverter.toPtoList(regionList));
+        responseObserver.onCompleted();
     }
 
     @Override
-    public void findByLocationId(IdStr request, StreamObserver<RegionPTO> responseObserver) {
-        throw new NotImplementedException();
+    public void findByLocationId(IdLong request, StreamObserver<RegionPTO> responseObserver) {
+        Optional<Region> regionOpt = regionRepository.findByLocationId(ProtoUtil.of(request));
+        regionOpt.ifPresent(region -> responseObserver.onNext(regionPtoConverter.toPto(region)));
+        responseObserver.onCompleted();
     }
 
     // For Crud

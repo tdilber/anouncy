@@ -27,7 +27,7 @@ public class LocationController {
 
     @GetMapping("/{parentLocationId}")
     private ResponseEntity<LocationDTO> findLocations(@PathVariable Long parentLocationId) {
-        LocationDTO dto = locationService.findAllByParentId(parentLocationId);
+        LocationDTO dto = locationService.findAllDTOByParentId(parentLocationId);
         return ResponseEntity.ok(dto);
     }
 }

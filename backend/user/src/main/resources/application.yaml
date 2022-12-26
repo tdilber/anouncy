@@ -9,6 +9,11 @@ grpc:
   server:
     port: 9090
   client:
+    location-grpc-server:
+      address: 'static://127.0.0.1:9095'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
     persist-grpc-server:
       address: 'static://127.0.0.1:9096'
       enableKeepAlive: true

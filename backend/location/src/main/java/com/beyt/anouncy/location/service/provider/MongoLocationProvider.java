@@ -38,7 +38,7 @@ public class MongoLocationProvider implements LocationProvider {
             return locations;
         }
 
-        List<Long> parentLocationIdList = countyList.get(0).getParentLocationIdList();
+        List<Long> parentLocationIdList = countyList.get(0).getParentLocationIdWithSelfList();
         if (CollectionUtils.isNotEmpty(parentLocationIdList)) {
             return locationRepository.findAllByIdIsIn(parentLocationIdList);
         }
@@ -55,6 +55,6 @@ public class MongoLocationProvider implements LocationProvider {
         if (parentOpt.isEmpty()) {
             return false;
         }
-        return validateTree(locations, parentOpt.get());
+        return validateTree(locations.stream().filter(l -> !l.getId().equals(child.getParentLocationId())).toList(), parentOpt.get());
     }
 }

@@ -46,6 +46,16 @@ message RegionPTO {
   optional string parentRegionId = 9;
 }
 
+message LocationPTO {
+  int64 id = 1;
+  string name = 2;
+  int32 ordinal = 3;
+  double latitude = 4;
+  double longitude = 5;
+  RegionTypePTO type = 6;
+  optional int64 parentLocationId = 7;
+}
+
 message VotePTO {
   string id = 1;
   bool value = 2;
@@ -85,6 +95,10 @@ message RegionListPTO {
   repeated RegionPTO regionList = 1;
 }
 
+message LocationListPTO {
+  repeated LocationPTO locationList = 1;
+}
+
 message AnonymousUserListPTO {
   repeated AnonymousUserPTO anonymousUserList = 1;
 }
@@ -99,6 +113,14 @@ message VoteCountPTO {
   int64 yes = 2;
   int64 no = 3;
   string currentRegionId = 4;
+}
+
+message IdLong {
+  int64 id = 1;
+}
+
+message IdLongList {
+  repeated IdLong idList = 1;
 }
 
 message IdStr {

@@ -6,7 +6,7 @@ import com.beyt.anouncy.common.v1.RegionTypePTO;
 import java.util.Objects;
 
 public enum RegionType {
-    COUNTRY, CITY, COUNTY;
+    COUNTRY, REGION, CITY, COUNTY;
 
     public LocationType convert() {
         switch (this) {

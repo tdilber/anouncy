@@ -38,6 +38,8 @@ spring:
       pool:
         size: 2
 grpc:
+  server:
+    port: 9095
   client:
     persist-grpc-server:
       address: 'static://persist-service.default.svc.cluster.local:9096'

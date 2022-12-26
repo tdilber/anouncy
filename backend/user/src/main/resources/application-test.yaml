@@ -8,6 +8,11 @@ grpc:
   server:
     port: 9090
   client:
+    location-grpc-server:
+      address: 'static://location-service.default.svc.cluster.local:9095'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
     persist-grpc-server:
       address: 'static://persist-service.default.svc.cluster.local:9096'
       enableKeepAlive: true
