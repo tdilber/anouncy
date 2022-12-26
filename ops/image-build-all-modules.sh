@@ -42,3 +42,9 @@ if [[ "$?" -ne 0 ]] ; then
   echo 'location build fail'; exit $?
 fi
 
+echo "Module search Starting"
+sh "$ANOUNCY_PROJECT_PATH/ops/image-build.sh" "search" "$ANOUNCY_DOCKER_HOST/anouncy-search:$(uuidgen)" "skip-common-build"
+if [[ "$?" -ne 0 ]] ; then
+  echo 'search build fail'; exit $?
+fi
+
