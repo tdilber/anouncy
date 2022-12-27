@@ -2,6 +2,7 @@ package com.beyt.anouncy.location.controller;
 
 import com.beyt.anouncy.common.location.v1.LocationServiceGrpc;
 import com.beyt.anouncy.common.util.ProtoUtil;
+import com.beyt.anouncy.common.v1.Empty;
 import com.beyt.anouncy.common.v1.IdLong;
 import com.beyt.anouncy.common.v1.LocationListPTO;
 import com.beyt.anouncy.location.entity.Location;
@@ -22,6 +23,13 @@ public class LocationProtoController extends LocationServiceGrpc.LocationService
     public void findAllParents(IdLong request, StreamObserver<LocationListPTO> responseObserver) {
         Long childId = ProtoUtil.of(request);
         List<Location> parents = locationService.findAllByParentId(childId);
+        responseObserver.onNext(LocationProtoUtil.getLocationListPTO(parents));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void findAllCountries(Empty request, StreamObserver<LocationListPTO> responseObserver) {
+        List<Location> parents = locationService.findAllCountries();
         responseObserver.onNext(LocationProtoUtil.getLocationListPTO(parents));
         responseObserver.onCompleted();
     }

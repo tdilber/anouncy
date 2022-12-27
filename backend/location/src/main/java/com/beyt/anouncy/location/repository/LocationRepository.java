@@ -1,5 +1,6 @@
 package com.beyt.anouncy.location.repository;
 
+import com.beyt.anouncy.common.entity.enumeration.LocationType;
 import com.beyt.anouncy.location.entity.Location;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -18,6 +19,8 @@ public interface LocationRepository extends MongoRepository<Location, Long> {
     List<Location> findAllByPointIntersect(Double latitude, Double longitude);
 
     List<Location> findAllByIdIsIn(List<Long> idList);
+
+    List<Location> findAllByTypeIsIn(List<LocationType> typeList);
 
     List<Location> findAllByParentLocationIdIsIn(List<Long> parentIdList);
 

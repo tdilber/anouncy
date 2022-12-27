@@ -51,6 +51,10 @@ public class LocationService {
                 .orElseGet(ArrayList::new);
     }
 
+    public List<Location> findAllCountries() {
+        return locationRepository.findAllByTypeIsIn(List.of(LocationType.COUNTRY));
+    }
+
     private void fillGeometryTurkey(List<Location> locationList) throws IOException {
         JSONObject locationJsonArray = new JSONObject(FileUtils.readFileToString(new File("anouncy/backend/location/src/main/resources/geo-data/gadm41_TUR_0.json"), StandardCharsets.UTF_8));
 
