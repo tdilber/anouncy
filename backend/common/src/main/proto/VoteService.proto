@@ -12,6 +12,10 @@ message AnnounceVotePTO {
   string announceId = 6;
 }
 
+message AnnounceVoteOptionalPTO {
+  optional AnnounceVotePTO vote = 1;
+}
+
 message AnnounceVoteListPTO {
   repeated AnnounceVotePTO voteList = 1;
 }
@@ -32,9 +36,9 @@ message AnnounceVoteFetchOneRequest {
 
 service VoteFetchService {
   rpc fetchAll(AnnounceVoteFetchAllRequest) returns (AnnounceVoteListPTO);
-  rpc fetchOne(AnnounceVoteFetchOneRequest) returns (AnnounceVotePTO);
+  rpc fetchOne(AnnounceVoteFetchOneRequest) returns (AnnounceVoteOptionalPTO);
 
   rpc getAllVoteCounts(com.beyt.anouncy.common.v1.VoteCountMultiRequest) returns (com.beyt.anouncy.common.v1.VoteCountListPTO);
-  rpc getVoteCount(com.beyt.anouncy.common.v1.VoteCountSingleRequest) returns (com.beyt.anouncy.common.v1.VoteCountPTO);
+  rpc getVoteCount(com.beyt.anouncy.common.v1.VoteCountSingleRequest) returns (com.beyt.anouncy.common.v1.VoteCountOptionalPTO);
   rpc getVoteSummaries(com.beyt.anouncy.common.v1.VoteSummaryRequest) returns (com.beyt.anouncy.common.v1.VoteSummaryListPTO);
 }

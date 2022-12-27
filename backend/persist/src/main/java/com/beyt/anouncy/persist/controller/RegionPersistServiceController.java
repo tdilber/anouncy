@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @GrpcService
 @RequiredArgsConstructor
-public class RegionPersistServiceController extends RegionPersistServiceGrpc.RegionPersistServiceImplBase implements BasePersistServiceController<Region, RegionPTO, RegionListPTO> {
+public class RegionPersistServiceController extends RegionPersistServiceGrpc.RegionPersistServiceImplBase implements BasePersistServiceController<Region, RegionPTO, RegionListPTO, RegionOptionalPTO> {
     private final RegionRepository regionRepository;
     private final RegionPtoConverter regionPtoConverter;
 
@@ -39,9 +39,9 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
     }
 
     @Override
-    public void findByLocationId(IdLong request, StreamObserver<RegionPTO> responseObserver) {
+    public void findByLocationId(IdLong request, StreamObserver<RegionOptionalPTO> responseObserver) {
         Optional<Region> regionOpt = regionRepository.findByLocationId(ProtoUtil.of(request));
-        regionOpt.ifPresent(region -> responseObserver.onNext(regionPtoConverter.toPto(region)));
+        responseObserver.onNext(regionPtoConverter.toOptionalEntity(regionOpt));
         responseObserver.onCompleted();
     }
 
@@ -52,7 +52,7 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
     }
 
     @Override
-    public PtoConverter<Region, RegionPTO, RegionListPTO> getConverter() {
+    public PtoConverter<Region, RegionPTO, RegionListPTO, RegionOptionalPTO> getConverter() {
         return regionPtoConverter;
     }
 
@@ -67,7 +67,7 @@ public class RegionPersistServiceController extends RegionPersistServiceGrpc.Reg
     }
 
     @Override
-    public void findById(IdStr request, StreamObserver<RegionPTO> responseObserver) {
+    public void findById(IdStr request, StreamObserver<RegionOptionalPTO> responseObserver) {
         BasePersistServiceController.super.findById(request, responseObserver);
     }
 

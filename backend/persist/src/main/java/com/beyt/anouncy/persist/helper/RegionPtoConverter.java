@@ -4,6 +4,7 @@ package com.beyt.anouncy.persist.helper;
 import com.beyt.anouncy.common.entity.enumeration.RegionStatus;
 import com.beyt.anouncy.common.entity.enumeration.RegionType;
 import com.beyt.anouncy.common.v1.RegionListPTO;
+import com.beyt.anouncy.common.v1.RegionOptionalPTO;
 import com.beyt.anouncy.common.v1.RegionPTO;
 import com.beyt.anouncy.persist.entity.Region;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
@@ -19,7 +20,7 @@ import java.util.stream.StreamSupport;
 
 
 @Component
-public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, RegionListPTO> {
+public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, RegionListPTO, RegionOptionalPTO> {
 
     @Override
     public Region toEntity(RegionPTO pto) {
@@ -28,7 +29,9 @@ public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, Regio
         }
 
         Region region = new Region();
-        region.setId(pto.getId());
+        if (pto.hasId()) {
+            region.setId(pto.getId());
+        }
         region.setName(pto.getName());
         region.setOrdinal(pto.getOrdinal());
         region.setLatitude(pto.getLatitude());
@@ -52,6 +55,13 @@ public class RegionPtoConverter implements PtoConverter<Region, RegionPTO, Regio
         }
 
         return listPTO.getRegionListList().stream().map(this::toEntity).toList();
+    }
+
+    @Override
+    public RegionOptionalPTO toOptionalEntity(Optional<Region> entityOptional) {
+        final RegionOptionalPTO.Builder builder = RegionOptionalPTO.newBuilder();
+        entityOptional.ifPresent(e -> builder.setRegion(toPto(e)));
+        return builder.build();
     }
 
     @Override

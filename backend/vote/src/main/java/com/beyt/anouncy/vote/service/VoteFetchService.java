@@ -3,7 +3,7 @@ package com.beyt.anouncy.vote.service;
 import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
 import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
-import com.beyt.anouncy.common.v1.VoteCountPTO;
+import com.beyt.anouncy.common.v1.VoteCountOptionalPTO;
 import com.beyt.anouncy.common.v1.VoteCountSingleRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -54,9 +54,9 @@ public class VoteFetchService {
 
                         regionIdAnnounceIdPairList.forEach(p -> // TODO change foreach To Neo4j Group By multi fetch
                         {
-                            VoteCountPTO voteCount = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(p.getRight()).setAnnounceId(p.getLeft()).build());
-                            if (Objects.nonNull(voteCount)) {
-                                AnnounceVoteDTO vote = AnnounceVoteDTO.of(voteCount);
+                            VoteCountOptionalPTO voteCountOptionalPTO = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(p.getRight()).setAnnounceId(p.getLeft()).build());
+                            if (voteCountOptionalPTO.hasVoteCount()) {
+                                AnnounceVoteDTO vote = AnnounceVoteDTO.of(voteCountOptionalPTO.getVoteCount());
                                 resultMap.put(p.getRight(), vote);
                                 regionIdVoteRedisMapMap.get(p.getRight()).fastPutAsync(p.getLeft(), vote);
 
@@ -82,9 +82,9 @@ public class VoteFetchService {
             return voteDTO;
         }
 
-        VoteCountPTO voteCount = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setAnnounceId(announceId).setRegionId(regionId).build());
-        if (Objects.nonNull(voteCount)) {
-            AnnounceVoteDTO dto = AnnounceVoteDTO.of(voteCount);
+        VoteCountOptionalPTO voteCountOptionalPTO = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setAnnounceId(announceId).setRegionId(regionId).build());
+        if (voteCountOptionalPTO.hasVoteCount()) {
+            AnnounceVoteDTO dto = AnnounceVoteDTO.of(voteCountOptionalPTO.getVoteCount());
             voteMap.fastPutAsync(announceId, dto);
             return dto;
         } else {

@@ -16,25 +16,24 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @GrpcService
 @RequiredArgsConstructor
-public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc.AnnouncePersistServiceImplBase implements BasePersistServiceController<Announce, AnnouncePTO, AnnounceListPTO> {
+public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc.AnnouncePersistServiceImplBase implements BasePersistServiceController<Announce, AnnouncePTO, AnnounceListPTO, AnnounceOptionalPTO> {
     private final AnnounceRepository announceRepository;
     private final AnnouncePtoConverter announcePtoConverter;
 
     @Override
     public void findAllByAnonymousUserId(IdWithPageable request, StreamObserver<AnnouncePagePTO> responseObserver) {
-        Page<Announce> announcePage = announceRepository.findAllByAnonymousUserId(UUID.fromString(request.getId()), PageRequest.of(request.getPageable().getPage(), request.getPageable().getSize()));
+        Page<Announce> announcePage = announceRepository.findAllByAnonymousUserId(request.getId(), PageRequest.of(request.getPageable().getPage(), request.getPageable().getSize()));
         responseObserver.onNext(AnnouncePagePTO.newBuilder().addAllAnnounceList(announcePage.getContent().stream().map(announcePtoConverter::toPto).toList()).setPageable(ProtoUtil.toPageable(announcePage.getPageable())).setTotalElement(announcePage.getTotalElements()).build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId request, StreamObserver<AnnouncePTO> responseObserver) {
-        Optional<Announce> announceOpt = announceRepository.findByIdAndAnonymousUserId(request.getAnnounceId(), UUID.fromString(request.getAnonymousUserId()));
-        announceOpt.ifPresent(a -> responseObserver.onNext(announcePtoConverter.toPto(a)));
+    public void findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId request, StreamObserver<AnnounceOptionalPTO> responseObserver) {
+        Optional<Announce> announceOpt = announceRepository.findByIdAndAnonymousUserId(request.getAnnounceId(), request.getAnonymousUserId());
+        responseObserver.onNext(announcePtoConverter.toOptionalEntity(announceOpt));
         responseObserver.onCompleted();
     }
 
@@ -46,7 +45,7 @@ public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc
     }
 
     @Override
-    public PtoConverter<Announce, AnnouncePTO, AnnounceListPTO> getConverter() {
+    public PtoConverter<Announce, AnnouncePTO, AnnounceListPTO, AnnounceOptionalPTO> getConverter() {
         return announcePtoConverter;
     }
 
@@ -61,7 +60,7 @@ public class AnnouncePersistServiceController extends AnnouncePersistServiceGrpc
     }
 
     @Override
-    public void findById(IdStr request, StreamObserver<AnnouncePTO> responseObserver) {
+    public void findById(IdStr request, StreamObserver<AnnounceOptionalPTO> responseObserver) {
         BasePersistServiceController.super.findById(request, responseObserver);
     }
 

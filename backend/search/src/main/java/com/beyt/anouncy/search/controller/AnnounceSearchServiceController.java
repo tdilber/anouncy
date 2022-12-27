@@ -43,9 +43,9 @@ public class AnnounceSearchServiceController extends AnnounceSearchServiceGrpc.A
     }
 
     @Override
-    public void findById(IdStr request, StreamObserver<AnnouncePTO> responseObserver) {
+    public void findById(IdStr request, StreamObserver<AnnounceOptionalPTO> responseObserver) {
         Optional<AnnounceSearchItem> voteOpt = announceSearchRepository.findById(ProtoUtil.of(request));
-        voteOpt.ifPresent(v -> responseObserver.onNext(announcePtoConverter.toPto(v)));
+        responseObserver.onNext(announcePtoConverter.toOptionalEntity(voteOpt));
         responseObserver.onCompleted();
     }
 

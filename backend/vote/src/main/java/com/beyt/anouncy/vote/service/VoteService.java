@@ -5,6 +5,7 @@ import com.beyt.anouncy.common.entity.redis.AnnounceVoteDTO;
 import com.beyt.anouncy.common.exception.ClientErrorException;
 import com.beyt.anouncy.common.persist.v1.VotePersistServiceGrpc;
 import com.beyt.anouncy.common.service.VoteRedisService;
+import com.beyt.anouncy.common.v1.VoteCountOptionalPTO;
 import com.beyt.anouncy.common.v1.VoteCountPTO;
 import com.beyt.anouncy.common.v1.VoteCountSingleRequest;
 import com.beyt.anouncy.vote.dto.VoteCreateDTO;
@@ -57,11 +58,13 @@ public class VoteService {
     }
 
     protected AnnounceVoteDTO fetchAnnounceVotes(String announceId, String regionId) {
-        VoteCountPTO count = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(regionId).setAnnounceId(announceId).build());
+        VoteCountOptionalPTO voteCountOptionalPTO = votePersistServiceBlockingStub.getVoteCount(VoteCountSingleRequest.newBuilder().setRegionId(regionId).setAnnounceId(announceId).build());
         AnnounceVoteDTO voteSingleCache = new AnnounceVoteDTO();
-        if (Objects.isNull(count)) {
+        if (!voteCountOptionalPTO.hasVoteCount()) {
             throw new ClientErrorException("announce.not.found");
         }
+
+        final VoteCountPTO count = voteCountOptionalPTO.getVoteCount();
 
         if (count.getCurrentRegionId().equals(regionId)) {
             throw new ClientErrorException("vote.region.not.suitable");

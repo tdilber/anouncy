@@ -13,7 +13,6 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,7 +30,7 @@ public class RegionService {
             throw new ClientErrorException("user.region.not.selected");
         }
 
-        RegionListPTO regionListPTO = regionServiceBlockingStub.findAllByLocationIdIsIn(ProtoUtil.toIdStrList(userContext.getUserJwtModel().getSelectedLocationIdList().stream().map(Objects::toString).toList()));
+        RegionListPTO regionListPTO = regionServiceBlockingStub.findAllByLocationIdIsIn(ProtoUtil.toIdLongList(userContext.getUserJwtModel().getSelectedLocationIdList()));
 
         if (regionListPTO.getRegionListList().size() != 1) {
             throw new DeveloperMistakeException(String.format("User Have active Region problem Anonymous User Id : %s Region Ids : %s Locations : %s", userContext.getAnonymousUserId(), regionListPTO.getRegionListList().stream().map(RegionPTO::getId).collect(Collectors.joining(" ,")), userContext.getUserJwtModel().getSelectedLocationIdList().stream().map(Object::toString).collect(Collectors.joining(" ,"))));

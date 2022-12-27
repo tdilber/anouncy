@@ -2,6 +2,7 @@ package com.beyt.anouncy.persist.helper;
 
 
 import com.beyt.anouncy.common.v1.AnonymousUserListPTO;
+import com.beyt.anouncy.common.v1.AnonymousUserOptionalPTO;
 import com.beyt.anouncy.common.v1.AnonymousUserPTO;
 import com.beyt.anouncy.persist.entity.AnonymousUser;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
@@ -11,10 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Component
-public class AnonymousUserPtoConverter implements PtoConverter<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO> {
+public class AnonymousUserPtoConverter implements PtoConverter<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO, AnonymousUserOptionalPTO> {
 
     @Override
     public AnonymousUser toEntity(AnonymousUserPTO pto) {
@@ -32,6 +34,13 @@ public class AnonymousUserPtoConverter implements PtoConverter<AnonymousUser, An
         }
 
         return listPTO.getAnonymousUserListList().stream().map(this::toEntity).toList();
+    }
+
+    @Override
+    public AnonymousUserOptionalPTO toOptionalEntity(Optional<AnonymousUser> entityOptional) {
+        final AnonymousUserOptionalPTO.Builder builder = AnonymousUserOptionalPTO.newBuilder();
+        entityOptional.ifPresent(e -> builder.setAnonymousUser(toPto(e)));
+        return builder.build();
     }
 
     @Override

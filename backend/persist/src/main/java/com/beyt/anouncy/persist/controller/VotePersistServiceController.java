@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @GrpcService
 @RequiredArgsConstructor
-public class VotePersistServiceController extends VotePersistServiceGrpc.VotePersistServiceImplBase implements BasePersistServiceController<Vote, VotePTO, VoteListPTO> {
+public class VotePersistServiceController extends VotePersistServiceGrpc.VotePersistServiceImplBase implements BasePersistServiceController<Vote, VotePTO, VoteListPTO, VoteOptionalPTO> {
     private final Neo4jCustomRepository neo4jCustomRepository;
     private final VoteRepository voteRepository;
     private final VotePtoConverter votePtoConverter;
@@ -34,9 +34,11 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
     }
 
     @Override
-    public void getVoteCount(VoteCountSingleRequest request, StreamObserver<VoteCountPTO> responseObserver) {
+    public void getVoteCount(VoteCountSingleRequest request, StreamObserver<VoteCountOptionalPTO> responseObserver) {
         Optional<com.beyt.anouncy.persist.entity.model.VoteCount> voteCount = neo4jCustomRepository.getVoteCount(request.getRegionId(), request.getAnnounceId());
-        voteCount.ifPresent(v -> responseObserver.onNext(v.convert()));
+        final VoteCountOptionalPTO.Builder builder = VoteCountOptionalPTO.newBuilder();
+        voteCount.ifPresent(v -> builder.setVoteCount(v.convert()));
+        responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 
@@ -55,7 +57,7 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
     }
 
     @Override
-    public PtoConverter<Vote, VotePTO, VoteListPTO> getConverter() {
+    public PtoConverter<Vote, VotePTO, VoteListPTO, VoteOptionalPTO> getConverter() {
         return votePtoConverter;
     }
 
@@ -70,7 +72,7 @@ public class VotePersistServiceController extends VotePersistServiceGrpc.VotePer
     }
 
     @Override
-    public void findById(IdStr request, StreamObserver<VotePTO> responseObserver) {
+    public void findById(IdStr request, StreamObserver<VoteOptionalPTO> responseObserver) {
         BasePersistServiceController.super.findById(request, responseObserver);
     }
 

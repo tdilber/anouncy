@@ -35,7 +35,7 @@ enum RegionStatusPTO {
 }
 
 message RegionPTO {
-  string id = 1;
+  optional string id = 1;
   string name = 2;
   int32 ordinal = 3;
   double latitude = 4;
@@ -57,7 +57,7 @@ message LocationPTO {
 }
 
 message VotePTO {
-  string id = 1;
+  optional string id = 1;
   bool value = 2;
   AnnouncePTO announce = 3;
   AnonymousUserPTO anonymousUser = 4;
@@ -66,7 +66,7 @@ message VotePTO {
 }
 
 message AnnouncePTO {
-  string id = 1;
+  optional string id = 1;
   string body = 2;
   AnonymousUserPTO anonymousUser = 3;
   RegionPTO beginRegion = 4;
@@ -78,25 +78,46 @@ message AnonymousUserPTO {
   string id = 1;
 }
 
+message AnnounceOptionalPTO {
+  optional AnnouncePTO announce = 1;
+}
+
 message AnnounceListPTO {
   repeated AnnouncePTO announceList = 1;
 }
+
 message AnnouncePagePTO {
   repeated AnnouncePTO announceList = 1;
   PageablePTO pageable = 2;
   int64 totalElement = 3;
 }
 
+message VoteOptionalPTO {
+  optional VotePTO vote = 1;
+}
+
 message VoteListPTO {
   repeated VotePTO voteList = 1;
+}
+
+message RegionOptionalPTO {
+  optional RegionPTO region = 1;
 }
 
 message RegionListPTO {
   repeated RegionPTO regionList = 1;
 }
 
+message LocationOptionalPTO {
+  optional LocationPTO location = 1;
+}
+
 message LocationListPTO {
   repeated LocationPTO locationList = 1;
+}
+
+message AnonymousUserOptionalPTO {
+  optional AnonymousUserPTO anonymousUser = 1;
 }
 
 message AnonymousUserListPTO {
@@ -129,6 +150,10 @@ message IdStr {
 
 message IdStrList {
   repeated IdStr idList = 1;
+}
+
+message VoteCountOptionalPTO {
+  optional VoteCountPTO voteCount = 1;
 }
 
 message VoteCountListPTO {

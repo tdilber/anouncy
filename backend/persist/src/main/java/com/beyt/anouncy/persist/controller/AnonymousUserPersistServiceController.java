@@ -15,7 +15,7 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 
 @GrpcService
 @RequiredArgsConstructor
-public class AnonymousUserPersistServiceController extends AnonymousUserPersistServiceGrpc.AnonymousUserPersistServiceImplBase implements BasePersistServiceController<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO> {
+public class AnonymousUserPersistServiceController extends AnonymousUserPersistServiceGrpc.AnonymousUserPersistServiceImplBase implements BasePersistServiceController<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO, AnonymousUserOptionalPTO> {
     private final AnonymousUserRepository anonymousUserRepository;
     private final AnonymousUserPtoConverter anonymousUserPtoConverter;
 
@@ -26,7 +26,7 @@ public class AnonymousUserPersistServiceController extends AnonymousUserPersistS
     }
 
     @Override
-    public PtoConverter<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO> getConverter() {
+    public PtoConverter<AnonymousUser, AnonymousUserPTO, AnonymousUserListPTO, AnonymousUserOptionalPTO> getConverter() {
         return anonymousUserPtoConverter;
     }
 
@@ -41,7 +41,7 @@ public class AnonymousUserPersistServiceController extends AnonymousUserPersistS
     }
 
     @Override
-    public void findById(IdStr request, StreamObserver<AnonymousUserPTO> responseObserver) {
+    public void findById(IdStr request, StreamObserver<AnonymousUserOptionalPTO> responseObserver) {
         BasePersistServiceController.super.findById(request, responseObserver);
     }
 

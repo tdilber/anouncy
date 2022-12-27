@@ -3,6 +3,7 @@ package com.beyt.anouncy.persist.helper;
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.common.v1.AnnounceListPTO;
+import com.beyt.anouncy.common.v1.AnnounceOptionalPTO;
 import com.beyt.anouncy.common.v1.AnnouncePTO;
 import com.beyt.anouncy.persist.entity.Announce;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
@@ -15,7 +16,7 @@ import java.util.stream.StreamSupport;
 
 @Component
 @RequiredArgsConstructor
-public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO, AnnounceListPTO> {
+public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO, AnnounceListPTO, AnnounceOptionalPTO> {
     private final AnonymousUserPtoConverter anonymousUserPtoConverter;
     private final RegionPtoConverter regionPtoConverter;
 
@@ -26,7 +27,9 @@ public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO,
             return null;
         }
         Announce announce = new Announce();
-        announce.setId(pto.getId());
+        if (pto.hasId()) {
+            announce.setId(pto.getId());
+        }
         announce.setBody(pto.getBody());
         announce.setAnonymousUser(anonymousUserPtoConverter.toEntity(pto.getAnonymousUser()));
         announce.setBeginRegion(regionPtoConverter.toEntity(pto.getBeginRegion()));
@@ -43,6 +46,13 @@ public class AnnouncePtoConverter implements PtoConverter<Announce, AnnouncePTO,
         }
 
         return listPTO.getAnnounceListList().stream().map(this::toEntity).toList();
+    }
+
+    @Override
+    public AnnounceOptionalPTO toOptionalEntity(Optional<Announce> entityOptional) {
+        final AnnounceOptionalPTO.Builder builder = AnnounceOptionalPTO.newBuilder();
+        entityOptional.ifPresent(e -> builder.setAnnounce(toPto(e)));
+        return builder.build();
     }
 
     @Override

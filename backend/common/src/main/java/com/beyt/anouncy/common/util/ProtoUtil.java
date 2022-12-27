@@ -12,6 +12,8 @@ public final class ProtoUtil {
     private ProtoUtil() {
     }
 
+    public static final Empty EMPTY = Empty.newBuilder().build();
+
     public static Date toDate(Long time) {
         if (Objects.isNull(time)) {
             return null;

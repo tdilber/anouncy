@@ -11,7 +11,7 @@ message SearchParam {
 service AnnounceSearchService {
   rpc save(com.beyt.anouncy.common.v1.AnnouncePTO) returns (com.beyt.anouncy.common.v1.AnnouncePTO);
   rpc saveAll(com.beyt.anouncy.common.v1.AnnounceListPTO) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);
-  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.AnnouncePTO);
+  rpc findById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.AnnounceOptionalPTO);
   rpc existsById(com.beyt.anouncy.common.v1.IdStr) returns (com.beyt.anouncy.common.v1.Exist);
   rpc findAllById(com.beyt.anouncy.common.v1.IdStrList) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);
   rpc findAll(com.beyt.anouncy.common.v1.PageablePTO) returns (com.beyt.anouncy.common.v1.AnnounceListPTO);

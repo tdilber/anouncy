@@ -28,6 +28,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AnnounceService {
     private final RegionService regionService;
+    private final AnonymousUserService anonymousUserService;
 
 
     @GrpcClient("persist-grpc-server")
@@ -44,8 +45,9 @@ public class AnnounceService {
         AnnouncePTO announce = AnnouncePTO.getDefaultInstance();
         RegionPTO relatedRegion = regionService.getRelatedRegion();
 
-        AnnouncePTO.newBuilder()
-                .setAnonymousUser(AnonymousUserPTO.newBuilder().setId(userContext.getAnonymousUserId().toString()).build()) // TODO try it when no user exist
+        final AnonymousUserPTO anonymousUser = anonymousUserService.getAnonymousUser(userContext.getAnonymousUserId());
+        announce = AnnouncePTO.newBuilder()
+                .setAnonymousUser(anonymousUser)
                 .setBody(dto.getBody())
                 .setBeginRegion(relatedRegion)
                 .setCurrentRegion(relatedRegion)
@@ -58,27 +60,27 @@ public class AnnounceService {
 
     @NeedLogin
     public void deleteAnnounce(String announceId) {
-        AnnouncePTO announcePTO = announcePersistServiceBlockingStub.findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId.newBuilder().setAnnounceId(announceId).setAnonymousUserId(userContext.getAnonymousUserId().toString()).build());
+        AnnounceOptionalPTO announcePTO = announcePersistServiceBlockingStub.findByIdAndAnonymousUserId(AnnounceIdAndAnonymousUserId.newBuilder().setAnnounceId(announceId).setAnonymousUserId(userContext.getAnonymousUserId().toString()).build());
 
-        if (Objects.isNull(announcePTO)) {
+        if (!announcePTO.hasAnnounce()) {
             throw new ClientErrorException("announce.not.found");
         }
 
-        announcePersistServiceBlockingStub.delete(announcePTO);
+        announcePersistServiceBlockingStub.delete(announcePTO.getAnnounce());
     }
 
     public AnnouncePageItemDTO getAnnounce(String announceId) {
-        AnnouncePTO announcePTO = announcePersistServiceBlockingStub.findById(IdStr.newBuilder().setId(announceId).build());
+        AnnounceOptionalPTO announcePTO = announcePersistServiceBlockingStub.findById(IdStr.newBuilder().setId(announceId).build());
 
-        if (Objects.isNull(announcePTO)) {
+        if (!announcePTO.hasAnnounce()) {
             throw new ClientErrorException("announce.not.found");
         }
 
-        AnnouncePageItemDTO itemDTO = new AnnouncePageItemDTO(announcePTO);
-        AnnounceVotePTO announceVotePTO = voteFetchServiceBlockingStub.fetchOne(AnnounceVoteFetchOneRequest.newBuilder().setRegionId(itemDTO.getRegionId()).setAnnounceId(itemDTO.getAnnounceId()).build());
+        AnnouncePageItemDTO itemDTO = new AnnouncePageItemDTO(announcePTO.getAnnounce());
+        AnnounceVoteOptionalPTO announceVotePTO = voteFetchServiceBlockingStub.fetchOne(AnnounceVoteFetchOneRequest.newBuilder().setRegionId(itemDTO.getRegionId()).setAnnounceId(itemDTO.getAnnounceId()).build());
 
-        if (Objects.nonNull(announceVotePTO)) {
-            itemDTO.update(announceVotePTO);
+        if (announceVotePTO.hasVote()) {
+            itemDTO.update(announceVotePTO.getVote());
         }
 
         fillCurrentUserVoteIfLogin(itemDTO);

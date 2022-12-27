@@ -3,6 +3,7 @@ package com.beyt.anouncy.search.converter;
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.common.v1.AnnounceListPTO;
+import com.beyt.anouncy.common.v1.AnnounceOptionalPTO;
 import com.beyt.anouncy.common.v1.AnnouncePTO;
 import com.beyt.anouncy.common.v1.AnonymousUserPTO;
 import com.beyt.anouncy.search.entity.AnnounceSearchItem;
@@ -39,6 +40,12 @@ public class AnnouncePtoConverter {
         }
 
         return listPTO.getAnnounceListList().stream().map(this::toEntity).toList();
+    }
+
+    public AnnounceOptionalPTO toOptionalEntity(Optional<AnnounceSearchItem> entityOptional) {
+        final AnnounceOptionalPTO.Builder builder = AnnounceOptionalPTO.newBuilder();
+        entityOptional.ifPresent(e -> builder.setAnnounce(toPto(e)));
+        return builder.build();
     }
 
     public AnnouncePTO toPto(AnnounceSearchItem announce) {

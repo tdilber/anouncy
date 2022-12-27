@@ -9,11 +9,11 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import java.util.Objects;
 import java.util.Optional;
 
-public interface BasePersistServiceController<Entity, Pto, PtoList> {
+public interface BasePersistServiceController<Entity, Pto, PtoList, OptionalPto> {
 
     Neo4jRepository<Entity, String> getRepository();
 
-    PtoConverter<Entity, Pto, PtoList> getConverter();
+    PtoConverter<Entity, Pto, PtoList, OptionalPto> getConverter();
 
 
     default void save(Pto request, StreamObserver<Pto> responseObserver) {
@@ -23,14 +23,14 @@ public interface BasePersistServiceController<Entity, Pto, PtoList> {
     }
 
     default void saveAll(PtoList request, StreamObserver<PtoList> responseObserver) {
-        Iterable<Entity> voteList = getRepository().saveAll(getConverter().toEntityList(request));
-        responseObserver.onNext(getConverter().toPtoList(voteList));
+        Iterable<Entity> entityList = getRepository().saveAll(getConverter().toEntityList(request));
+        responseObserver.onNext(getConverter().toPtoList(entityList));
         responseObserver.onCompleted();
     }
 
-    default void findById(IdStr request, StreamObserver<Pto> responseObserver) {
-        Optional<Entity> voteOpt = getRepository().findById(ProtoUtil.of(request));
-        voteOpt.ifPresent(v -> responseObserver.onNext(getConverter().toPto(v)));
+    default void findById(IdStr request, StreamObserver<OptionalPto> responseObserver) {
+        Optional<Entity> entityOptional = getRepository().findById(ProtoUtil.of(request));
+        responseObserver.onNext(getConverter().toOptionalEntity(entityOptional));
         responseObserver.onCompleted();
     }
 
@@ -41,14 +41,14 @@ public interface BasePersistServiceController<Entity, Pto, PtoList> {
     }
 
     default void findAllById(IdStrList request, StreamObserver<PtoList> responseObserver) {
-        Iterable<Entity> voteList = getRepository().findAllById(ProtoUtil.of(request));
-        responseObserver.onNext(getConverter().toPtoList(voteList));
+        Iterable<Entity> entityList = getRepository().findAllById(ProtoUtil.of(request));
+        responseObserver.onNext(getConverter().toPtoList(entityList));
         responseObserver.onCompleted();
     }
 
     default void findAll(PageablePTO request, StreamObserver<PtoList> responseObserver) {
-        Iterable<Entity> voteList = getRepository().findAll(ProtoUtil.toPageable(request));
-        responseObserver.onNext(getConverter().toPtoList(voteList));
+        Iterable<Entity> entityList = getRepository().findAll(ProtoUtil.toPageable(request));
+        responseObserver.onNext(getConverter().toPtoList(entityList));
         responseObserver.onCompleted();
     }
 

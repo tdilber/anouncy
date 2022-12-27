@@ -12,6 +12,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class VoteProtoController extends VoteFetchServiceGrpc.VoteFetchServiceIm
     }
 
     @Override
-    public void getVoteCount(VoteCountSingleRequest request, StreamObserver<VoteCountPTO> responseObserver) {
+    public void getVoteCount(VoteCountSingleRequest request, StreamObserver<VoteCountOptionalPTO> responseObserver) {
         responseObserver.onNext(votePersistServiceBlockingStub.getVoteCount(request));
         responseObserver.onCompleted();
     }
@@ -51,9 +52,14 @@ public class VoteProtoController extends VoteFetchServiceGrpc.VoteFetchServiceIm
     }
 
     @Override
-    public void fetchOne(AnnounceVoteFetchOneRequest request, StreamObserver<AnnounceVotePTO> responseObserver) {
+    public void fetchOne(AnnounceVoteFetchOneRequest request, StreamObserver<AnnounceVoteOptionalPTO> responseObserver) {
         AnnounceVoteDTO announceVoteDTO = voteFetchService.fetchOne(request.getRegionId(), request.getAnnounceId());
-        responseObserver.onNext(AnnounceVoteDTO.of(announceVoteDTO, request.getRegionId()));
+        final AnnounceVoteOptionalPTO.Builder builder = AnnounceVoteOptionalPTO.newBuilder();
+
+        if (Objects.nonNull(announceVoteDTO)) {
+            builder.setVote(AnnounceVoteDTO.of(announceVoteDTO, request.getRegionId()));
+        }
+        responseObserver.onNext(builder.build());
         responseObserver.onCompleted();
     }
 }

@@ -3,6 +3,7 @@ package com.beyt.anouncy.persist.helper;
 import com.beyt.anouncy.common.exception.DeveloperMistakeException;
 import com.beyt.anouncy.common.util.ProtoUtil;
 import com.beyt.anouncy.common.v1.VoteListPTO;
+import com.beyt.anouncy.common.v1.VoteOptionalPTO;
 import com.beyt.anouncy.common.v1.VotePTO;
 import com.beyt.anouncy.persist.entity.Vote;
 import com.beyt.anouncy.persist.helper.base.PtoConverter;
@@ -16,7 +17,7 @@ import java.util.stream.StreamSupport;
 
 @Component
 @RequiredArgsConstructor
-public class VotePtoConverter implements PtoConverter<Vote, VotePTO, VoteListPTO> {
+public class VotePtoConverter implements PtoConverter<Vote, VotePTO, VoteListPTO, VoteOptionalPTO> {
     private final AnnouncePtoConverter announcePtoConverter;
     private final AnonymousUserPtoConverter anonymousUserPtoConverter;
     private final RegionPtoConverter regionPtoConverter;
@@ -28,7 +29,9 @@ public class VotePtoConverter implements PtoConverter<Vote, VotePTO, VoteListPTO
         }
 
         Vote vote = new Vote();
-        vote.setId(pto.getId());
+        if (pto.hasId()) {
+            vote.setId(pto.getId());
+        }
         vote.setValue(pto.getValue());
         vote.setAnnounce(announcePtoConverter.toEntity(pto.getAnnounce()));
         vote.setAnonymousUser(anonymousUserPtoConverter.toEntity(pto.getAnonymousUser()));
@@ -45,6 +48,13 @@ public class VotePtoConverter implements PtoConverter<Vote, VotePTO, VoteListPTO
         }
 
         return listPTO.getVoteListList().stream().map(this::toEntity).toList();
+    }
+
+    @Override
+    public VoteOptionalPTO toOptionalEntity(Optional<Vote> entityOptional) {
+        final VoteOptionalPTO.Builder builder = VoteOptionalPTO.newBuilder();
+        entityOptional.ifPresent(e -> builder.setVote(toPto(e)));
+        return builder.build();
     }
 
     @Override

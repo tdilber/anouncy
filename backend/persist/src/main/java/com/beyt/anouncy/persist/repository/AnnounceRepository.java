@@ -7,12 +7,11 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface AnnounceRepository extends Neo4jRepository<Announce, String> {
 
-    Page<Announce> findAllByAnonymousUserId(UUID anonymousUserId, Pageable pageable);
+    Page<Announce> findAllByAnonymousUserId(String anonymousUserId, Pageable pageable);
 
-    Optional<Announce> findByIdAndAnonymousUserId(String announceId, UUID anonymousUserId);
+    Optional<Announce> findByIdAndAnonymousUserId(String announceId, String anonymousUserId);
 }
