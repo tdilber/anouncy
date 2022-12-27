@@ -30,4 +30,9 @@
         <appender-ref ref="stash"/>
         <appender-ref ref="console"/>
     </logger>
+
+    <logger name="org.springframework.data.neo4j" level="debug">
+        <appender-ref ref="stash"/>
+        <appender-ref ref="console"/>
+    </logger>
 </configuration>
