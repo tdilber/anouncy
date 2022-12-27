@@ -5,4 +5,5 @@ package com.beyt.anouncy.common.location.v1;
 
 service LocationService {
   rpc findAllParents(com.beyt.anouncy.common.v1.IdLong) returns (com.beyt.anouncy.common.v1.LocationListPTO);
+  rpc findAllCountries(com.beyt.anouncy.common.v1.Empty) returns (com.beyt.anouncy.common.v1.LocationListPTO);
 }
