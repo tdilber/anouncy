@@ -2,6 +2,10 @@ nameOverride: mongo
 fullnameOverride: mongo
 auth:
   rootUser: mongo_db_user
+  databases:
+    - location-db
+  usernames:
+    - location_user
 existingSecret: mongo-password-secret
 replicaCount: 2
 persistence:

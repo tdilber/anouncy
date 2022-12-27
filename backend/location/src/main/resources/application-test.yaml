@@ -21,8 +21,8 @@ spring:
       username: ENV_PARAM
       password: ENV_PARAM
       authentication-database: admin
-      database: twitch-observer
-
+      database: location-db
+  #mongoimport --host=secret --collection=locations --file=locationsUpdatedLast.json --username=mongo_db_user --password=secret --authenticationDatabase=admin --db=location-db
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true

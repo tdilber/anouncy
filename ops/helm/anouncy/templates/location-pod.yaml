@@ -34,6 +34,8 @@ spec:
           ports:
             - name: location-port
               containerPort: {{ .Values.location.deployment.port }}
+            - name: location-g-port
+              containerPort: {{ .Values.location.deployment.grpcPort }}
           env:
             - name: JAVA_OPTS
               value: {{ .Values.location.deployment.jvmOpts }}
