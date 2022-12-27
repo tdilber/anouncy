@@ -6,8 +6,10 @@ import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguratio
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
+@EnableScheduling
 @SpringBootApplication(scanBasePackages = {"com.beyt.anouncy.common", "com.beyt.anouncy.region"})
 @ImportAutoConfiguration({GrpcClientAutoConfiguration.class, GrpcServerAutoConfiguration.class, GrpcServerFactoryAutoConfiguration.class})
 public class RegionApplication {

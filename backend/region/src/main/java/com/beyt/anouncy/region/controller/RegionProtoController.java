@@ -28,8 +28,9 @@ public class RegionProtoController extends RegionServiceGrpc.RegionServiceImplBa
     }
 
     @Override
-    public void findByLocationId(IdLong request, StreamObserver<RegionPTO> responseObserver) {
-        responseObserver.onNext(regionPersistServiceBlockingStub.findByLocationId(request));
+    public void findByLocationId(IdLong request, StreamObserver<RegionOptionalPTO> responseObserver) {
+        final RegionOptionalPTO byLocationId = regionPersistServiceBlockingStub.findByLocationId(request);
+        responseObserver.onNext(byLocationId);
         responseObserver.onCompleted();
     }
 }
